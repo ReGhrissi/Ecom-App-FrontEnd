@@ -1,0 +1,153 @@
+<div *ngIf="currentProduct">
+
+    <div *ngIf="mode==0" class="panel panel-primary">
+
+        <div class="panel-heading"> Fiche Produit : {{currentProduct.name}}
+
+            <span *ngIf="this.authService.isAdmin()" (click)="onEditProduct()" class="btn glyphicon glyphicon-edit pull-right" ></span>
+
+        </div>
+
+        <div class="panel-body">
+
+            <div class="col-md-5">
+
+                <img  id="Photo_Product_Det" src="{{this.catalService.host+'/photoProduct/'+currentProduct.id+'?ts='+getTS()}}"/>
+                
+
+                <div *ngIf="this.authService.isAdmin()">
+
+                    <button *ngIf="!editPhoto" (click)="onEditPhoto(currentProduct)">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+
+                    <span *ngIf="editPhoto">
+
+                        <input type="file" (change)="onSelectedFile($event)">
+
+                        <button (click)="uploadPhoto()" class="btn btn-success btn-sm ">
+                            <span class="glyphicon glyphicon-upload"></span>
+                        </button>
+                        {{progress}}
+
+                    </span>
+
+                </div>
+
+                <div>
+                    <span *ngIf="currentProduct.promotion">
+                        <mat-icon> monetization_on</mat-icon>
+                    </span>
+
+                    <span *ngIf="currentProduct.selected">
+                        <mat-icon>stars</mat-icon>
+                    </span>
+
+                    <span *ngIf="currentProduct.available">
+                        <mat-icon>check_circle</mat-icon>
+                    </span>
+                </div>
+
+                <div>
+                    <form #f="ngForm">
+
+                        <label class="control-label"> Quantité :</label>
+                        <input type="number" name="quantity" [(ngModel)]="currentProduct.quantity" min="1" ngModel  style="width: 40px; margin-left: 20px;">
+
+                        
+                        <button style="margin-left: 30px;" mat-button-toggle > <mat-icon>add_shopping_cart</mat-icon></button>
+
+                    </form>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-7">
+
+                <div class="panel panel-default" style="min-height: 450px;">
+
+                    <div class="panel-body">
+
+                        <label> Prix : {{currentProduct.currentPrice|number:'0.2'}} DH</label>
+
+                    </div>
+
+                    <div class="panel-body">
+                        <label> Description : </label>
+                        <br>
+                        <p> {{currentProduct.description}} </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-9">
+    <div *ngIf="mode==1" class="panel panel-primary ">
+
+        <div class="panel-heading ">
+            <label >  Modification du produit :</label>
+        </div> 
+
+        <div class="panel-body ">
+
+                <form #f="ngForm" (ngSubmit)="onUpdateProduct(f.value)">
+
+                    <div class="form-group">
+
+                        <label class="control-label">Nom de Produit :</label>
+                        <input type="text" name="name" ngModel [(ngModel)]="currentProduct.name" class="form-control">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="control-label">Description de produit :</label>
+                        <textarea  name="description" ngModel [(ngModel)]="currentProduct.description" class="form-control"></textarea>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="control-label">Prix de produit:</label>
+                        <input type="text" name="currentPrice" ngModel [(ngModel)]="currentProduct.currentPrice" class="form-control">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="control-label">Promotion :</label>
+                        <input type="checkbox" name="promotion" ngModel [(ngModel)]="currentProduct.promotion">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="control-label">Sélection :</label>
+                        <input type="checkbox" name="selected" ngModel [(ngModel)]="currentProduct.selected">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="control-label">Disponible :</label>
+                        <input type="checkbox" name="available" ngModel [(ngModel)]="currentProduct.available">
+
+                    </div>
+                    <br>
+                    <div>
+                        <input type="button" value="Annuler" class="btn btn-primary">
+                        <button class="btn btn-primary pull-right" type="submit">Modifier</button>
+                    </div>
+
+                </form>
+        </div>
+         
+    </div>
+    </div>
+
+</div>

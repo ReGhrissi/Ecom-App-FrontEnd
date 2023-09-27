@@ -1,0 +1,138 @@
+<div *ngIf="products">
+
+    <div><h3>{{title}}</h3></div>
+    <div *ngFor="let p of products._embedded.products">
+        
+        <div class="col-md-4">
+
+            <div class="panel panel-default heighted">
+
+                <div class="panel-heading">
+                      {{p.name}}
+                </div>
+
+                <div class="panel-body">
+
+                    <img (click)="onProductDetails(p)" class="clickable" id="Photo_Product"  src="{{this.catService.host+'/photoProduct/'+p.id+'?ts='+getTS()}}"/>
+
+                    <br><br>
+
+                    <div *ngIf="isAdmin()"> <!--ou bien creer une methode isAdmin()
+                        propre au component products et on l appelle par *ngIf="isAdmin()" qui va appeler
+                        elle meme la methode 'isAdmin()' de AuthetificationService  -->
+                        
+                            <button (click)="onEditPhoto(p)">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </button>
+                        
+                        
+                        <p *ngIf="editPhoto && currentProduct==p">
+                            <input type="file" (change)="onSelectedFile($event)">
+                            <br>
+                            <button (click)="uploadPhoto()" class="btn btn-success">Upload</button>
+                            {{progress}} 
+                        </p>
+
+                    </div>
+                                    
+                                            
+                                            <br><br>
+                                                    <div>
+                                                        <span *ngIf="p.promotion">
+                                                            <mat-icon> monetization_on</mat-icon>
+                                                        </span>
+
+                                                        <span *ngIf="p.selected">
+                                                            <mat-icon>stars</mat-icon>
+                                                        </span>
+
+                                                        <span *ngIf="p.available">
+                                                            <mat-icon>check_circle</mat-icon>
+                                                        </span>
+                                                    </div>
+                                                   
+                                        
+
+                                                    <!---
+                                                    <mat-icon>event_available</mat-icon>
+                                                    <mat-icon>not_interested</mat-icon>
+                                                    <mat-icon>search</mat-icon>
+                                                   
+                                                    <span> <mat-icon>add_shopping_cart</mat-icon> </span>
+                                                    <mat-icon>remove_shopping_cart</mat-icon>
+                                                    <span><mat-icon>account_circle</mat-icon></span>
+                                                    
+                                                    <mat-icon>edit</mat-icon>
+                                                    <mat-icon>add_box</mat-icon>
+                                                    <mat-icon>cancel</mat-icon>
+                                                    <mat-icon>close</mat-icon>
+                                                    <mat-icon>add_circle</mat-icon>
+                                                    <mat-icon>done_outline</mat-icon>
+                                                    <mat-icon>favorite</mat-icon>
+                                                    <mat-icon>favorite_border</mat-icon>
+                                                    <mat-icon>grade</mat-icon>
+                                                    
+                                                    
+                                                    <mat-icon>payment</mat-icon>
+                                                    <mat-icon>settings</mat-icon>
+                                                    <mat-icon>verified_user</mat-icon>
+                                                    <mat-icon> mail_outline</mat-icon>
+                                                    <mat-icon> location_on</mat-icon>
+                                                    <mat-icon> phone</mat-icon>
+                                                    <mat-icon>library_add</mat-icon>
+                                                    <mat-icon>add_photo_alternate</mat-icon>
+                                                    -->
+                                
+                                            <br>
+                                    
+                                            <div>
+                                                {{p.description}}
+                                            </div>
+                                             
+                                             <br>
+                                             <div>
+                                                    <label> Prix : {{p.currentPrice|number:'0.2'}} DH </label>
+                                            </div>
+                                           
+                                            <br>
+                                        
+                                            <div>
+                                                
+                                                    
+                                                  
+                                                  
+
+                                                <form #f="ngForm" (ngSubmit)="onAddProductToCaddy(p)">
+                                                    <!--
+                                                        <mat-form-field>
+                                                            <input matInput type="number" [(ngModel)]="valeur" min="0" max="100">
+                                                            <mat-button-toggle-group>
+                                                            <button mat-button-toggle (click)="augmenter()">+</button>
+                                                            <button mat-button-toggle (click)="diminuer()">-</button>
+                                                            </mat-button-toggle-group>
+                                                        </mat-form-field>
+                                                    -->
+                                                    
+                                               
+                                                    <label class="control-label"> Quantité : </label>
+                                                    <input type="number" name="quantity" [(ngModel)]="p.quantity"  min="1" ngModel  style="width: 40px; margin-left: 20px;"/>
+                                                    
+                                                    <button style="margin-left: 30px;" mat-button-toggle > <mat-icon>add_shopping_cart</mat-icon></button>
+                                                </form>
+                                            </div>
+                                         
+                                          <br>
+                                         <div>
+                                            <span><mat-icon>thumb_up</mat-icon> </span>
+                                            <span> <mat-icon>thumb_down</mat-icon> </span>
+                                        </div>
+
+                </div>
+
+            </div>
+
+        </div>  
+
+    </div>
+
+</div>

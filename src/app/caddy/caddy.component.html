@@ -1,0 +1,56 @@
+    
+    <div class="panel panel-default" *ngIf="caddy"   > <!-- *ngIf="panierService.myCaddy.items"    *ngIf="Items"-->
+        <div class="panel-heading"> Produits de la commande
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped" >
+            <thead>
+                <tr>
+                <th>ID</th>  <th>Nom Produit</th>  <th>Quantité</th>  <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  *ngFor= "let item of caddy.items | keyvalue"> <!-- let item of panierService.myCaddy.items.values()""    *ngFor="let item of Items"-->
+                    <td>{{item.value.id}}</td>
+                    <td>{{item.value.name}}</td>
+                    <td>{{item.value.quantity}}</td>
+                    <td>{{item.value.price | number:'0.2'}}</td>
+
+                    <!--
+                    <td>{{item.id | json}}</td>
+                    <td>{{item.name | json}}</td>
+                    <td>{{item.quantity| json | number:'0.2'}}</td>
+                    <td>{{item.price| json | number:'0.2'}}</td>
+-->
+                    
+                    
+                    <td> 
+                            <button class="btn btn-danger" (click)="onRemoveProductFromCaddy(item.value)">
+                                                 <span> <mat-icon>delete</mat-icon> </span>
+                            </button>
+                    </td>
+                </tr>
+                
+            </tbody>
+              
+                <!--
+                    
+                -->
+             
+            <br>
+           
+            <thead>
+                <tr>
+                    <th colspan="3">Total :</th>
+                    <th>{{getTotal()|number:'0.2'}}</th>
+                </tr>
+            </thead>
+          </table>
+          
+          <br>
+          <button class="btn btn-success pull-right" (click)="onNewOrder()">Passer à la commande</button>
+          
+        </div>
+      
+      </div>
+      
