@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../_Model/product.model';
+import { GatewayService } from './gateway.service';
+import { MicroServicesName } from '../_Enum/micro-service';
 
 
 
@@ -11,15 +13,24 @@ import { Product } from '../_Model/product.model';
 export class CatalogueService {
 
     //backEnd port
-    public host:string="http://localhost:8090"
+    public GATEWAY :GatewayService = new GatewayService()
+    public microServiceName : MicroServicesName = MicroServicesName.E_COMMERCE
 
-    constructor(private http:HttpClient) { }
+    //public host:string= this.GATEWAY.gateway+this.microServiceName;
+    public host:string ="http://localhost:8090"
+    constructor(
+                    private http:HttpClient      
+                ) 
+                {}
 
+    
 
     // methode qui permet la recuperation des différentes ressources de la BD
         public getRessource(url :any)
         {
+            console.log(this.host)
             return this.http.get(this.host+url);
+            
         }
 
    

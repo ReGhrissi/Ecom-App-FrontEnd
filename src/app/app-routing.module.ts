@@ -6,6 +6,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { CaddyComponent } from './caddy/caddy.component';
 import { ClientComponent } from './client/client.component';
 import { PaymentComponent } from './payment/payment.component';
+import { OrderComponent } from './order/order.component';
 
 const routes: Routes = [
 
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path:'product-detail/:url',component:ProductDetailComponent}, //on a utiliser un URL au lieu de ID
   {path:'caddy', component:CaddyComponent},
   {path:'client', component:ClientComponent},
-  {path:'payment', component:PaymentComponent}
+  {path:'order', component:OrderComponent},
+  {path:'payment/:orderID', component:PaymentComponent}
 ];
 
 @NgModule({

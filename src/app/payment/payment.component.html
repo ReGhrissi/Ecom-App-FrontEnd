@@ -1,1 +1,64 @@
-<p>payment works!</p>
+<div class="col-md-6"*ngIf="paymentService.paymentID==0">
+    <div class="panel {{paymentPanelStyle}}">
+
+        <div class="panel-heading">Informations de paiment :</div>
+
+        <div class="panel-body">
+
+            <div *ngIf="currentOrder"> <!--  -->
+                <form #f="ngForm" (ngSubmit)="onPayOrder(f.value)" > <!--  -->
+            
+                <div class="form-group">
+            
+                    <label class="control-label">Type de votre carte :</label>
+                    <select name="cardType" ngModel class="form-control">
+                    <option value="Visa">Visa</option>
+                    <option value="MasterCard">MasterCard</option>
+                    <option value="Cmi">Cmi</option>
+                    </select>
+            
+                </div>
+            
+                <div class="form-group">
+            
+                    <label class="control-label">Numéro de la carte :</label>
+                    <input type="text" name="cardNumber" ngModel class="form-control">
+            
+                </div>
+            
+                    <div >
+            
+                    <label class="control-label">Code de vérification de la carte :</label>
+                    <input type="text" name="codeVerif" ngModel class="form-control">
+            
+                    </div>
+            
+                    <div >
+            
+                    <label class="control-label">Montant à Payer :</label>
+                    <input readonly type="text" name="amount" ngModel [(ngModel)]="currentOrder.totalAmount" class="form-control" ><!-- [(ngModel)]="currentOrder.totalAmount"-->
+            
+                    </div>
+
+                    <div >
+            
+                        <label class="control-label">Numéro de la commande :</label>
+                        <input readonly type="text" name="orderID" ngModel [(ngModel)]="currentOrder.id" class="form-control" ><!-- [(ngModel)]="currentOrder.totalAmount"-->
+                
+                        </div>
+            
+                    <button type="submit" class="btn btn-success">Confirmer le paiment</button>
+                    <button class="btn btn-danger pull-right" (click)="onCancel()" >Annuler le paiment</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div *ngIf="paymentService.paymentID!=0">
+
+    <h1>votre paiment a été éffectué avec succes !</h1>
+
+</div>

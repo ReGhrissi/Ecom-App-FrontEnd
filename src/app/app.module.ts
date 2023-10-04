@@ -16,6 +16,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { CaddyComponent } from './caddy/caddy.component';
 import { ClientComponent } from './client/client.component';
 import { PaymentComponent } from './payment/payment.component';
+import { CatalogueService } from './services/catalogue.service';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { PaymentComponent } from './payment/payment.component';
     ProductDetailComponent,
     CaddyComponent,
     ClientComponent,
-    PaymentComponent
+    PaymentComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { PaymentComponent } from './payment/payment.component';
     MatButtonToggleModule
   ],
   providers: [
+    //CatalogueService,
     CaddyComponent
 
   ],

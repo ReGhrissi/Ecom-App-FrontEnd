@@ -2,7 +2,7 @@ import { Component , OnInit } from '@angular/core';
 import { Caddy } from '../_Model/caddy.model';
 import { CatalogueService } from '../services/catalogue.service';
 import { Router } from '@angular/router';
-//import { CaddyService } from '../services/caddy.service';
+
 import { AuthentificationService } from '../services/authentification.service';
 import { ProductItem } from '../_Model/product-item.model';
 import { PanierService } from '../services/panier.service';

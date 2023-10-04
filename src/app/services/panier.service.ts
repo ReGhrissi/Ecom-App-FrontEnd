@@ -3,6 +3,7 @@ import { AuthentificationService } from './authentification.service';
 import { Caddy } from '../_Model/caddy.model';
 import { ProductItem } from '../_Model/product-item.model';
 import { Product } from '../_Model/product.model';
+import { Client } from '../_Model/client.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,7 @@ export class PanierService {
         else
         {
                 let productsGuestCaddy =localStorage.getItem("Panier_GUEST");
+                
                 if(productsGuestCaddy)
                 {
                   productsFromCaddy = JSON.parse(productsGuestCaddy)
@@ -229,6 +231,12 @@ export class PanierService {
         return total;
   }
 
+  setClient(client: Client) {
+    
+    this.loadCaddyFromLocalStorage().client=client;
+    this.saveCaddyOnlocalStorage();
+    
+  }
 
    
 }

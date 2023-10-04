@@ -1,1 +1,41 @@
-<p>client works!</p>
+<div class="col-md-7">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">Coordonnées Client </div>
+
+        <div class="panel-body">
+
+                <form #f="ngForm" (ngSubmit)="onSaveClient(f.value)">
+
+                    <div class="form-group">
+
+                        <label class="control-label">Nom Client:</label>
+                        <input type="text" name="name" ngModel class="form-control" [(ngModel)]="panierService.loadCaddyFromLocalStorage().client.name">
+                    
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">Téléphone :</label>
+                        <input type="text" name="phoneNumber" ngModel class="form-control" [(ngModel)]="panierService.loadCaddyFromLocalStorage().client.phoneNumber">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Address :</label>
+                        <textarea type="text" name="address" ngModel class="form-control" [(ngModel)]="panierService.loadCaddyFromLocalStorage().client.address"></textarea>
+                    </div>
+            
+                    <div class="form-group">
+                        <label class="control-label">Email :</label>
+                        <input type="text" name="email" ngModel class="form-control" [(ngModel)]="panierService.loadCaddyFromLocalStorage().client.email">
+                    </div>
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Suivant</button>
+                    </div>
+
+                </form>
+        </div>
+
+    </div>
+</div>

@@ -1,3 +1,4 @@
+//export interface Client
 export interface Client
 {
     name:string;
@@ -5,5 +6,14 @@ export interface Client
     phoneNumber:string;
     address:string;
     username:string;
-
+/*
+    constructor()
+    {
+        this.name='';
+        this.email='';
+        this.phoneNumber='';
+        this.address='';
+        this.username='';
+    }
+*/
 }
