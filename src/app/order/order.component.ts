@@ -15,9 +15,9 @@ export class OrderComponent implements OnInit {
 
   public mode:number=0;
   
-  public mainPanelStyle:string= "panel-default";
-  public clientPanelStyle:string= "panel-primary";
-  public productsPanelStyle:string= "panel-primary";
+  public mainPanelStyle:string= "";
+  public clientPanelStyle:string= "panel-default";
+  public productsPanelStyle:string= "panel-default";
 
  // panelStyle:string= "panel-default";
 
@@ -45,40 +45,20 @@ export class OrderComponent implements OnInit {
       console.log(err);
     });
   }
-*/  
+*/   
       onOrder() 
       {
-        this.orderService.submitOrder().pipe(
+        this.orderService.submitOrder()
 
-          catchError(err => {
-            console.log(err);
-
-                this.mainPanelStyle = "panel-danger";
-
-            throw err;
-
-          })
-        ).subscribe((data : any)=> {
-         
-              console.log("dataaaaaaaa :"+data)
-
-                  console.log("ID commande avant submit :"+this.orderService.order.id)
-                this.orderService.order.id = data['id'];
-                  console.log("ID commande apres submit :"+this.orderService.order.id)
-        
-                  console.log("date commande avant submit :"+this.orderService.order.date)
-                this.orderService.order.date = data['date'];
-                  console.log("date commande apres submit :"+this.orderService.order.date)
-        
-                this.mainPanelStyle = "panel-success";
-                this.clientPanelStyle= "panel-default";
-                this.productsPanelStyle= "panel-default";
-     
-        });
+        if(this.orderService.order.id!=0)
+        {
+          this.mainPanelStyle="panel-success";
+        }
       }
     
     
   onPayOrder() {
+        //faire un PATCH pour l'ordre
         this.router.navigateByUrl("/payment/"+this.orderService.order.id);
   }
     

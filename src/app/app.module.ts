@@ -18,6 +18,17 @@ import { ClientComponent } from './client/client.component';
 import { PaymentComponent } from './payment/payment.component';
 import { CatalogueService } from './services/catalogue.service';
 import { OrderComponent } from './order/order.component';
+import { ConfirmComponent } from './confirm/confirm.component';
+import { RegisterComponent } from './register/register.component';
+import { NewProductComponent } from './new-product/new-product.component';
+import { NewCategoryComponent } from './new-category/new-category.component';
+import { FooterComponent } from './footer/footer.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { UsersComponent } from './users/users.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { NavbarComponent } from './navbar/navbar.component';
+
+//import { FlowbiteModule } from 'flowbite';
 
 @NgModule({
   declarations: [
@@ -28,7 +39,16 @@ import { OrderComponent } from './order/order.component';
     CaddyComponent,
     ClientComponent,
     PaymentComponent,
-    OrderComponent
+    OrderComponent,
+    ConfirmComponent,
+    RegisterComponent,
+    NewProductComponent,
+    NewCategoryComponent,
+    FooterComponent,
+    CategoriesComponent,
+    UsersComponent,
+    SidebarComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

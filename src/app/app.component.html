@@ -1,3 +1,13 @@
+<div>
+
+  <app-navbar></app-navbar>
+  
+
+</div>
+
+<br>
+<br>
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -18,6 +28,15 @@
         <ul class="dropdown-menu">
           <li><a (click)="OnProductsPromo()" class="clickable">En Promotion</a></li>
           <li><a (click)="onProductsDispo()" class="clickable">Disponibles</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Catalogue
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/categories" class="clickable">Gestion des catégories</a></li>
+          <li><a routerLink="/products" class="clickable">Gestion des produits</a></li>
         </ul>
       </li>
       
@@ -52,6 +71,7 @@
   </div>
 </nav>
 
+
 <div class="container">
   
   <div class="col-md-2">
@@ -78,3 +98,10 @@
 
 
 </div>
+
+<br>
+<br>
+
+<!--
+<app-footer></app-footer>
+-->

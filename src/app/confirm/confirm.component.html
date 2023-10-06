@@ -1,0 +1,40 @@
+<div *ngIf="paymentService.paymentID!=0">
+
+    <div class="panel panel-success">
+
+        <div class="panel-heading">Merci pour votre commande</div>
+
+        <div class="panel-body">
+
+            <table  class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>ID Commande</th>
+                        <th>ID Transaction</th>
+                        <th>Date Transaction</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{paymentService.updatedPayment.order.client.name}}</td>
+                        <td>{{paymentService.updatedPayment.order.id}}</td>
+                        <td>{{paymentService.updatedPayment.id}}</td>
+                        <td>{{paymentService.updatedPayment.datePayment}}</td>
+                        <td>{{paymentService.updatedPayment.order.totalAmount}}</td>
+                    </tr>
+                </tbody>
+                    <br>
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+

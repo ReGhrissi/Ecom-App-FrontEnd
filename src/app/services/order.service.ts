@@ -20,16 +20,23 @@ export class OrderService {
       public microServiceName : MicroServicesName = MicroServicesName.CLIENTS_ORDERS
   
       //public host:string= this.GATEWAY.gateway+this.microServiceName;
-   public host:string ="http://localhost:8090"
-  public order:Order=new Order();
+    public host:string ="http://localhost:8090"
 
+    public order:Order=new Order();
+    public currentOrderData:Order = new Order();
+    public updatedOrder : Order = new Order();
+
+ // public mainPanelStyle = "panel-default";
+ // public clientPanelStyle= "panel-primary";
+ // public productsPanelStyle= "panel-primary";
+  
   constructor(
                 private panierService:PanierService,
                 private httpClient:HttpClient,
                 //private catalService:CatalogueService
               )
               {}
-
+ 
 
   public setClient(client:Client)
   {
@@ -65,42 +72,82 @@ export class OrderService {
     this.order.products.forEach(p=>{
       total+=p.price*p.quantity;
     });
+    
     return total;
   }
 
 
-  submitOrder()
+  submitOrder() 
   {
     console.log(this.order)
-    return this.httpClient.post(this.host+"/orders",this.order);
-    
-  }
 
-  updateOrder(payment :any)
-  {
-    this.order.payment=payment;
-    console.log("payment :"+ this.order.payment)
-    return this.httpClient.patch(this.host+"/orders/"+this.order.id,this.order);
+    return this.httpClient.post(this.host+"/orders",this.order).pipe(
 
-  }
-
-
-  public getOrder(id:number)
-  {
-    return this.httpClient.get(this.host+"/orders/"+id).pipe(
       catchError(err => {
         console.log(err);
-     
+
+          //  this.mainPanelStyle = "panel-danger";
+
         throw err;
 
       })
-    ).subscribe((data : any)=> {
+    ).subscribe((data:any)=> {
+/*
+      if(data['id']!=0)
+      {
+        this.mainPanelStyle = "panel-success";
+        this.clientPanelStyle= "panel-default";
+        this.productsPanelStyle= "panel-default";
+      }
+
+     */
+          console.log("dataaaaaaaa :"+data)
+
+      this.currentOrderData =data;
+
+      console.log("currectOder :"+this.currentOrderData)
+
+              console.log("ID commande avant submit :"+this.order.id)
+            this.order.id = data['id'];
+              console.log("ID commande apres submit :"+this.order.id)
     
-      console.log("le retour de GET ORDER : "+data)
-      //this.currentOrder=data;
-      //console.log("la valeur de currentOrder :"+ this.currentOrder)
+              console.log("date commande avant submit :"+this.order.date)
+            this.order.date = data['date'];
+              console.log("date commande apres submit :"+this.order.date)
+    
+           
  
     });
+    
+  }
+/*
+  updateOrder(payment :any)
+  {
+    this.currentOrderData.payment=payment;
+
+    console.log("Order à modifier par PATCH :"+ JSON.stringify(this.currentOrderData))
+
+    return this.httpClient.patch(this.host+"/orders/"+this.currentOrderData.id,this.currentOrderData).pipe(
+          catchError(err => {
+            console.log(err);
+
+            throw err;
+            
+          })
+        ).subscribe((data : any)=> {
+        
+              console.log("dataaaaaaaa :"+data)
+
+          this.updatedOrder =data;
+    
+        });
+        
+  }
+*/
+
+  public getOrder(id:number)
+  {
+    return this.httpClient.get(this.host+"/orders/"+id)
   }
 
 

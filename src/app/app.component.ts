@@ -8,6 +8,7 @@ import { CatalogueService } from './services/catalogue.service';
 //import { CaddyService } from './services/caddy.service';
 import { PanierService } from './services/panier.service';
 import { CaddyComponent } from './caddy/caddy.component';
+import { initFlowbite } from 'flowbite';
 
 
 @Component({
@@ -31,6 +32,8 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     
+        initFlowbite();
+
     this.authService.loadAuthUserFromLocalStorage();
     this.getCategories();
 /**
