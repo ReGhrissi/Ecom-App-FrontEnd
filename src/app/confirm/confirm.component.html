@@ -1,9 +1,9 @@
 <div *ngIf="paymentService.paymentID!=0">
 
     <div class="panel panel-success">
-
+        <br>
         <div class="panel-heading">Merci pour votre commande</div>
-
+        <br>
         <div class="panel-body">
 
             <table  class="table table-striped">
@@ -38,3 +38,77 @@
 
 </div>
 
+
+<div *ngIf="paymentService.paymentID!=0" class="relative overflow-x-auto shadow-md sm:rounded-lg"> 
+    <br>
+    <div>
+        Merci pour votre commande :
+    </div>
+    <br>
+    
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Client
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    ID Commande
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    ID Transaction
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Date Transaction
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Montant
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            
+            <tr   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                
+                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    {{paymentService.updatedPayment.order.client.name}}
+                </td>
+
+                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white w-32 p-4">
+                    {{paymentService.updatedPayment.order.id}}
+                </td>
+
+                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white w-32 p-4">
+                    {{paymentService.updatedPayment.id}}
+                </td>
+                
+                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    {{paymentService.updatedPayment.datePayment}}
+                </td>
+                
+                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white w-32 p-4">
+                    {{paymentService.updatedPayment.order.totalAmount}}
+                </td>
+            
+            </tr>
+
+        </tbody>
+  
+    </table>
+</div>
+<br>
+<div  class="flex">
+    <button routerLink="/" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <fa-icon  [icon]="myBack"></fa-icon>
+        <span > Retour à la page d'Acceuil</span>
+    </button>
+</div>
+<br>
+<div  class="flex">
+    <button routerLink="/user-orders" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <fa-icon  [icon]="myOrderStatus"></fa-icon>
+        <span > Suivre ma commande</span>
+    </button>
+</div>

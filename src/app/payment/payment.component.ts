@@ -5,6 +5,7 @@ import { OrderService } from '../services/order.service';
 import { catchError } from 'rxjs';
 import { PaymentService } from '../services/payment.service';
 import { Payment } from '../_Model/payment.model';
+import { faSackDollar, faSackXmark, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-payment',
@@ -14,7 +15,10 @@ import { Payment } from '../_Model/payment.model';
 
 export class PaymentComponent implements OnInit {
 
-  
+  myPayment=faSackDollar;
+  myDenyPayment=faSackXmark;
+
+  selectedOption: string = ''
  // paymentAmount:number;
   public currentOrder:Order = new Order();
   public paymentPanelStyle:string= "panel-primary";

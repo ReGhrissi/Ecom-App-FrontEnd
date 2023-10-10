@@ -1,107 +1,42 @@
-<div>
+<div >
 
-  <app-navbar></app-navbar>
-  
-
-</div>
-
-<br>
-<br>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#"> <mat-icon>store</mat-icon> Ecom App</a>
+    <div > 
+        <div >
+          <app-navbar (Selected_Products)= "onSelectedProducts()"
+                      (products_Promo) = "OnProductsPromo()"
+                      (products_Dispo) = "onProductsDispo()"
+                      (Log_Out) = "onLogout()"
+                      (Log_In) = "onLogin()"
+          >
+          </app-navbar>
+        </div>
     </div>
 
-    <ul class="nav navbar-nav">
+    <div class="flex">
 
-      <li class="active">
-          
-          <a  class="clickable" (click)="onSelectedProducts()" > <span><mat-icon>home</mat-icon> Acceuil</span></a>
-        
-      </li>
-
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Produits
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a (click)="OnProductsPromo()" class="clickable">En Promotion</a></li>
-          <li><a (click)="onProductsDispo()" class="clickable">Disponibles</a></li>
-        </ul>
-      </li>
-
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Catalogue
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a routerLink="/categories" class="clickable">Gestion des catégories</a></li>
-          <li><a routerLink="/products" class="clickable">Gestion des produits</a></li>
-        </ul>
-      </li>
-      
-      <li *ngIf="authService.isAuth()"><a routerLink="/caddy" class="clickable">Mes Produits</a> </li>
-      
-    </ul>
-
-    <ul *ngIf="!authService.isAuth()" class=" nav navbar-nav pull-right">
-      <li>
-        <a (click)="onLogin()"class="btn">
-          Login
-          <span class="glyphicon glyphicon-log-in"></span>
-          
-        </a>
-      </li>
-    </ul>
-    <ul class=" nav navbar-nav pull-right">
-      <li >
-        <a routerLink="/caddy"> <span> Panier  <mat-icon>shopping_cart </mat-icon> </span> ({{panierService.myCaddy.items.size}})  </a>
-      </li>
-      <li *ngIf="authService.isAuth()">
-       <a> <span><mat-icon>account_circle</mat-icon> {{authService.userAuthenticated.username | json }} </span> </a>
-    </li>
-      <li *ngIf="authService.isAuth()">
-        <a (click)="onLogout()"class="btn">
-          <span class="glyphicon glyphicon-log-out"></span>
-          Logout
-        </a>
-      </li>
-    </ul>
-
-  </div>
-</nav>
+        <div class="w-1/5">
+          <app-sidebar  [_Categories] = "categories"
+                        [Current_Category] = "currentCategory"
+                        (Products_By_Cat) = "getProductsByCat($event)"
+          >
+          </app-sidebar>
+        </div>
 
 
-<div class="container">
-  
-  <div class="col-md-2">
+          <div class=" w-4/5">
+            <br>
+            <router-outlet>
 
-    <ul *ngIf="categories" class="list-group">
-          <li   [ngClass]="c==currentCategory?'active':''"  (click)="getProductsByCat(c)"
-          *ngFor="let c of categories._embedded.categories"  class="list-group-item clickable">
+            </router-outlet>
 
-               {{c.name}}
-          </li>
+          </div>
 
-    </ul>
+    </div>
 
-  </div>
+    <br>
+    <br>
 
-  <div class="col-md-10">
-
-    <router-outlet>
-
-    </router-outlet>
-
-  </div>
-
-
-
+    <!--
+    <app-footer></app-footer>
+    -->
 </div>
-
-<br>
-<br>
-
-<!--
-<app-footer></app-footer>
--->

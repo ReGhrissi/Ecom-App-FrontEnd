@@ -1,152 +1,213 @@
 
-<div class="panel {{mainPanelStyle}}">
+<div >
 
     <div class="panel-heading">Récapitulatif sur votre commande</div>
 
-    <div class="panel-body" *ngIf="orderService.order.id">
-
-        <button class="btn btn-success" (click)="onPayOrder()" >Passer au paiment</button>
-
-        <button class="btn btn-danger pull-right" (click)="onCancel()" >Annuler la commande</button>
-
-    </div>
-
-    <div class="panel-body" *ngIf="orderService.order.id!=0">
-        <br>
-        <div class="panel panel-primary">
-
-            <div class="panel-heading"> Détail de la commande :</div>
-            <div class="panel-body">
-
-                <table  class="table table-striped">
-
-                    <thead>
-                        <tr>
-                        <th>Numéro de Commande</th>
-                        <th>Date de la commande</th>
-                        <th>Montant à payer</th>
-                        </tr>
-                    </thead>
-        
-                    <tbody>
-                        <tr>
-                        <td>{{orderService.order.id}}</td>
-                        <td>{{orderService.order.date}}</td>
-                        <td>{{orderService.getTotal()|number:'0.2'}}</td>
-                        </tr>
-                    </tbody>
-                    <br>
-            
-                </table>
-
-            </div>
-        </div>
-
-
-    </div>
-
-    
-    <div class="panel-body">
-
-        <div class="panel {{clientPanelStyle}}">
-
-            <div class="panel-heading">Informations du client :</div>
-
-            <div class="panel-body">
-
-                <div class="col-md-5">
-
-                    <div class="form-group">
-                        <label>Nom du Client :</label>
-                        <br>
-                        <p>{{orderService.order.client.name}}</p>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="form-group">
-                        <label>Adresse Client :</label>
-                        <br>
-                        <p>{{orderService.order.client.address}}</p>
-                    </div>
-            </div>
-    
-            <div class="col-md-5">
-                    <div class="form-group">
-                        <label>Téléphone Client :</label>
-                        <br>
-                        <p>{{orderService.order.client.phoneNumber}}</p>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="form-group">
-                        <label>Email Client:</label>
-                        <br>
-                        <p>{{orderService.order.client.email}}</p>
-                    </div>
-    
-            </div>
-
-            </div>
-        </div>
-
-
-        <br>
-  
-    </div>
-
     <br>
-    <div class="panel-body">
+<!----------------------------------------------------------------------->
+    
+    <div *ngIf="orderService.order.id!=0" class="relative overflow-x-auto shadow-md sm:rounded-lg"> 
 
-        <div class="panel {{productsPanelStyle}}">
-            <div class="panel-heading"> Les produits de la commande :</div>
-
-            <div class="panel-body">
-                <table  class="table table-striped">
-
-                    <thead>
-                        <tr>
-                        <th>ID</th>
-                        <th>Désignation</th>
-                        <th>Quantité</th>
-                        <th>Prix</th>
-                        </tr>
-                    </thead>
+        <div>
+            Détail de la commande :
+        </div>
+        <br>
         
-                    <tbody>
-                        <tr *ngFor="let p of orderService.order.products">
-                        <td>{{p.id}}</td><td>{{p.name}}</td>
-                        <td>{{p.quantity|number:'0.2'}}</td>
-                        <td>{{p.price|number:'0.2'}}</td>
-                        </tr>
-                    </tbody>
-                    <br>
-                    <thead>
-                        <tr>
-                        <td colspan="3">Total :</td>
-                        <td>{{orderService.getTotal()|number:'0.2'}}</td>
-                        </tr>
-                    </thead>
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Numéro de Commande
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Date de la Commande
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Montant à payer
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                <tr   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white w-32 p-4">
+                        {{orderService.order.id}}
+                    </td>
+                    
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{orderService.order.date}}
+                    </td>
+                    
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{orderService.getTotal()|number:'0.2'}}
+                    </td>
+                
+                </tr>
+
+            </tbody>
+      
+        </table>
+    </div>
+    <br>
+    <div *ngIf="orderService.order.id">
+
+        <div  class="flex">
+            <button (click)="onPayOrder()" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <fa-icon  [icon]="myCard"></fa-icon>
+                <span > Passer au paiment</span>
+            </button>
+        </div>
+        <br>
+        <div  class="flex">
+            <button (click)="onCancel()" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <fa-icon  [icon]="myCancel"></fa-icon>
+                <span > Annuler la commande</span>
+            </button>
+        </div>
+    </div>
+<!----------------------------------------------------------------------------------------------------------------------------->
+    <br>
+
+    <div id="alert-additional-content-5" class="p-4 border border-gray-300 rounded-lg bg-gray-50 dark:border-gray-600 dark:bg-gray-800" role="alert">
         
-                </table>
+        <div class="flex items-center">
+          <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <span class="sr-only">Info</span>
+          <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Informations du client </h3>
+        </div>
+        <br>
 
-            </div>
+        <div class="flex items-center">
+            <fa-icon [icon]="myClinet"></fa-icon>
+            <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              
+            </svg>
+            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Nom du client :</h3> 
+            <span >{{orderService.order.client.name}}</span>
+            <div></div>
+        </div>
+          
+        <div class="flex items-center">
+            <fa-icon [icon]="myaddress"></fa-icon>
+            <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                
+            </svg>
+            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Adresse Clinet :</h3>
+            <span>{{orderService.order.client.address}}</span>
+        </div>
 
+        <div class="flex items-center">
+                <fa-icon [icon]="myPhone"></fa-icon>
+                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  
+                </svg>
+                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Téléphone :</h3>
+                <span >{{orderService.order.client.phoneNumber}}</span>
+        </div>
 
+        <div class="flex items-center">
+            <fa-icon [icon]="myEmail"></fa-icon>
+            <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    
+            </svg>
+            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Email :</h3>
+            <span >{{orderService.order.client.email}}</span>
+        </div>
+    </div>
+
+<!--------------------------------------------------------------------------------------------->
+    <br>
+    
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg"> 
+
+        <div>
+            Les produits de la commande :
         </div>
         
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
-        
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        <span class="sr-only">Image</span>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Produit
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Quantité
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Prix
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                <tr  *ngFor="let p of orderService.order.products" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    
+                    <td class="w-32 p-4">
+                        <img src="{{this.catService.host+'/photoProduct/'+p.id}}" alt="Apple Watch">
+                    </td>
+                    
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{p.name}}
+                    </td>
+                    
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{p.quantity}}
+                    </td>
+                    
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{p.price | number:'0.2'}}
+                    </td>
+                
+                </tr>
+
+            </tbody>
+            <br>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr >     
+                    <th scope="col" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                         Total :
+                    </th>   
+                    <th scope="col" class="px-6 py-3">
+                    </th> 
+                    <th scope="col" class="px-6 py-3">
+                    </th>
+                    <th scope="col" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{orderService.getTotal()|number:'0.2'}}
+                    </th>
+                </tr>
+            </thead>
+        </table>
     </div>
 
 
+<!---------------------------------------------------------------------------------------->
+    <br>
 
+    <div *ngIf="orderService.order.id==0">
 
-    <div class="panel-body" *ngIf="orderService.order.id==0">
-
-        <button class="btn btn-success" (click)="onOrder()" >Confirmer la commande</button>
-
-        <button class="btn btn-danger pull-right" (click)="onBack()" >Retour</button>
-
+        <div  class="flex">
+            <button (click)="onOrder()" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <fa-icon  [icon]="myValid"></fa-icon>
+                <span > Confirmer la commande</span>
+            </button>
+        </div>
+        <br>
+        <div  class="flex">
+            <button (click)="onBack()" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <fa-icon  [icon]="myBack"></fa-icon>
+                <span > Retour</span>
+            </button>
+        </div>
     </div>
 
 </div>

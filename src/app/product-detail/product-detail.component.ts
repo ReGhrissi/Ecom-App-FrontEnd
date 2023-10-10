@@ -4,6 +4,10 @@ import { CatalogueService } from '../services/catalogue.service';
 import { AuthentificationService } from '../services/authentification.service';
 import { Product } from '../_Model/product.model';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { faBullhorn, faCartPlus, faCheckCircle, faSplotch, faUpload, faUserPen, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {} from '@fortawesome/free-regular-svg-icons';
+import {} from '@fortawesome/free-brands-svg-icons';
+import { PanierService } from '../services/panier.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,6 +19,13 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 export class ProductDetailComponent implements OnInit {
 
+  myEdit=faUserPen;
+  myUpload=faUpload;
+  myCancel=faXmark;
+  myAddToCart = faCartPlus;
+  myAvailable= faCheckCircle;
+  myNew = faSplotch;
+  myPromo = faBullhorn;
 
   currentProduct : any;
   selectedFiles : any ;
@@ -28,7 +39,8 @@ export class ProductDetailComponent implements OnInit {
                 private router:Router,
                 private route:ActivatedRoute,
                 public catalService:CatalogueService,
-                public authService:AuthentificationService  
+                public authService:AuthentificationService,
+                public panierService:PanierService  
             
               )
     {
@@ -95,6 +107,16 @@ export class ProductDetailComponent implements OnInit {
             this.selectedFiles =undefined;
     
   }
+
+  onCancelUploadPhoto()
+  {
+    this.editPhoto=false;
+  }
+
+  onCancelUpdateProduct()
+  {
+    this.mode=0;
+  }
 /** 
   onAddProductToCaddy(p:Product) {
     if(!this.authService.isAuthenticated()){
@@ -138,6 +160,20 @@ onUpdateProduct(data :any)
       console.log(err);
     })
 }
+
+
+  // Methode qui permet d'ajouter un produit au panier
+  onAddProductToCaddy(p:Product)
+  {
+    /**
+        if(!this.authService.isAuthenticated)
+        {
+          this.router.navigateByUrl("/login");
+        }
+    */
+        this.panierService.addProduct(p);
+  
+  }
 
 
 }

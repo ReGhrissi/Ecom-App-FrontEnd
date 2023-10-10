@@ -9,12 +9,21 @@ import { CatalogueService } from '../services/catalogue.service';
 import { Product } from '../_Model/product.model';
 import { PanierService } from '../services/panier.service';
 
+import { faBullhorn, faCartPlus, faCheckCircle, faSplotch } from '@fortawesome/free-solid-svg-icons';
+import {} from '@fortawesome/free-regular-svg-icons';
+import {} from '@fortawesome/free-brands-svg-icons';
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
+
+  myAddToCart = faCartPlus;
+  myAvailable= faCheckCircle;
+  myNew = faSplotch;
+  myPromo = faBullhorn;
 
   products :any;
   public currentProduct : any;
@@ -162,17 +171,5 @@ export class ProductsComponent implements OnInit {
         this.router.navigateByUrl("product-detail/"+url);
     }
 
-  // Methode qui permet d'ajouter un produit au panier
-    onAddProductToCaddy(p:Product)
-    {
-      /**
-          if(!this.authService.isAuthenticated)
-          {
-            this.router.navigateByUrl("/login");
-          }
-      */
-          this.panierService.addProduct(p);
-    
-    }
 
 }

@@ -5,6 +5,11 @@ import { PanierService } from '../services/panier.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs';
+import { CatalogueService } from '../services/catalogue.service';
+
+import { faCartShopping, faCircleUser, faRightToBracket, faRightFromBracket, faUserTie, faLocationDot, faMobileScreen, faEnvelope, faCheck, faArrowLeft, faCreditCard, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {} from '@fortawesome/free-regular-svg-icons';
+import {} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-order',
@@ -12,6 +17,15 @@ import { catchError } from 'rxjs';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+
+  myClinet=faUserTie;
+  myaddress=faLocationDot;
+  myPhone=faMobileScreen;
+  myEmail=faEnvelope;
+  myValid=faCheck;
+  myBack=faArrowLeft;
+  myCard=faCreditCard;
+  myCancel=faXmark;
 
   public mode:number=0;
   
@@ -25,7 +39,8 @@ export class OrderComponent implements OnInit {
           public orderService:OrderService,
           private authService:AuthentificationService,
           public panierService:PanierService,
-          private router:Router
+          private router:Router,
+          public catService:CatalogueService
         ) 
         { }
 

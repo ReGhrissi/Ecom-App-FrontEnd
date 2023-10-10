@@ -7,6 +7,10 @@ import { AuthentificationService } from '../services/authentification.service';
 import { ProductItem } from '../_Model/product-item.model';
 import { PanierService } from '../services/panier.service';
 
+import { faBasketShopping, faBullhorn, faCartPlus, faCheckCircle, faSplotch, faTrash, faUpload, faUserPen, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {} from '@fortawesome/free-regular-svg-icons';
+import {} from '@fortawesome/free-brands-svg-icons';
+
 @Component({
   selector: 'app-caddy',
   templateUrl: './caddy.component.html',
@@ -14,6 +18,9 @@ import { PanierService } from '../services/panier.service';
 })
 
 export class CaddyComponent implements OnInit {
+
+  myDelete=faTrash;
+  myOrder=faBasketShopping;
 
   //public Items : any
     public caddy : Caddy
@@ -52,12 +59,10 @@ export class CaddyComponent implements OnInit {
 
 //---------------------------------------------- ici -----------------------
 
-getTotal() {
-  return this.panierService.getTotal();
-}
-
-
-
+      getTotal() 
+      {
+        return this.panierService.getTotal();
+      }
 
       getUserCaddy()  :Caddy
       {

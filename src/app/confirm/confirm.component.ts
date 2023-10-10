@@ -3,6 +3,7 @@ import { OrderService } from '../services/order.service';
 import { PaymentService } from '../services/payment.service';
 import { Payment } from '../_Model/payment.model';
 import { Order } from '../_Model/order.model';
+import { faArrowLeft, faTruck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-confirm',
@@ -11,6 +12,8 @@ import { Order } from '../_Model/order.model';
 })
 export class ConfirmComponent implements OnInit {
 
+    myOrderStatus=faTruck;
+    myBack=faArrowLeft;
     constructor(
                 public paymentService:PaymentService,
                 public orderService:OrderService

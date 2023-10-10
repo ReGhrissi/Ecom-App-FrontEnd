@@ -59,8 +59,14 @@ export class CatalogueService {
         }
 
     // methode qui permet la modification d'un produit    
-       public patchResource(url:any,data:any){
+      public patchResource(url:any,data:any){
+
         return this.http.patch(url,data);
+      }
+
+      getNumberOfProductsForCategory(categoryId: number): any {
+  
+            return this.http.get<number>(`/categories/${categoryId}/products/count`);
       }
 
 }
