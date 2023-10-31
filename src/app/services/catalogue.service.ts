@@ -33,6 +33,10 @@ export class CatalogueService {
             
         }
 
+        public postRessource(url:any, data:any)
+        {
+            return this.http.post(this.host+url,data);
+        }
    
       
     // methode qui permet la recuperation d'un produit

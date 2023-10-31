@@ -1,57 +1,127 @@
-<br>
-<br>
+
 <div>
 
     
-<form>
-    <div class="mb-6">
-      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-      <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required>
-    </div>
-    <div class="mb-6">
-      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-      <input data-popover-target="popover-password" data-popover-placement="bottom" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-      <div data-popover id="popover-password" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
-          <div class="p-3 space-y-2">
-              <h3 class="font-semibold text-gray-900 dark:text-white">Must have at least 6 characters</h3>
-              <div class="grid grid-cols-4 gap-2">
-                  <div class="h-1 bg-orange-300 dark:bg-orange-400"></div>
-                  <div class="h-1 bg-orange-300 dark:bg-orange-400"></div>
-                  <div class="h-1 bg-gray-200 dark:bg-gray-600"></div>
-                  <div class="h-1 bg-gray-200 dark:bg-gray-600"></div>
-              </div>
-              <p>It’s better to have:</p>
-              <ul>
-                  <li class="flex items-center mb-1">
-                      <svg class="w-3.5 h-3.5 mr-2 text-green-400 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
-                      </svg>
-                      Upper & lower case letters
-                  </li>
-                  <li class="flex items-center mb-1">
-                      <svg class="w-3 h-3 mr-2.5 text-gray-300 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                      </svg>
-                      A symbol (#$&)
-                  </li>
-                  <li class="flex items-center">
-                      <svg class="w-3 h-3 mr-2.5 text-gray-300 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                      </svg>
-                      A longer password (min. 12 chars.)
-                  </li>
-              </ul>
-      </div>
-      <div data-popper-arrow></div>
-  </div>
-    </div>
-    <div class="flex items-start mb-6">
-      <div class="flex items-center h-5">
-        <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required>
-      </div>
-      <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
-    </div>
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-  </form>
+  <div class="w-full max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+     
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-6" >
   
-</div>
+          <h5 class="text-xl font-medium text-gray-900 dark:text-white">Créer votre compte </h5>
+  
+          <div class="grid">
+            <div  class="form-group relative">
+    
+              <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre prénom</label>
+
+              <input 
+                  formControlName="firstName"
+                  class="form-control"
+                  [ngClass]="{'error-input': (First_Name?.touched || First_Name?.dirty) && !First_Name?.valid}"
+                  type="text" id="firstName"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                  placeholder="Prénom">
+
+                  <div class="text-[11px] text-red-500">
+                    <div *ngIf="First_Name?.hasError('required') && First_Name?.touched" >* Ce champs est obligatoire !</div>
+                  
+                </div>
+
+            </div>
+
+            <div  class="form-group relative">
+    
+              <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Votre nom </label>
+
+              <input 
+                  formControlName="lastName"
+                  class="form-control"
+                  [ngClass]="{'error-input': (Last_Name?.touched || Last_Name?.dirty) && !Last_Name?.valid}"
+                  type="text" id="lastName"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                  placeholder="Nom">
+
+                  <div class="text-[11px] text-red-500">
+                    <div *ngIf="Last_Name?.hasError('required') && Last_Name?.touched" >* Ce champs est obligatoire !</div>
+                  
+                </div>
+
+            </div>
+          </div>
+          <div  class="form-group">
+  
+              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Votre Email</label>
+  
+              <input 
+                  formControlName="email"
+                  class="form-control"
+                  [ngClass]="{'error-input': (Email?.touched || Email?.dirty) && !Email?.valid}"
+                  type="email" id="email"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                  placeholder="name@exemple.com">
+
+                  <div class="text-[11px] text-red-500">
+                    <div *ngIf="Email?.hasError('required') && Email?.touched" >* Ce champs est obligatoire !</div>
+                    <div *ngIf="Email?.invalid && Email?.dirty" >* Ce champ doit etre un Email !</div>
+                </div>
+  
+          </div>
+  
+          
+
+              <div class="form-group">
+
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Saisir un mot de passe </label>
+
+                    <input formControlName="password" 
+                    class="form-control"
+                    [ngClass]="{'error-input': (Password?.touched || Password?.dirty) && !Password?.valid }"
+                    type="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+              
+                    <div class="text-[11px] text-red-500">
+                      <div *ngIf="Password?.hasError('required') && Password?.touched" >* Ce champs est obligatoire !</div>
+                      <div *ngIf="Password?.invalid && Password?.dirty" >* Au moins 8 char !</div>
+                    </div>
+              </div>
+              
+              <div class="form-group">
+
+                  <label for="password_conf" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Confirmez votre mot de passe </label>
+                  
+                  <input formControlName="password_conf"
+                  class="form-control"
+                  [ngClass]="{'error-input': (Password_Conf?.touched || Password_Conf?.dirty) && !Password_Conf?.valid }"
+                  type="password" id="password_conf" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                
+                  <div class="text-[11px] text-red-500">
+                    <div *ngIf="Password_Conf?.hasError('required') && Password_Conf?.touched" >* Ce champs est obligatoire !</div>
+                    <div *ngIf="(Password_Conf?.value != Password?.value) && Password_Conf?.dirty" >* Champs non identiques !</div>
+                  </div>
+              
+              </div>
+
+              <div class="flex items-start">
+                  <div class="flex items-center h-5">
+                    <input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <label for="terms" class="font-light text-gray-500 dark:text-gray-300">I accept the <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
+                  </div>
+              </div>
+ 
+            <button [disabled]="!registerForm.valid" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Créer un compte
+            </button>
+            <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                Déja inscris ? <a routerLink="/login" class="text-blue-700 hover:underline dark:text-blue-500">Se connecter </a>
+            </div>
+      </form>
+  </div>
+   
+  
+  </div>
+
+  <br> Dirty : {{registerForm.dirty}} 
+<br> Touched : {{registerForm.touched}}
+<br> Valide : {{registerForm.valid}}
+<br> Value : {{registerForm.value | json}}
+  

@@ -1,6 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AuthentificationService } from '../services/authentification.service';
 import { Router } from '@angular/router';
+import { Modal } from 'flowbite'
+import type { ModalOptions, ModalInterface } from 'flowbite'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { faSubscript } from '@fortawesome/free-solid-svg-icons';
+import { TokenService } from '../services/token.service';
+import {Observable, catchError} from 'rxjs';
+import { Location } from '@angular/common';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -9,15 +17,85 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService:AuthentificationService, private router:Router) // injectiond e dependance
-   { }
+  constructor(private authService:AuthentificationService, 
+    private router:Router,
+    private tokenService : TokenService,
+    private accountService:AccountService,
+    private location :Location
+   ) // injectiond e dependance
+  { }
+
+  modalVisible: boolean = false;
+
+  loginForm = new FormGroup({
+
+        email: new FormControl('',[Validators.required,Validators.email]),
+        password: new FormControl( '',[Validators.required,Validators.minLength(3)])
+        
+  });
+
+  get Email()
+  {
+    return this.loginForm.get('email');
+  }
+  get Password()
+  {
+    return this.loginForm.get('password');
+  }
+
+
 
   
 
   ngOnInit(): void {
+
+    /**
+    const modalButton = this.el.nativeElement.querySelector('[data-modal-target="authentication-modal"]');
+    const modal = this.el.nativeElement.querySelector('#authentication-modal');
+
+    modalButton.addEventListener('click', () => {
+      this.renderer.addClass(modal, 'active'); // Ajoutez une classe pour afficher le modal
+    });
+
+    modal.addEventListener('click', () => {
+      this.renderer.removeClass(modal, 'active'); // Supprimez la classe pour masquer le modal
+    });
+
+     */
   }
 
+  showModal() {
+    this.modalVisible = true;
+  }
+  
+  hideModal() {
+    this.modalVisible = false;
+  }
 
+  onLogin()
+  {
+    const email = this.loginForm.get('email')?.value || '';
+    const password = this.loginForm.get('password')?.value || '';
+
+    this.authService.onLogin( {email, password} ).pipe(
+        catchError (err => {
+          console.log(err);
+
+          throw err;    
+        })
+      ).subscribe((res : any)=> {
+      
+          this.handleResponse(res);
+      });
+  }
+
+  handleResponse(data : any) {
+    this.tokenService.handle(data);
+    this.accountService.changeStatus(true);
+    this.location.back()
+  }
+
+  /*
   // Methode qui permet de faire un loginng
   onLogin(dataForm : any)
   {
@@ -30,6 +108,7 @@ export class LoginComponent implements OnInit {
     }
 
   }
+  */
 
   
 }

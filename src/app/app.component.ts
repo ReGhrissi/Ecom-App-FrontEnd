@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -9,6 +9,8 @@ import { CatalogueService } from './services/catalogue.service';
 import { PanierService } from './services/panier.service';
 import { CaddyComponent } from './caddy/caddy.component';
 import { initFlowbite } from 'flowbite';
+import { TokenService } from './services/token.service';
+import { AccountService } from './services/account.service';
 
 
 
@@ -28,9 +30,12 @@ export class AppComponent implements OnInit{
 
   constructor (private catService:CatalogueService, 
                private router:Router,
+               private activeRoute:ActivatedRoute,
                public authService:AuthentificationService,
                public panierService:PanierService,
-               public caddyComponent :CaddyComponent
+               public caddyComponent :CaddyComponent,
+               private tokenService:TokenService,
+               private accountService : AccountService
 
                ) { }
 
@@ -40,6 +45,8 @@ export class AppComponent implements OnInit{
 
     this.authService.loadAuthUserFromLocalStorage();
     this.getCategories();
+
+
 /**
     if(this.authService.isAuthenticated) 
     {
@@ -59,7 +66,7 @@ export class AppComponent implements OnInit{
       {
           this.catService.getRessource("/categories")
               .subscribe({
-                  next: data => {this.categories=data;},
+                  next: data => {this.categories=data;console.log("all categories:"+data)},
                   error: err => console.error(err)
               });
       }
@@ -96,7 +103,8 @@ export class AppComponent implements OnInit{
   // methode qui permet de faire un LogOut (suppression du tocken)
   onLogout()
   {
-    this.authService.removeTokenFromLocalStorage();
+    this.tokenService.remove();
+    this.accountService.changeStatus(false);
     this.router.navigateByUrl('/login');
   }
 
@@ -106,6 +114,9 @@ export class AppComponent implements OnInit{
     this.router.navigateByUrl('/login');
   }
 
-
+  onJumpToSection(section : any)
+  {
+      document.getElementById(section)?.scrollIntoView({behavior:'smooth'})
+  }
 
 }

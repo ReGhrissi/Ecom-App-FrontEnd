@@ -8,6 +8,8 @@ import { faBullhorn, faCartPlus, faCheckCircle, faSplotch, faUpload, faUserPen, 
 import {} from '@fortawesome/free-regular-svg-icons';
 import {} from '@fortawesome/free-brands-svg-icons';
 import { PanierService } from '../services/panier.service';
+import { Icons } from '../_Plugins/icons.model';
+
 
 @Component({
   selector: 'app-product-detail',
@@ -19,13 +21,16 @@ import { PanierService } from '../services/panier.service';
 
 export class ProductDetailComponent implements OnInit {
 
-  myEdit=faUserPen;
-  myUpload=faUpload;
-  myCancel=faXmark;
-  myAddToCart = faCartPlus;
-  myAvailable= faCheckCircle;
-  myNew = faSplotch;
-  myPromo = faBullhorn;
+  icons : Icons = new Icons();
+
+  myEdit=this.icons.myEdit;
+  myUpload=this.icons.myUpload;
+  myCancel=this.icons.myCancel;
+  myAddToCart = this.icons.myAddToCart;
+  myAvailable= this.icons.myAvailable;
+  myPromo=this.icons.myPromo;
+  myNewPr = this.icons.myNewPr;
+
 
   currentProduct : any;
   selectedFiles : any ;
@@ -50,7 +55,8 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit(): void {
     
     let url=atob(this.route.snapshot.params['url']);
-    //console.log(url);
+    console.log("aaaaaaaaaaa"+url);
+
     this.catalService.getProduct(url)
        .subscribe({
            next: data => {this.currentProduct=data;},
@@ -152,6 +158,8 @@ onEditProduct()
 onUpdateProduct(data :any) 
 {
   let url=this.currentProduct._links.self.href;
+
+  console.log("patch product :"+url)
   this.catalService.patchResource(url,data)
     .subscribe(d=>{
       this.currentProduct=d;

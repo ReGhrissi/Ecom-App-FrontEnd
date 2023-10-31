@@ -1,0 +1,14 @@
+.clickable
+{
+    cursor: pointer;
+}
+ .active-link
+ {
+    color: rgb(26 86 219) !important;
+ }
+/*
+.icon
+{
+    height: 100px;
+    width: 100px;
+}*/

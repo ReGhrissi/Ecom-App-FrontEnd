@@ -3,6 +3,8 @@ import {faAngleRight, faListCheck, faUsers} from '@fortawesome/free-solid-svg-ic
 import {} from '@fortawesome/free-regular-svg-icons';
 import { faProductHunt } from '@fortawesome/free-brands-svg-icons';
 import { CatalogueService } from '../services/catalogue.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Icons } from '../_Plugins/icons.model';
 
 
 
@@ -13,10 +15,14 @@ import { CatalogueService } from '../services/catalogue.service';
 })
 export class SidebarComponent implements OnInit{
 
-  myAngle = faAngleRight;
-  myCatManage=faListCheck;
-  myProdManage=faProductHunt;
-  myUsersManage=faUsers
+  icons : Icons = new Icons();
+
+  myAngle= this.icons.myAngle;
+  myCatManage= this.icons.myCatManage;
+  myProdManage=this.icons.myProdManage;
+  myUsersManage=this.icons.myUsersManage;
+  myOrdersManager = this.icons.myOrdersManage;
+  
   
   @Input() _Categories : any;
   @Input() Current_Category : any;
@@ -25,12 +31,12 @@ export class SidebarComponent implements OnInit{
   
   numberOfProducts:number=0;
   
-  constructor(public catService:CatalogueService)
+  constructor(public catService:CatalogueService, public router:Router)
   {
 
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
     
     // pour afficher le nombre des produits par categorie 
     this.getCount()
@@ -42,14 +48,19 @@ export class SidebarComponent implements OnInit{
     this.Products_By_Cat.emit(category);
   }
 
+  getAllProduct()
+  {
+    this.router.navigateByUrl('/products/0/0');
+  }
+
   getCount()
   {
     
     this.catService.getNumberOfProductsForCategory(1)
-    .subscribe((count: number) => {
-      console.log(count)
-        this.numberOfProducts = count;
-});
+        .subscribe((count: number) => {
+          console.log(count)
+            this.numberOfProducts = count;
+      });
   }
   
 

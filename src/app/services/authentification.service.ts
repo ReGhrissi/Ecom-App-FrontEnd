@@ -2,6 +2,7 @@ import { Injectable, booleanAttribute } from '@angular/core';
 
 import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { TokenService } from './token.service';
 
 
 
@@ -11,7 +12,7 @@ import {Observable} from 'rxjs';
 export class AuthentificationService {
 
 
-  public host:string="https://localhost:8090";
+  public host:string="http://localhost:8090";
 
    // Utilisateurs pour le Test
    private usres=[
@@ -28,7 +29,7 @@ export class AuthentificationService {
   public isAuthenticated:any; // modifié ????
   public userAuthenticated:any;
 
-  constructor( private http:HttpClient ) { }
+  constructor( private httpClinet:HttpClient, private tokenService : TokenService ) { }
 
   // Methode qui permet de faire un Login
       public login(username:string,password:string)
@@ -56,6 +57,16 @@ export class AuthentificationService {
                     this.isAuthenticated=false;
                     this.userAuthenticated=undefined;
                 }
+      }
+
+      public onLogin(data : {email:string , password:string})
+      {
+        return this.httpClinet.post(this.host+"/users/login",data)
+      }
+
+      public onRegister(data : {firstName: string,lastName :string, email:string , password:string})
+      {
+        return this.httpClinet.post(this.host+"/users",data)
       }
 
       public isAuth()

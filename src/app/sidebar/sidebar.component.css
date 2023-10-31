@@ -2,3 +2,11 @@
 {
     cursor: pointer;
 }
+.active-cat
+{
+    color : rgb(26 86 219) !important;
+}
+.active-link
+{
+   color: rgb(26 86 219) !important;
+}

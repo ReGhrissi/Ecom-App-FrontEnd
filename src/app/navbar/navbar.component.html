@@ -6,188 +6,172 @@
 
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       
-        <a href="#" class="flex items-center">
-         <!--  <mat-icon class="h-8 mr-3">store</mat-icon> --> 
-            
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Ecom APP</span>
-        </a>
-            <!------------------------------------------------------------>
-  
-
-
-            <!--------------------------------------------------------------------->
+              <a href="#" class="flex items-center">
+              <!--  <mat-icon class="h-8 mr-3">store</mat-icon> --> 
+                  
+                  <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Ecom APP</span>
+              </a>
+                  <!------------------------------------------------------------>
         
-      
-        <div *ngIf="authService.isAuth()" class="flex items-center md:order-2">
 
-            <div class="flex items-center">
 
-                <button type="button">
-                    <a routerLink="/caddy"><span>Panier </span>  <fa-icon [icon]="myCartShopping"></fa-icon> ({{panierService.myCaddy.items.size}})  </a>
-                </button>
-            </div>
-      
-            <button type="button" 
-                    class="flex mr-3 text-sm bg-wight-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" 
-                    id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-      
-              <span class="sr-only">Open user menu</span>
-      
-              <fa-icon class="fa-solid fa-circle-user w-8 h-8 rounded-full" alt="user photo" [icon]="myUser"></fa-icon>
-           <!--   <i class="fa-solid fa-circle-user w-8 h-8 rounded-full" alt="user photo"></i> -->
-            </button>
-      
-            <!-- Dropdown menu -->
-            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 
-                        dark:divide-gray-600" id="user-dropdown">
-              <div class="px-4 py-3">
-                <span class="block text-sm text-gray-900 dark:text-white">{{authService.userAuthenticated.username | json }}</span>
-                <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{authService.userAuthenticated.roles | json }}</span>
-              </div>
-              <ul class="py-2" aria-labelledby="user-menu-button">
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200
-                                     dark:hover:text-white">Dashboard</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 
-                                     dark:hover:text-white">Settings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 
-                                     dark:hover:text-white">Earnings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200
-                                     dark:hover:text-white">Sign out</a>
-                </li>
-              </ul>
-            </div>
-      
-            <button data-collapse-toggle="navbar-user" type="button" 
-                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 
-                           focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                     aria-controls="navbar-user" aria-expanded="false">
-      
-              <span class="sr-only">Open main menu</span>
-      
-              <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-              </svg>
-      
-          </button>
+                  <!--------------------------------------------------------------------->
+              
+            
+                  <div  class="flex items-center md:order-2">
 
-          <div *ngIf="!authService.isAuth()" class="flex items-center">
-
-            <button type="button">
-                <a (click)="Login()"><span>Se Connecter </span>  <fa-icon [icon]="myLogin"></fa-icon>  </a>
-            </button>
-        </div>
-
-        <div *ngIf="authService.isAuth()" class="flex items-center">
-
-            <button type="button">
-                <a (click)="Logout()"><span>Se déconnecter </span>  <fa-icon [icon]="myLogout"></fa-icon>  </a>
-            </button>
-        </div>
-        </div>
-        <!-------------------------------------------------------------------------------------->
-      
-
-      
-      <!------------------------------------------------------------------------------------------->
-        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
-          
-          <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 
-                     md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <a (click)="SelectedProducts()" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded 
-                                                       md:bg-transparent md:text-blue-700 md:p-0  md:dark:text-blue-500" 
-                  aria-current="page">Acceuil</a>
-            </li>
-            <li>
-              <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700
-                                 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white
-                                 md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-            </li>
-      
-            <li *ngIf="authService.isAuth()">
-              <a routerLink="/caddy" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700
-                                 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white 
-                                 md:dark:hover:bg-transparent dark:border-gray-700">Mes produits</a>
-            </li>
-
-                  <!------------------------------------------------------------------------------------------> 
-                  <li>
-                    <button id="dropdownNavbarLink_2" data-dropdown-toggle="dropdownNavbar_2" 
-                            class="flex items-center justify-between w-full 
-                                   py-2 pl-3 pr-4  text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700
-                                   md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 
-                                   dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Produits
-                                   <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                      
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                   </svg>
+                    <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                      <span class="sr-only">Open user menu</span>
+                      <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
                     </button>
                     <!-- Dropdown menu -->
-                    <div id="dropdownNavbar_2" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg 
-                                                    shadow w-50 dark:bg-gray-700 dark:divide-gray-600">
-                        
-                      <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
-                          <li>
-                            <a (click)="ProductsPromo()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600
-                                                                dark:hover:text-white">En Promotion</a>
-                          </li>
-                          <li>
-                            <a (click)="ProductsDispo()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 
-                                                                dark:hover:text-white">Disponibles</a>
-                          </li>
+                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+                      <div class="px-4 py-3">
+                        <span class="block text-sm text-gray-900 dark:text-white"></span>
+                        <span class="block text-sm  text-gray-500 truncate dark:text-gray-400"></span>
+                      </div>
+                      <ul class="py-2" aria-labelledby="user-menu-button">
+                        <li>
+                          <a routerLink="/account" class="clickable block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            <span class="ml-0 mr-2"> <fa-icon [icon]="myAccount"></fa-icon> </span> Mon Compte 
+                          </a>
+                        </li>
+
+                        <li> 
+                          <a (click)="Logout()" class="clickable block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            <span class="ml-0 mr-2">  <fa-icon [icon]="myLogout"></fa-icon> </span> Se déconnecter 
+                          </a>
+                        </li>
                       </ul>
-                        <div class="py-1">
-                          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600
-                                             dark:text-gray-400  dark:hover:text-white">...</a>
-                        </div>
                     </div>
-                </li>
-      <!------------------------------------------------------------------------------------------> 
-            <li>
-              <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" 
-                      class="flex items-center justify-between w-full 
-                             py-2 pl-3 pr-4  text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700
-                             md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 
-                             dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Catalogue
-                             <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
+                      <span class="sr-only">Open main menu</span>
+                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                      </svg>
+                  </button>
+                </div>
+              <!-------------------------------------------------------------------------------------->
+            
+
+            
+            <!------------------------------------------------------------------------------------------->
+              <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
                 
-                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                             </svg>
-              </button>
-              <!-- Dropdown menu -->
-              <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-50 dark:bg-gray-700
-                                               dark:divide-gray-600">
+                <ul class="clickable flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 
+                          md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+
+                  <li >
+
+                    <a [routerLinkActive]="'active-link'" [routerLinkActiveOptions]="{exact: true}" routerLink="/home" class="clickable block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700
+                    md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white
+                    md:dark:hover:bg-transparent dark:border-gray-700 " 
+                        aria-current="page">Acceuil</a>
+                  </li>
+                  <li >
+                    <a [routerLinkActive]="'active-link'" routerLink="/about" class="clickable block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700
+                                      md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white
+                                      md:dark:hover:bg-transparent dark:border-gray-700 " >A propos</a>
+                  </li>
+
+                  <li>
+                      <button id="dropdownNavbarLink_2" data-dropdown-toggle="dropdownNavbar_2" 
+                              class="flex items-center justify-between w-full 
+                                    py-2 pl-3 pr-4  text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700
+                                    md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 
+                                    dark:hover:bg-gray-700 md:dark:hover:bg-transparent">No produits
+                                    <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        
+                                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                      </button>
+                      <!-- Dropdown menu -->
+                      <div id="dropdownNavbar_2" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg 
+                                                      shadow w-50 dark:bg-gray-700 dark:divide-gray-600">
+                          
+                        <ul class=" py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                            <li>
+                              <a (click)="ProductsPromo()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600
+                                                                  dark:hover:text-white"><span class="mr-2"><fa-icon [icon]="myPromo"></fa-icon></span> En Promotion</a>
+                            </li>
+                            <li>
+                              <a href="#"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 
+                                                                  dark:hover:text-white"><span class="mr-2"><fa-icon [icon]="myNewPr"></fa-icon></span> Nouveaux</a>
+                            </li>
+                            <li>
+                              <a (click)="ProductsDispo()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 
+                                                                  dark:hover:text-white"><span class="mr-2"><fa-icon [icon]="myTendancy"></fa-icon></span> Tendances</a>
+                            </li>
+                        </ul>
+                          <div class="py-1">
+                            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600
+                                              dark:text-gray-400  dark:hover:text-white"><span class="mr-2"><fa-icon [icon]="myFutur"></fa-icon></span> Prochainement</a>
+                          </div>
+                      </div>
+                  </li>
+
+                  <li >
+                    <a routerLink="" fragment="contact-us" class="clickable block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700
+                                      md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white
+                                      md:dark:hover:bg-transparent dark:border-gray-700 " >Contactez-nous</a>
+                  </li>
+            
+                  <li *ngIf="currentUser" >
+                      <a [routerLinkActive]="'active-link'" routerLink="/history-orders" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700
+                                      md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white 
+                                      md:dark:hover:bg-transparent dark:border-gray-700">Mes Commandes </a>
+                  </li>
                   
-                <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
-                    <li>
-                      <a routerLink="/categories" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Gestion des Catégories</a>
-                    </li>
-                    <li>
-                      <a routerLink="/products" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Gestion des Produits</a>
-                    </li>
-                </ul>
-                  <div class="py-1">
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 
-                                       dark:hover:text-white">...</a>
-                  </div>
+                  <li class="relative">
+                    
+
+                      <a [routerLinkActive]="'active-link'" routerLink="/caddy" class="mr-2 block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700
+                                                     md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white 
+                                                     md:dark:hover:bg-transparent dark:border-gray-700">
+                                                      Panier <span class=" ml-1"> <fa-icon [icon]="myCartShopping"></fa-icon> </span>
+                        
+                                
+                      </a>
+                     
+                      <span class="absolute  inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2
+                         border-white rounded-full -top-2 -right-2 dark:border-gray-900">{{panierService.myCaddy.items.size}}
+                    </span> 
+ <!-----------------------
+                    <button type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                        <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                        <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                      </svg>
+                      <span class="sr-only">Notifications</span>
+                      <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">20</div>
+                    </button>
+                
+                  </li>
+             ----------------------------------------------------------------------------------------------> 
+
+                  <li *ngIf="!currentUser">
+
+                            <a  [routerLinkActive]="'active-link'" routerLink="/login" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700
+                            md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white 
+                            md:dark:hover:bg-transparent dark:border-gray-700">
+                            Se Connecter  <span class="ml-1">  <fa-icon [icon]="myLogin"></fa-icon></span>  </a>
+
+                  </li>
+            <!------------------------------------------------------------------------------------------> 
+                 
+            <!------------------------------------------------------------------------------------------------------------->
+
+              
+            <!------------------------------------------------------------------------------------------------------------->
+                    
+              </ul>
+
+
+            
+            
+                
               </div>
-          </li>
-      <!------------------------------------------------------------------------------------------------------------->
-          </ul>
-
-
-      
-      
-          
-        </div>
-      
+            
        
       
         </div>
