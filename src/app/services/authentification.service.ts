@@ -3,6 +3,8 @@ import { Injectable, booleanAttribute } from '@angular/core';
 import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { TokenService } from './token.service';
+import { AccountService } from './account.service';
+import { Router } from '@angular/router';
 
 
 
@@ -27,10 +29,15 @@ export class AuthentificationService {
   public token:any;
 
   public isAuthenticated:any; // modifié ????
+  public isAdmin = this.accountService.isAdmin;
+
   public userAuthenticated:any;
 
-  constructor( private httpClinet:HttpClient, private tokenService : TokenService ) { }
-
+  constructor( private httpClinet:HttpClient, private tokenService : TokenService, 
+               private accountService : AccountService, private router : Router ) 
+  {
+  }
+/*
   // Methode qui permet de faire un Login
       public login(username:string,password:string)
       {
@@ -58,10 +65,21 @@ export class AuthentificationService {
                     this.userAuthenticated=undefined;
                 }
       }
-
+*/
       public onLogin(data : {email:string , password:string})
       {
         return this.httpClinet.post(this.host+"/users/login",data)
+      }
+
+      public onLogout()
+      {
+        this.tokenService.remove();
+        this.accountService.changeRoleStatus(false); 
+        this.accountService.changeAuthStatus(false); 
+        this.router.navigate(['/login']).then(() => {
+          window.location.reload();
+        });
+        //this.router.navigateByUrl('/login');
       }
 
       public onRegister(data : {firstName: string,lastName :string, email:string , password:string})
@@ -73,7 +91,9 @@ export class AuthentificationService {
       {
         return this.isAuthenticated;
       }
-
+      
+ 
+    /**  
       // Methode qui permet de verifier si l'utilisateur est ADMIN
       public isAdmin(): boolean
       {
@@ -103,21 +123,36 @@ export class AuthentificationService {
            // localStorage.setItem('userToken',this.token); 
           }
       }
-
+*/
   // Methode qui permet de récuperer le token du localStorage
       public loadAuthUserFromLocalStorage()
       {
-        let t=localStorage.getItem('userToken');
+        let t = this.tokenService.getToken(); //userToken -> token
+        
         if(t)
         {
+           if(this.tokenService.isValid())
+           {
+             //this.isAuthenticated=true;
+             let payload = this.tokenService.payload(t)
+
+             if (payload) 
+             {
+              this.userAuthenticated = { id : payload.id, 
+                                         email : payload.sub,
+                                         name : payload.name,
+                                        isAdmin : payload.isAdmin } ;
+            }
+           }
+/*
           let user=JSON.parse(atob(t)); // atob() l inverse de btoa()
           this.userAuthenticated={username:user.username,roles:user.roles}; 
           this.isAuthenticated=true;
           this.token=t;
-
+*/
         }
       }
-
+/*
   // Methode qui permet de supprimer le token du localStorage
       public removeTokenFromLocalStorage()
       {
@@ -127,6 +162,6 @@ export class AuthentificationService {
         this.userAuthenticated=undefined;
       }
 
-    
+    */  
 
 }

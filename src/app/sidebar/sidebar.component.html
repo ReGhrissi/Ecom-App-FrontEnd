@@ -43,7 +43,8 @@
          </ul>
 
 
-         <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+         <ul *ngIf="this.authService.isAdmin" class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+
             <li class="clickable">
                <a routerLink="/categories" [routerLinkActive]="'active-link'" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                   <fa-icon [icon]="myCatManage"></fa-icon>
@@ -68,8 +69,15 @@
                   <span class="ml-3">Gestion Utilisateurs</span>
                </a>
             </li>
+            <li class="clickable">
+               <a (click)="onMyComments()" [routerLink]='"/comments/"+currentUser.id' [routerLinkActive]="'active-link'" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                  <fa-icon [icon]="myComment"></fa-icon>
+                  <span class="ml-3">Gestion Commentaires</span>
+               </a>
+            </li>
          </ul>
       </div>
+
     </aside>
   
     <!--

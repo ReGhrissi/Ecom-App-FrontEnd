@@ -5,104 +5,573 @@
 <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
 -->
 
-<section class=" py-1 bg-blueGray-50">
-<div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
-  <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-    <div class="rounded-t bg-white mb-0 px-6 py-6">
-      <div class="text-center flex justify-between">
-        <h6 class="text-blueGray-700 text-xl font-bold">
-          My account
-        </h6>
-        <button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-          Settings
-        </button>
+
+
+<section *ngIf="currentUser" class=" py-1 bg-blueGray-50">
+
+<div  class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+  
+      <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+      
+        <div class="rounded-t bg-white mb-0 px-6 py-6">
+          <div class="text-center flex justify-between">
+            <h6 class="text-blueGray-700 text-xl font-bold">
+              <fa-icon class="mr-2" [icon]="myAccount"></fa-icon> Mon compte
+            </h6>
+
+            <button *ngIf="changePassword" (click)="onChangeStatus_Password(false)" class="bg-red-600 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+              <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> Annuler
+            </button>
+
+            <button (click)="onChangeStatus_Password(true)" *ngIf="!editionProfil && !changePassword" class="bg-pink-600 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+              <fa-icon class="mr-2" [icon]="myEdit"></fa-icon> Modifier votre mot de passe
+            </button>
+
+            <button *ngIf="editionProfil" (click)="onChangeStatus_Profil(false)" class="bg-red-600 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+              <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> Annuler
+            </button>
+
+            <button (click)="onChangeStatus_Profil(true)" *ngIf="!editionProfil && !changePassword" class="bg-blue-800 text-white active:bg-black hover:bg-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+              <fa-icon class="mr-2" [icon]="myEdit"></fa-icon> Modifier vos informations
+            </button>
+
+            <button *ngIf="editionProfil" class="bg-green-600 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" 
+                    (click)="onEditProfil()" 
+                    type="submit">
+                    <fa-icon class="mr-2" [icon]="myValid"></fa-icon> Enregistrer
+            </button>
+
+            <button *ngIf="changePassword" class="bg-green-600 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" 
+                    (click)="onChangePassword" 
+                    type="submit">
+                    <fa-icon class="mr-2" [icon]="myValid"></fa-icon> Enregistrer
+            </button>
+
+          </div>
+        </div>
+
+        <div *ngIf="!editionProfil && !changePassword" class="flex-auto px-4 lg:px-10 py-10 pt-0">
+
+          <div class="mx-auto right-0 mt-10 ">
+
+            <div class="bg-white rounded overflow-hidden shadow-lg">
+          
+                <div class="text-center p-6 bg-gray-800 border-b">
+          
+                  <img class="h-40 w-40 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256" 
+                  src="{{this.userService.host+this.userService.requestMapping+'/photoUser/'+currentUser.userId+'?ts='+getTS()}}" alt="image description">
+          
+                    <!-- <svg aria-hidden="true" role="img" class="h-24 w-24 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256">
+                      
+                      <path fill="currentColor" d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z">
+          
+                      </path>
+                      
+                    </svg> -->
+                    
+                    <br>
+
+                    <p class="pt-2 text-lg font-semibold text-gray-50">{{currentUser.firstName}} {{ currentUser.lastName}}</p>
+                    <p class="text-sm text-gray-100">{{currentUser.email}}</p>
+                    
+                    <div class="mt-5">
+                        <a *ngIf="!editPhoto" (click)="onEditPhoto()" class="clicable border rounded-full py-2 px-4 text-xs font-semibold hover:bg-blue-800 text-gray-100">
+                            Modifier votre photo de profil
+                        </a>
+
+                    </div>
+          
+                </div>
+          
+                <div class="border-b">
+
+                  <div  class="space-y-4 text-sm text-gray-500 dark:text-gray-400">
+
+
+                    
+                    <span *ngIf="editPhoto">
+      
+                        
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Changer la photo :</label>
+                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer 
+                                    bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 
+                                    dark:placeholder-gray-400" id="file_input" type="file" (change)="onSelectedFile($event)">
+      
+                        <br>
+                        <button (click)="uploadPhoto()" class="bg-blue-800 hover:bg-black text-white text-sm 
+                                                                font-semibold inline-flex items-center p-1.5 rounded"> Changer la photo
+                            <fa-icon [icon]="myUpload"></fa-icon>
+                        </button>
+      
+                        <button (click)="onCancelUploadPhoto()" class="bg-blue-800 hover:bg-black text-white text-sm 
+                                                                font-semibold inline-flex items-center p-1.5 rounded"> Annuler 
+                            <fa-icon [icon]="myCancel"></fa-icon>
+                        </button>
+                        <br>
+      
+                        <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                            <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: 45%"> 45%</div>
+                        </div>
+      
+                        {{progress}}
+      
+                    </span>
+      
+                  </div>
+
+                </div>
+          
+                <!-- <div class="">
+                    <button href="#" class="w-full px-4 py-2 pb-4 hover:bg-gray-100 flex">
+                        <p class="text-sm font-medium text-gray-800 leading-none"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="h-4 w-4 text-gray-800 fill-current animate-spin" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024"><path fill="currentColor" d="M988 548c-19.9 0-36-16.1-36-36c0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 0 0-94.3-139.9a437.71 437.71 0 0 0-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7c26.7 63.1 40.2 130.2 40.2 199.3c.1 19.9-16 36-35.9 36z"></path></svg> Logout
+                                </p>
+                    </button>
+                </div> -->
+            </div>
+          </div>
+<!-- -------------------------------------------------------------------------------------------------------- -->
+
+
+          <br><br>
+          
+          <div>
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Informations du profil
+            </h6>
+            <div class="flex flex-wrap">
+              
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myId"></fa-icon> Numéro d'identification (ID)
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150"
+                        [value]="currentUser.userId"
+                        readonly>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-6/12 px-4">
+
+                <div *ngIf="currentUser.admin" class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myAdmin"></fa-icon> Role
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150"
+                        value="Admin"
+                        readonly>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Prénom
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow   w-full ease-linear transition-all duration-150"
+                        [value]="currentUser.firstName"
+                    
+                        readonly>
+
+                      
+                </div>
+                <!-- <div class="text-[11px] text-red-500">
+                  <div *ngIf="FirstName?.hasError('required') && FirstName?.touched" >* Ce champ est obligatoire !</div>
+              </div> -->
+              </div>
+
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Nom
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150"
+                        [value]="currentUser.lastName"
+                  
+                        readonly>
+
+                        <!-- <div class="text-[11px] text-red-500">
+                          <div *ngIf="LastName?.hasError('required') && LastName?.touched" >* Ce champ est obligatoire !</div>
+                      </div> -->
+                </div>
+              </div>
+            </div>
+
+            <hr class="mt-6 border-b-1 border-blueGray-300">
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Coordonnées personnelles
+            </h6>
+            <div class="flex flex-wrap">
+
+              <div class="w-full lg:w-12/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myAddress"></fa-icon> Adresse de livraison
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150" 
+                         [value]="currentUser.contact.street +' , '+
+                                  currentUser.contact.city +' , '+
+                                  currentUser.contact.country +' , '+
+                                  currentUser.contact.postal"
+                         readonly>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myEmail"></fa-icon> Email
+                  </label>
+                  <input type="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150"
+                         [value]="currentUser.email" 
+                         readonly>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myPhone"></fa-icon> Téléphone 1
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150" 
+                        [value]="currentUser.contact.mobile"
+                        readonly>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myWhatsapp"></fa-icon> WhatsApp  /  <fa-icon class="mr-2 ml-1" [icon]="mySkype"></fa-icon> Skype
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow w-full ease-linear transition-all duration-150" 
+                         [value]="currentUser.contact.skype"
+                        readonly>
+                </div>
+              </div>
+
+            </div>
+
+            <hr class="mt-6 border-b-1 border-blueGray-300">
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Informations de payement
+            </h6>
+
+            <div class="flex flex-wrap">
+
+              <div class="w-full lg:w-12/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myCard"></fa-icon> Numéro du carte de payement
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150" 
+                  [value]="currentUser.paymentCard.cardNumber"
+                  readonly>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Nom du porteur de la carte
+                  </label>
+                  <input type="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150"
+                  [value]="currentUser.paymentCard.cardOwner"
+                  readonly>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myDate"></fa-icon> Date d'expiration (Mois)
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150" 
+                        value=""
+                        readonly>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myDate"></fa-icon> Date d'expiration (Année)
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow w-full ease-linear transition-all duration-150" 
+                        value=""
+                        readonly>
+                </div>
+              </div>
+
+            </div>
+
+
+
+          </div>
+        </div>
+
+                <!-------------------------------------------------------------------------------------------------------------->
+
+        <div *ngIf="editionProfil" class="flex-auto px-4 lg:px-10 py-10 pt-0">
+  
+          <form [formGroup]="editProfilForm" (ngSubmit)="onEditProfil()">
+    
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Informations du profil
+            </h6>
+            <div class="flex flex-wrap">
+              
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Prénom
+                  </label>
+                  <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        [value]="currentUser.firstName"
+                        formControlName="firstName">
+    
+                       
+                </div>
+                <!-- <div class="text-[11px] text-red-500">
+                  <div *ngIf="FirstName?.hasError('required') && FirstName?.touched" >* Ce champ est obligatoire !</div>
+              </div> -->
+              </div>
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Nom
+                  </label>
+                  <input type="text" class=" form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        [value]="currentUser.lastName"
+                        formControlName="lastName">
+    
+                        <!-- <div class="text-[11px] text-red-500">
+                          <div *ngIf="LastName?.hasError('required') && LastName?.touched" >* Ce champ est obligatoire !</div>
+                      </div> -->
+                </div>
+              </div>
+            </div>
+    
+            <hr class="mt-6 border-b-1 border-blueGray-300">
+    
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Coordonnées personnelles
+            </h6>
+            <div class="flex flex-wrap">
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myCountry"></fa-icon> Pays
+                  </label>
+                  <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                        [value]="currentUser.contact.country"
+                        formControlName="country">
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myCity"></fa-icon> Ville
+                  </label>
+                  <input type="email" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  [value]="currentUser.contact.city"
+                  formControlName="city">
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myPostal"></fa-icon> Code postal
+                  </label>
+                  <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  [value]="currentUser.contact.postal"
+                  formControlName="postal">
+                </div>
+              </div>
+
+              <div class="w-full lg:w-12/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myStreet"></fa-icon> Quartier et Rue
+                  </label>
+                  <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                  [value]="currentUser.contact.street"
+                  formControlName="street">
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myEmail"></fa-icon> Email
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                  value="">
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myPhone"></fa-icon> Téléphone 1
+                  </label>
+                  <input type="email" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                  [value]="currentUser.contact.mobile"
+                  formControlName="mobile">
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myWhatsapp"></fa-icon> WhatsApp  /  <fa-icon class="mr-2 ml-1" [icon]="mySkype"></fa-icon> Skype
+                  </label>
+                  <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                  [value]="currentUser.contact.skype"
+                  formControlName="skype">
+                </div>
+              </div>
+
+
+            </div>
+
+            
+            <hr class="mt-6 border-b-1 border-blueGray-300">
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Informations de payement
+            </h6>
+
+            <div class="flex flex-wrap">
+
+              <div class="w-full lg:w-12/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myCard"></fa-icon> Numéro du carte de payement
+                  </label>
+                  <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring  w-full ease-linear transition-all duration-150" 
+                  [value]="currentUser.paymentCard.cardNumber"
+                  formControlName="cardNumber">
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Nom du porteur de la carte
+                  </label>
+                  <input type="email" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  [value]="currentUser.paymentCard.cardOwner"
+                  formControlName="cardOwner">
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myDate"></fa-icon> Date d'expiration (Mois)
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                        value=""
+                        >
+                </div>
+              </div>
+
+              <div class="w-full lg:w-4/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myDate"></fa-icon> Date d'expiration (Année)
+                  </label>
+                  <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                        value=""
+                        >
+                </div>
+              </div>
+
+            </div>
+
+    
+            <!-- <hr class="mt-6 border-b-1 border-blueGray-300">
+    
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              About Me
+            </h6>
+            <div class="flex flex-wrap">
+              <div class="w-full lg:w-12/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    About me
+                  </label>
+                  <textarea type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" rows="4"> A beautiful UI Kit and Admin for JavaScript &amp; Tailwind CSS. It is Freeand Open Source.</textarea>
+                </div>
+              </div>
+            </div> -->
+          </form>
+        </div>
+
+                        <!-------------------------------------------------------------------------------------------------------------->
+
+        <div *ngIf="changePassword" class="flex-auto px-4 lg:px-10 py-10 pt-0">
+  
+          <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()">
+    
+            <hr class="mt-6 border-b-1 border-blueGray-300">
+    
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Réinitialisation de votre mot de passe
+            </h6>
+            <div class="flex flex-wrap">
+
+              <div class="w-full lg:w-12/12 px-4">
+
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myKey"></fa-icon> Votre mot de passe actuel
+                  </label>
+
+                  <input type="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                         value="xx">
+                
+                </div>
+
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myPassword"></fa-icon> Le nouveau mot de passe
+                  </label>
+
+                  <input type="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                         value="xx">
+                
+                </div>
+
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    <fa-icon class="mr-2" [icon]="myPassword"></fa-icon> Confirmer le mot de passe
+                  </label>
+
+                  <input type="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                         value="xx">
+                
+                </div>
+              </div>
+     
+            </div>
+    
+          </form>
+        </div>
+
+
       </div>
-    </div>
-    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-      <form>
-        <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-          User Information
-        </h6>
-        <div class="flex flex-wrap">
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                Username
-              </label>
-              <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="lucky.jesse">
-            </div>
-          </div>
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                Email address
-              </label>
-              <input type="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="jesse@example.com">
-            </div>
-          </div>
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                First Name
-              </label>
-              <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="Lucky">
-            </div>
-          </div>
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                Last Name
-              </label>
-              <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="Jesse">
-            </div>
-          </div>
-        </div>
 
-        <hr class="mt-6 border-b-1 border-blueGray-300">
-
-        <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-          Contact Information
-        </h6>
-        <div class="flex flex-wrap">
-          <div class="w-full lg:w-12/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                Address
-              </label>
-              <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
-            </div>
-          </div>
-          <div class="w-full lg:w-4/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                City
-              </label>
-              <input type="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
-            </div>
-          </div>
-          <div class="w-full lg:w-4/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                Country
-              </label>
-              <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="United States">
-            </div>
-          </div>
-          <div class="w-full lg:w-4/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                Postal Code
-              </label>
-              <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="Postal Code">
-            </div>
-          </div>
-        </div>
-
-        <hr class="mt-6 border-b-1 border-blueGray-300">
-
-        <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-          About Me
-        </h6>
+      <!-- <footer class="relative  pt-8 pb-6 mt-2">
         <div class="flex flex-wrap">
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
@@ -113,19 +582,25 @@
             </div>
           </div>
         </div>
-      </form>
-    </div>
-  </div>
-  <footer class="relative  pt-8 pb-6 mt-2">
-  <div class="container mx-auto px-4">
-    <div class="flex flex-wrap items-center md:justify-between justify-center">
-      <div class="w-full md:w-6/12 px-4 mx-auto text-center">
-        <div class="text-sm text-blueGray-500 font-semibold py-1">
-          Made with <a href="https://www.creative-tim.com/product/notus-js" class="text-blueGray-500 hover:text-gray-800" target="_blank">Notus JS</a> by <a href="https://www.creative-tim.com" class="text-blueGray-500 hover:text-blueGray-800" target="_blank"> Creative Tim</a>.
+
+
+        <div class="container mx-auto px-4">
+          <div class="flex flex-wrap items-center md:justify-between justify-center">
+            <div class="w-full md:w-6/12 px-4 mx-auto text-center">
+              <div class="text-sm text-blueGray-500 font-semibold py-1">
+                Made with <a href="https://www.creative-tim.com/product/notus-js" class="text-blueGray-500 hover:text-gray-800" target="_blank">Notus JS</a> by <a href="https://www.creative-tim.com" class="text-blueGray-500 hover:text-blueGray-800" target="_blank"> Creative Tim</a>.
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</footer>
+    </footer> -->
+      
+
+    
+       
+    
+
+    
 </div>
+    
 </section>

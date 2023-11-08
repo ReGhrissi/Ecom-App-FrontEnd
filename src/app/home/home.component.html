@@ -185,7 +185,7 @@
             <button routerLink="/products"  type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 
                 <span > Découvrir plus de produits</span>
-                <fa-icon class="ml-2"  [icon]="myGo"></fa-icon>
+                <fa-icon class="ml-2"  [icon]="myGoTo"></fa-icon>
             </button>
         </div>
     </div>
@@ -267,7 +267,7 @@
                 <button routerLink="/products/3/0"  type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     
                     <span > Découvrir plus </span>
-                    <fa-icon class="ml-2"  [icon]="myGo"></fa-icon>
+                    <fa-icon class="ml-2"  [icon]="myGoTo"></fa-icon>
                 </button>
             </div>
         </div>
@@ -351,7 +351,7 @@
                 <button routerLink="/products/4/0"  type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     
                     <span > Découvrir plus </span>
-                    <fa-icon class="ml-2"  [icon]="myGo"></fa-icon>
+                    <fa-icon class="ml-2"  [icon]="myGoTo"></fa-icon>
                 </button>
             </div>
         </div>
@@ -360,104 +360,96 @@
     <br>
     <br>
 
-    <section id="ProductsByCat">
+<div *ngIf="categories" >
 
-        
-
+    <section id="ProductsByCat" *ngFor="let c of categories" >
 
         <div id="accordion-open" data-accordion="open">
 
             <h2 id="accordion-open-heading-1">
-              <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
-                
-                <span class="flex items-center">
-                    <fa-icon class="mr-2" [icon]="myCatManage"></fa-icon>
-                    Para-Pharmacie
-                </span>
-             
-                
-              </button>
+                <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-400 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
+                    
+                    <span class="flex items-center">
+                        <fa-icon class="mr-2" [icon]="myCatManage"></fa-icon>
+                        {{c.name}}
+                    </span>
+                     
+                </button>
             </h2>
 
-            <div *ngIf="cat_1_roducts">
-                
-
+            <div *ngIf="c.products">
+                    
                 <owl-carousel-o [options]="customOptions">
-            
-                <ng-container *ngFor="let p of cat_1_roducts._embedded.products">
+                
+                    <ng-container *ngFor="let p of c.products"> <!-- c._links.products._embedded.products-->
 
-                    <ng-template carouselSlide [id]="p.id">
+                        <ng-template carouselSlide [id]="p.id">
 
-                        <div  (click)="onProductDetails(p)">
-
-
-                                        
-                                        
-                            <div class=" w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-
-                                <a>
-                                    <img class="p-8 rounded-t-lg" src="{{this.catService.host+'/photoProduct/'+p.id+'?ts='+getTS()}}" alt="product image"
-                                        (click)="onProductDetails(p)"id="Photo_Product" class="clickable"/>
-                                
-                                </a>
-
-                                <div class="px-5 pb-5">
+                            <div  (click)="onProductDetails(p)">
+              
+                                <div class=" w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                                     <a>
-                                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                            {{p.name}}</h5>
+                                        <img class="p-8 rounded-t-lg" src="{{this.catService.host+'/photoProduct/'+p.id+'?ts='+getTS()}}" alt="product image"
+                                            (click)="onProductDetails(p)"id="Photo_Product" class="clickable"/>
+                                    
                                     </a>
 
-                                    
+                                    <div class="px-5 pb-5">
 
-                                    <div class="flex items-center justify-between">
-                                    <span class="text-lg font-medium text-gray-900 line-through dark:text-white">$109</span>
-                                        <span class="text-1xl font-bold text-gray-500 dark:text-white">Prix : {{p.currentPrice|number:'0.2'}} DH</span>
+                                        <a>
+                                            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                                {{p.name}}</h5>
+                                        </a>
 
+                                        <div class="flex items-center justify-between">
+                                        <span class="text-lg font-medium text-gray-900 line-through dark:text-white">$109</span>
+                                            <span class="text-1xl font-bold text-gray-500 dark:text-white">Prix : {{p.currentPrice|number:'0.2'}} DH</span>
+
+                                        </div>
+                                        <!----------------------------------------------------------------------------->
+                                        <br>
+                                        <div class="flex">
+                                                <span *ngIf="p.available">
+                                                    <fa-icon [icon]="myAvailable"></fa-icon>
+                                                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Disponible</h3>
+                                                </span>
+                                
+                                                <span *ngIf="p.promotion">
+                                                    <fa-icon [icon]="myPromo"></fa-icon>
+                                                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promo</h3>
+                                                </span>
+                                
+                                                <span *ngIf="p.selected">
+                                                    <fa-icon [icon]="myNewPr"></fa-icon>
+                                                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
+                                                </span>
+                                        </div>
                                     </div>
-                                <!----------------------------------------------------------------------------->
 
-                                <br>
-                                <div class="flex">
-                                            <span *ngIf="p.available">
-                                                <fa-icon [icon]="myAvailable"></fa-icon>
-                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Disponible</h3>
-                                            </span>
-                            
-                                            <span *ngIf="p.promotion">
-                                                <fa-icon [icon]="myPromo"></fa-icon>
-                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promo</h3>
-                                            </span>
-                            
-                                            <span *ngIf="p.selected">
-                                                <fa-icon [icon]="myNewPr"></fa-icon>
-                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
-                                            </span>
-                                    </div>
+                                </div>  
+
                             </div>
-
-                        </div>  
-
-                        </div>
-                  
-
-                    </ng-template>
-                  
-                </ng-container>
-             
-                </owl-carousel-o>
+                    
+                        </ng-template>
+                    
+                    </ng-container>
                 
-        </div>
+                </owl-carousel-o>
+                    
+            </div>
 
         </div>
+     
         <div  class="flex">
-            <button routerLink="/products/4/0"  type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button routerLink="/products/2/{{c.id}}"  type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 
                 <span > VOIR PLUS </span>
-                <fa-icon class="ml-2"  [icon]="myGo"></fa-icon>
+                <fa-icon class="ml-2"  [icon]="myGoTo"></fa-icon>
             </button>
         </div>
-
+        <br>
     </section>
 <br>
+</div>
 </div>

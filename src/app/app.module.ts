@@ -55,6 +55,7 @@ import { HistoryOrdersComponent } from './history-orders/history-orders.componen
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CommentsComponent } from './comments/comments.component';
 
 
 //import { FlowbiteModule } from 'flowbite';
@@ -88,7 +89,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     OrdersComponent,
     AboutComponent,
     HistoryOrdersComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
@@ -110,11 +112,12 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
   providers: [
     //CatalogueService,
     CaddyComponent,
-   // {
-   //   provide: HTTP_INTERCEPTORS,
-   ////   useClass: JwtInterceptor,
-    //  multi: true
-   // }
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
 
   ],
   bootstrap: [AppComponent]

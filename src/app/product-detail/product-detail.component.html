@@ -16,9 +16,9 @@
 
             </div>
 
-            <div *ngIf="this.authService.isAdmin()" class="space-y-4 text-sm text-gray-500 dark:text-gray-400">
+            <div *ngIf="this.authService.isAdmin" class="space-y-4 text-sm text-gray-500 dark:text-gray-400">
 
-                <button  *ngIf="!editPhoto" (click)="onEditPhoto(currentProduct)" class="ml-auto bg-blue-700 text-white text-sm 
+                <button  *ngIf="!editPhoto" (click)="onEditPhoto(currentProduct)" class="ml-auto bg-blue-800 hover:bg-black text-white text-sm 
                                                                                         font-semibold inline-flex items-center p-1.5 rounded">
                     <fa-icon [icon]="myEdit"></fa-icon> 
                 </button>
@@ -33,12 +33,12 @@
                                 dark:placeholder-gray-400" id="file_input" type="file" (change)="onSelectedFile($event)">
 
                     <br>
-                    <button (click)="uploadPhoto()" class="bg-blue-700 text-white text-sm 
+                    <button (click)="uploadPhoto()" class="bg-blue-800 hover:bg-black text-white text-sm 
                                                             font-semibold inline-flex items-center p-1.5 rounded"> Changer la photo
                         <fa-icon [icon]="myUpload"></fa-icon>
                     </button>
 
-                    <button (click)="onCancelUploadPhoto()" class="bg-blue-700 text-white text-sm 
+                    <button (click)="onCancelUploadPhoto()" class="bg-blue-800 hover:bg-black text-white text-sm 
                                                             font-semibold inline-flex items-center p-1.5 rounded"> Annuler 
                         <fa-icon [icon]="myCancel"></fa-icon>
                     </button>
@@ -63,7 +63,7 @@
                     <h4 class="text-xl font-bold text-gray-900 dark:text-white">  {{currentProduct.name}}</h4>
                 </div>
 
-                <button *ngIf="this.authService.isAdmin()" (click)="onEditProduct()"  class="ml-auto bg-blue-700 text-white
+                <button *ngIf="this.authService.isAdmin" (click)="onEditProduct()"  class="ml-auto bg-blue-800 hover:bg-black text-white
                                                                                              text-sm font-semibold inline-flex items-center p-1.5 rounded">
                      <fa-icon [icon]="myEdit"></fa-icon> 
                 </button>
@@ -117,7 +117,7 @@
                     <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
                 </span>
             </div>
-
+ 
             <br>
             <div>
                                                      
@@ -159,7 +159,7 @@
                                 </svg>
                             </button>
                             <div>
-                            <button  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none 
+                            <button  class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none 
                                     focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 
                                     dark:hover:bg-blue-700 dark:focus:ring-blue-800"> Ajouter au Panier  
                                      <fa-icon [icon]="myAddToCart"></fa-icon>
@@ -280,11 +280,11 @@
     
             </div>
 
-            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+            <button type="submit" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 
                                         font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600
                                          dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modifier</button>
 
-             <button (ckick)="onCancelUpdateProduct()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+             <button (ckick)="onCancelUpdateProduct()" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 
                                          font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600
                                           dark:hover:bg-blue-700 dark:focus:ring-blue-800">Annuler</button>
         </form>
@@ -294,113 +294,258 @@
     </div>
 
 </div>
+<!-- ----------------------------------------------------------------------------------------------------------------- -->
+<br>
+<br>
 
+<div *ngIf="currentCategory" >
 
+<section id="ProductsByCat"  >
+
+    <div id="accordion-open" data-accordion="open">
+
+        <h2 id="accordion-open-heading-1">
+            <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-400 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
+                
+                <span class="flex items-center">
+                    <fa-icon class="mr-2" [icon]="myCatManage"></fa-icon>
+                    Produits de la même catégorie ( {{currentCategory.name}} )
+                </span>
+                 
+            </button>
+        </h2>
+
+        <div *ngIf="productsOfCategory">
+                
+            <owl-carousel-o [options]="customOptions">
+            
+                <ng-container *ngFor="let p of productsOfCategory"> <!-- c._links.products._embedded.products-->
+
+                    <ng-template carouselSlide [id]="p.id">
+
+                        <div  (click)="onProductDetails(p)">
+          
+                            <div class=" w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+                                <a>
+                                    <img class="p-8 rounded-t-lg" src="{{this.catalService.host+'/photoProduct/'+p.id+'?ts='+getTS()}}" alt="product image"
+                                        (click)="onProductDetails(p)"id="Photo_Product" class="clickable"/>
+                                
+                                </a>
+
+                                <div class="px-5 pb-5">
+
+                                    <a>
+                                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                            {{p.name}}</h5>
+                                    </a>
+
+                                    <div class="flex items-center justify-between">
+                                    <span class="text-lg font-medium text-gray-900 line-through dark:text-white">$109</span>
+                                        <span class="text-1xl font-bold text-gray-500 dark:text-white">Prix : {{p.currentPrice|number:'0.2'}} DH</span>
+
+                                    </div>
+                                    <!----------------------------------------------------------------------------->
+                                    <br>
+                                    <div class="flex">
+                                            <span *ngIf="p.available">
+                                                <fa-icon [icon]="myAvailable"></fa-icon>
+                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Disponible</h3>
+                                            </span>
+                            
+                                            <span *ngIf="p.promotion">
+                                                <fa-icon [icon]="myPromo"></fa-icon>
+                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promo</h3>
+                                            </span>
+                            
+                                            <span *ngIf="p.selected">
+                                                <fa-icon [icon]="myNewPr"></fa-icon>
+                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
+                                            </span>
+                                    </div>
+                                </div>
+
+                            </div>  
+
+                        </div>
+                
+                    </ng-template>
+                
+                </ng-container>
+            
+            </owl-carousel-o>
+                
+        </div>
+
+    </div>
+ 
+    <div  class="flex">
+        <button routerLink="/products/2/{{currentCategory.id}}"  type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            
+            <span > VOIR PLUS </span>
+            <fa-icon class="ml-2"  [icon]="myGoTo"></fa-icon>
+        </button>
+    </div>
+    <br>
+</section>
+<br>
+</div>
+<!-- ------------------------------------------------------------------------------------------------------------ -->
 <br><br>
 
-<div>
+<!-- ------------------------------------------------------------------------------------------------------ -->
 
+
+  <section  class=" py-1 bg-blueGray-50">
+
+    <div  class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+      
+          <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+          
+            <div class="rounded-t bg-white mb-0 px-6 py-6">
+              <div class="text-center flex justify-between">
+                <h6 class="text-blueGray-700 text-xl font-bold">
+                    <fa-icon class="mr-2" [icon]="myCommentSolid"></fa-icon> 
+                </h6>
     
-<div class="flex items-center mb-2">
-    <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-    <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-    <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-    <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-    <svg class="w-4 h-4 text-gray-300 mr-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-    <p class="ml-2 text-sm font-medium text-gray-900 dark:text-white">4.95 out of 5</p>
-</div>
-<p class="text-sm font-medium text-gray-500 dark:text-gray-400">1,745 global ratings</p>
-<div class="flex items-center mt-4">
-    <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">5 star</a>
-    <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-        <div class="h-5 bg-yellow-300 rounded" style="width: 70%"></div>
-    </div>
-    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">70%</span>
-</div>
-<div class="flex items-center mt-4">
-    <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">4 star</a>
-    <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-        <div class="h-5 bg-yellow-300 rounded" style="width: 17%"></div>
-    </div>
-    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">17%</span>
-</div>
-<div class="flex items-center mt-4">
-    <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">3 star</a>
-    <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-        <div class="h-5 bg-yellow-300 rounded" style="width: 8%"></div>
-    </div>
-    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">8%</span>
-</div>
-<div class="flex items-center mt-4">
-    <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">2 star</a>
-    <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-        <div class="h-5 bg-yellow-300 rounded" style="width: 4%"></div>
-    </div>
-    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">4%</span>
-</div>
-<div class="flex items-center mt-4">
-    <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">1 star</a>
-    <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-        <div class="h-5 bg-yellow-300 rounded" style="width: 1%"></div>
-    </div>
-    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">1%</span>
-</div>   
+                <button  (click)="onAddComment()" class="bg-blue-800 text-white active:bg-black hover:bg-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                  <fa-icon class="mr-2" [icon]="myValid"></fa-icon> Enregister le commentaire
+                </button>
+    
+              </div>
+            </div>
+    
+                    <!-------------------------------------------------------------------------------------------------------------->
+    
+            <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+      
+              <form [formGroup]="commentForm">
 
 
-</div>
+        
+                <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                    <fa-icon class="mr-2" [icon]="myComment"></fa-icon>  Vos commentaires
+                </h6>
+                <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                <div class="flex flex-wrap">
+                    
+                  <div class="w-full lg:w-12/12 px-4">
+                    <div class="relative w-full mb-3">
+
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                        
+                        </label>
+                        <br>
+                        <textarea id="descr" name="description" rows="4" ngModel class="form-control block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg 
+                                                    border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 
+                                                    dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                                     dark:focus:border-blue-500" 
+                                                placeholder="Saisir votre commentaire ..."
+                                                formControlName="commentText"></textarea>
+                    </div>
+                  </div>
+                </div> 
+              </form>
+            </div>
+    
+    
+          </div>
+    
+        </div>
+        
+    </section>
+
+<!-- --------------------------------------------------------------------------------------------- -->
+    <br><br>
+
+<div>
+        
+    <div class="flex items-center mb-2">
+        <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+        </svg>
+        <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+        </svg>
+        <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+        </svg>
+        <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+        </svg>
+        <svg class="w-4 h-4 text-gray-300 mr-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+        </svg>
+        <p class="ml-2 text-sm font-medium text-gray-900 dark:text-white">4.95 out of 5</p>
+    </div>
+    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">1,745 global ratings</p>
+    <div class="flex items-center mt-4">
+        <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">5 star</a>
+        <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-yellow-300 rounded" style="width: 70%"></div>
+        </div>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">70%</span>
+    </div>
+    <div class="flex items-center mt-4">
+        <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">4 star</a>
+        <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-yellow-300 rounded" style="width: 17%"></div>
+        </div>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">17%</span>
+    </div>
+    <div class="flex items-center mt-4">
+        <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">3 star</a>
+        <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-yellow-300 rounded" style="width: 8%"></div>
+        </div>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">8%</span>
+    </div>
+    <div class="flex items-center mt-4">
+        <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">2 star</a>
+        <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-yellow-300 rounded" style="width: 4%"></div>
+        </div>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">4%</span>
+    </div>
+    <div class="flex items-center mt-4">
+        <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">1 star</a>
+        <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-yellow-300 rounded" style="width: 1%"></div>
+        </div>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">1%</span>
+    </div>   
+    
+  <br><br>  
+    </div>
+<!-- -------------------------------------------------------------------------------------------------------- -->
 
 <br><br>
+<div class="flex  top-1/3"> <!--justify-center relative -->
 
-<div>
 
+    <!-- This is an example component -->
+    <div class="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
+
+        <div class="relative flex gap-4">
+
+            <!-- <img src="https://icons.iconarchive.com/icons/diversity-avatars/avatars/256/charlie-chaplin-icon.png" class="relative rounded-lg -top-8 -mb-4 bg-white border h-20 w-20" alt="" loading="lazy"> -->
+            
+            <fa-icon class="relative rounded-lg -top-8 -mb-4 bg-white border h-20 w-20" [icon]="myUser"></fa-icon> 
+
+            <div class="flex flex-col w-full">
+                <div class="flex flex-row justify-between">
+                    <p class="relative text-xl whitespace-nowrap truncate overflow-hidden">Nom PRENOM</p>
+                     <a class="text-gray-500 text-xl" href="#">
+                        <fa-icon  [icon]="myDelete"></fa-icon>
+                    </a> 
+                </div>
+                <p class="text-gray-400 text-sm">20 April 2022, at 14:88 PM</p>
+            </div>
+        </div>
+        <p class="-mt-4 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>Maxime quisquam vero adipisci beatae voluptas dolor ame.</p>
+    </div>
     
-<article>
-    <div class="flex items-center mb-4 space-x-4">
-        <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="">
-        <div class="space-y-1 font-medium dark:text-white">
-            <p>Jese Leos <time datetime="2014-08-16 19:00" class="block text-sm text-gray-500 dark:text-gray-400">Joined on August 2014</time></p>
-        </div>
-    </div>
-    <div class="flex items-center mb-1">
-        <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-        </svg>
-        <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-        </svg>
-        <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-        </svg>
-        <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-        </svg>
-        <svg class="w-4 h-4 text-gray-300 dark:text-gray-500 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-        </svg>
-        <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Thinking to buy another one!</h3>
-    </div>
-    <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400"><p>Reviewed in the United Kingdom on <time datetime="2017-03-03 19:00">March 3, 2017</time></p></footer>
-    <p class="mb-2 text-gray-500 dark:text-gray-400">This is my third Invicta Pro Diver. They are just fantastic value for money. This one arrived yesterday and the first thing I did was set the time, popped on an identical strap from another Invicta and went in the shower with it to test the waterproofing.... No problems.</p>
-    <p class="mb-3 text-gray-500 dark:text-gray-400">It is obviously not the same build quality as those very expensive watches. But that is like comparing a Citroën to a Ferrari. This watch was well under £100! An absolute bargain.</p>
-    <a href="#" class="block mb-5 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">Read more</a>
-    <aside>
-        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">19 people found this helpful</p>
-        <div class="flex items-center mt-3 space-x-3 divide-x divide-gray-200 dark:divide-gray-600">
-            <a href="#" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-xs px-2 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Helpful</a>
-            <a href="#" class="pl-4 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">Report abuse</a>
-        </div>
-    </aside>
-</article>
-
-
+    
+    
 </div>

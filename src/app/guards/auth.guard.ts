@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate  {
       {
         this.router.navigateByUrl('/login');
         this.tokenService.remove();
-        this.accountService.changeStatus(false);
+        this.accountService.changeAuthStatus(false);
         return false;
      }
      console.warn('ok')

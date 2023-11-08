@@ -10,6 +10,7 @@ import { PanierService } from '../services/panier.service';
 import { faBasketShopping, faBullhorn, faCartPlus, faCheckCircle, faSplotch, faTrash, faUpload, faUserPen, faXmark } from '@fortawesome/free-solid-svg-icons';
 import {} from '@fortawesome/free-regular-svg-icons';
 import {} from '@fortawesome/free-brands-svg-icons';
+import { Icons } from '../_Plugins/icons.model';
 
 @Component({
   selector: 'app-caddy',
@@ -19,8 +20,11 @@ import {} from '@fortawesome/free-brands-svg-icons';
 
 export class CaddyComponent implements OnInit {
 
-  myDelete=faTrash;
-  myOrder=faBasketShopping;
+  icons :Icons =new Icons();
+
+  myGoTo= this.icons.myGoTo;
+  myDelete=this.icons.myDelete;
+  myOrder=this.icons.myOrder;
 
   //public Items : any
     public caddy : Caddy

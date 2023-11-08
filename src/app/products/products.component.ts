@@ -241,12 +241,12 @@ export class ProductsComponent implements OnInit {
 
     return this.timeStamp;
   }
-
+/*
   public isAdmin() : boolean
   {
     return this.authService.isAdmin();
   }
-
+*/
   // Methode qui permet de faire une redirection vers le detail du produit
     onProductDetails(p:Product)
     {

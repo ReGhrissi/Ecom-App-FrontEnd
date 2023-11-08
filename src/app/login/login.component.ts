@@ -47,22 +47,22 @@ export class LoginComponent implements OnInit {
 
   
 
-  ngOnInit(): void {
+        ngOnInit(): void {
 
-    /**
-    const modalButton = this.el.nativeElement.querySelector('[data-modal-target="authentication-modal"]');
-    const modal = this.el.nativeElement.querySelector('#authentication-modal');
+          /**
+          const modalButton = this.el.nativeElement.querySelector('[data-modal-target="authentication-modal"]');
+          const modal = this.el.nativeElement.querySelector('#authentication-modal');
 
-    modalButton.addEventListener('click', () => {
-      this.renderer.addClass(modal, 'active'); // Ajoutez une classe pour afficher le modal
-    });
+          modalButton.addEventListener('click', () => {
+            this.renderer.addClass(modal, 'active'); // Ajoutez une classe pour afficher le modal
+          });
 
-    modal.addEventListener('click', () => {
-      this.renderer.removeClass(modal, 'active'); // Supprimez la classe pour masquer le modal
-    });
+          modal.addEventListener('click', () => {
+            this.renderer.removeClass(modal, 'active'); // Supprimez la classe pour masquer le modal
+          });
 
-     */
-  }
+          */
+        }
 
   showModal() {
     this.modalVisible = true;
@@ -88,11 +88,16 @@ export class LoginComponent implements OnInit {
           this.handleResponse(res);
       });
   }
-
-  handleResponse(data : any) {
+ 
+  handleResponse(data : any) 
+  {
     this.tokenService.handle(data);
-    this.accountService.changeStatus(true);
-    this.location.back()
+    this.accountService.changeAuthStatus(true);
+    //this.location.back()
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
+    //this.router.navigateByUrl('/')
   }
 
   /*
@@ -112,3 +117,4 @@ export class LoginComponent implements OnInit {
 
   
 }
+ 

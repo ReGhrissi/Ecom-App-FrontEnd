@@ -1,0 +1,29 @@
+<br><br>
+<div *ngIf="comments" class=" top-1/3"> <!--justify-center relative -->
+
+
+    <!-- This is an example component -->
+    <div *ngFor="let c of comments" class="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
+
+        <div class="relative flex gap-4">
+
+            <img src="{{this.userService.host+this.userService.requestMapping+'/photoUser/'+currentUser.userId}}" class="relative rounded-lg -top-8 -mb-4 bg-white border h-20 w-20" alt="" loading="lazy">
+            
+            
+
+            <div class="flex flex-col w-full">
+                <div class="flex flex-row justify-between">
+                    <p class="relative text-xl whitespace-nowrap truncate overflow-hidden">{{currentUser.firstName}} {{currentUser.lastName}}</p>
+                     <a class="text-gray-500 text-xl" href="#">
+                        <fa-icon  [icon]="myDelete"></fa-icon>
+                    </a> 
+                </div>
+                <p class="text-gray-400 text-sm">{{c.commentDate}}</p>
+            </div>
+        </div>
+        <p class="-mt-4 text-gray-500">{{c.commentText}}
+        </p>
+    </div>
+           
+    <br><br>
+</div>

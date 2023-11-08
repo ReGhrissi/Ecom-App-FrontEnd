@@ -4,6 +4,7 @@ import { Icons } from '../_Plugins/icons.model';
 import { Product } from '../_Model/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o/public_api'; 
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -19,18 +20,19 @@ export class HomeComponent implements OnInit {
   myPromo = this.icons.myPromo;
   myTendancy =this.icons.myTendancy
   myFutur=this.icons.myFutur;
-  myGo = this.icons.myGo
+  myGoTo = this.icons.myGoTo
   myCatManage = this.icons.myCatManage; 
 
   selectedProducts :any;
   promoProducts :any;
   dispoProducts : any;
-  cat_1_roducts : any;
+
+  categories:any;
 
   timeStamp:number=0
 
 
-  constructor(public catService:CatalogueService, private router:Router, private activeRoute :ActivatedRoute)
+  constructor(private http:HttpClient, public catService:CatalogueService, private router:Router, private activeRoute :ActivatedRoute)
   {}
 
   ngOnInit(): void {
@@ -41,11 +43,24 @@ export class HomeComponent implements OnInit {
 
     this.getDispoProducts('/products/search/dispoProducts');
 
-    this.getProductsByCat('/categories/1/products');
+   this.catService.getRessource("/categories").subscribe((categories: any) => {
+
+      this.categories = categories._embedded.categories;
+
+      // Pour chaque catégorie, récupérez les produits associés
+      this.categories.forEach((category :any)=> {
+
+            this.http.get(category._links.products.href).subscribe((products: any) => {
+              
+              category.products = products._embedded.products;
+            });
+      });
+    });
+
 
     this.activeRoute.fragment.subscribe((data)=>{
         this.jumpToSection(data);
-    })
+    });
 
   }
 
@@ -77,14 +92,6 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  getProductsByCat(url : any)
-  {
-    this.catService.getRessource(url)
-      .subscribe({
-          next: data => {this.cat_1_roducts=data;},
-          error: err => console.error(err)
-      });
-  }
 
     // Methode qui permet de faire une redirection vers le detail du produit
     onProductDetails(p:Product)

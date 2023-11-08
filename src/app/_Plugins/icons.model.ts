@@ -1,9 +1,11 @@
-import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
-import { faAngleRight, faArrowLeft, faBasketShopping, faBullhorn, faCartPlus, faCartShopping, faCheck, faCheckCircle,
-     faCircleUser, faCreditCard, faCrown, faEnvelope, faListCheck, faLocationDot, faMobileScreen, faRightFromBracket,
+import { faProductHunt, faSkype, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faCalendarDays, faComment, faCreditCardAlt, faMessage } from "@fortawesome/free-regular-svg-icons";
+import { faAngleRight, faArrowLeft, faBasketShopping, faBookAtlas, faBullhorn, faCartPlus, faCartShopping, faCheck, faCheckCircle,
+     faCircleUser, faCity, faCreditCard, faCrown, faEarthAfrica, faEnvelope, faIdBadge, faKey, faListCheck, faLocationDot, faLock, faMapLocationDot, faMobileScreen, faPen, faRightFromBracket,
       faRightLong,
-      faRightToBracket, faSackDollar, faSackXmark, faSplotch, faThumbsUp, faTrash, faTruck, faTruckArrowRight, faUpload, faUserGear,
-       faUserPen, faUserPlus, faUserTie, faUsers, faXmark } from "@fortawesome/free-solid-svg-icons";
+      faRightToBracket, faSackDollar, faSackXmark, faSplotch, faThumbsUp, faTrash, faTruck, faTruckArrowRight, faUpload, faUser, faUserGear,
+       faUserGraduate,
+       faUserPen, faUserPlus, faUserSecret, faUserTie, faUsers, faXmark, faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 export class Icons{
 
@@ -16,14 +18,20 @@ export class Icons{
     myDelete=faTrash;
     myEdit=faUserPen;
     myNew=faUserPlus;
+    myEdit_2 = faPen;
 
-    myGo = faRightLong;
+    myGoTo = faRightLong;
     myBack=faArrowLeft;
     myCancel=faXmark;
     myUpload=faUpload;
 
     myClinet=faUserTie;
     myUser = faCircleUser;
+    myUserName = faUser
+    myAdmin=faUserGraduate
+    myId = faIdBadge
+    myKey=faKey
+    myPassword=faLock
     myAccount = faUserGear;
     myCartShopping = faCartShopping;
     myLogin= faRightToBracket;
@@ -32,11 +40,17 @@ export class Icons{
     myPayment=faSackDollar;
     myDenyPayment=faSackXmark;
     myCard=faCreditCard;
+    myCreditCard=faCreditCardAlt
 
     myOrder=faBasketShopping;
   
-    
+    mySkype=faSkype
+    myWhatsapp=faWhatsapp;
     myaddress=faLocationDot;
+    myCountry = faEarthAfrica;
+    myCity= faCity
+    myStreet = faMapLocationDot
+    myPostal=faBookAtlas
     myPhone=faMobileScreen;
     myEmail=faEnvelope;
     myValid=faCheck;
@@ -49,6 +63,10 @@ export class Icons{
     myFutur=faTruck;
     
     myLike = faThumbsUp;
+    myDate = faCalendarDays
+    myMessage =faMessage
+    myComment= faComment
+    myCommentSolid=faCommentDots
     
    
 

@@ -1,0 +1,9 @@
+.clicable
+{
+    cursor: pointer;
+}
+
+.error-input
+{
+    border: 1px solid red;
+}

@@ -43,7 +43,11 @@ export class AppComponent implements OnInit{
     
         initFlowbite();
 
-    this.authService.loadAuthUserFromLocalStorage();
+    if(this.tokenService.loggedIn())
+    {
+      this.authService.loadAuthUserFromLocalStorage();
+    }
+     
     this.getCategories();
 
 
@@ -103,9 +107,7 @@ export class AppComponent implements OnInit{
   // methode qui permet de faire un LogOut (suppression du tocken)
   onLogout()
   {
-    this.tokenService.remove();
-    this.accountService.changeStatus(false);
-    this.router.navigateByUrl('/login');
+      this.authService.onLogout();
   }
 
   // methode qui permet de faire un LogOut (suppression du tocken)

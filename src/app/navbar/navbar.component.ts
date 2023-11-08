@@ -3,12 +3,14 @@ import {} from '@fortawesome/free-regular-svg-icons';
 import {} from '@fortawesome/free-brands-svg-icons';
 
 
+
 import { AuthentificationService } from '../services/authentification.service';
 import { PanierService } from '../services/panier.service';
 import { Icons } from '../_Plugins/icons.model';
 import { AccountService } from '../services/account.service';
 import { TokenService } from '../services/token.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 
 
@@ -41,7 +43,7 @@ export class NavbarComponent implements OnInit{
   @Output() Jump_To_Section : EventEmitter<void> = new EventEmitter<void>();
 
 
-  currentUser = null;
+  currentUser :any= null;
 
           constructor(
                       public authService:AuthentificationService,
@@ -49,24 +51,29 @@ export class NavbarComponent implements OnInit{
                       private accountService:AccountService,
                       private tokenService:TokenService,
                       private activeRoute:ActivatedRoute,
-                      private router: Router
+                      private router: Router,
+                      public userService:UserService
                     )
           {
             
-          }
+          } 
 
   ngOnInit(): void {
 
     this.accountService.isAuth.subscribe( res=> {
-
-        this.currentUser = this.tokenService.getInfos();
+        if(res==true)
+        {
+          this.currentUser = this.tokenService.getInfos();
+        }
+        
+      
     })
 
     this.activeRoute.fragment.subscribe((data) =>{
 
       this.jumpToSection(data);
     })
-  }
+  } 
 
 
   SelectedProducts() 
@@ -99,6 +106,11 @@ export class NavbarComponent implements OnInit{
       this.Jump_To_Section.emit(section)
   }
 
-
+  onMyAccount()
+  {
+    this.router.navigate(['/account/'+this.currentUser.id]).then(() => {
+      window.location.reload();
+    });
+  }
 
 }

@@ -5,6 +5,9 @@ import { faProductHunt } from '@fortawesome/free-brands-svg-icons';
 import { CatalogueService } from '../services/catalogue.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Icons } from '../_Plugins/icons.model';
+import { AuthentificationService } from '../services/authentification.service';
+import { AccountService } from '../services/account.service';
+import { TokenService } from '../services/token.service';
 
 
 
@@ -22,6 +25,7 @@ export class SidebarComponent implements OnInit{
   myProdManage=this.icons.myProdManage;
   myUsersManage=this.icons.myUsersManage;
   myOrdersManager = this.icons.myOrdersManage;
+  myComment=this.icons.myCommentSolid
   
   
   @Input() _Categories : any;
@@ -30,8 +34,12 @@ export class SidebarComponent implements OnInit{
   @Output() Products_By_Cat: EventEmitter<void> = new EventEmitter<void>();
   
   numberOfProducts:number=0;
+
+  currentUser :any= null;
   
-  constructor(public catService:CatalogueService, public router:Router)
+  constructor(public catService:CatalogueService, public router:Router,
+             public authService:AuthentificationService, private accountService:AccountService,
+             private tokenService:TokenService)
   {
 
   }
@@ -40,6 +48,15 @@ export class SidebarComponent implements OnInit{
     
     // pour afficher le nombre des produits par categorie 
     this.getCount()
+    
+    this.accountService.isAuth.subscribe( res=> {
+      if(res==true)
+      {
+        this.currentUser = this.tokenService.getInfos();
+      }
+      
+    
+    })
  
   }
 
@@ -47,12 +64,12 @@ export class SidebarComponent implements OnInit{
   {
     this.Products_By_Cat.emit(category);
   }
-
+/** 
   getAllProduct()
   {
     this.router.navigateByUrl('/products/0/0');
   }
-
+*/
   getCount()
   {
     
@@ -63,5 +80,12 @@ export class SidebarComponent implements OnInit{
       });
   }
   
+  onMyComments()
+  {
+    this.router.navigate(['/comments/'+this.currentUser.id]).then(() => {
+      window.location.reload();
+    });
+  
+  }
 
 }
