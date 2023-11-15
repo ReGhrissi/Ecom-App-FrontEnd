@@ -1,24 +1,25 @@
 
 export interface Product{
-    id:number;
+    productId:number;
     name:string;
     description:string;
+
+    price:number;
     currentPrice:number;
-    promotion:boolean;
-    selected:boolean;
-    available:boolean;
-    photoName:string;
+
+    stock : number;
+
+    tendancyProduct:boolean;
+    newProduct:boolean;
+    futurProduct:boolean;
+
+    promotionProduct:boolean;
+    promotionRate:number;
+
+    selectedProduct:boolean;
+    availableProduct:boolean;
+
     quantity:number;
-    _links:{
-      self:{
-        href:string;
-      },
-      product:{
-        href:string;
-      },
-      category:{
-        href:string
-      }
-    }
+    
   
-  }
+  } 

@@ -18,6 +18,9 @@ export class CatalogueService {
 
     //public host:string= this.GATEWAY.gateway+this.microServiceName;
     public host:string ="http://localhost:8090"
+    requestMapping ="/products"; // du Controlleur ProductController
+    requestMappingCat ="/categories";
+
     constructor(
                     private http:HttpClient      
                 ) 
@@ -37,6 +40,12 @@ export class CatalogueService {
         {
             return this.http.post(this.host+url,data);
         }
+
+     // methode qui permet la modification d'un produit    
+      public putResource(url:any,data:any){
+
+        return this.http.put(this.host+url,data);
+      }
    
       
     // methode qui permet la recuperation d'un produit
@@ -53,7 +62,7 @@ export class CatalogueService {
 
             formData.append('file',file);
 
-            const req =new HttpRequest('POST', this.host+'/uploadPhoto/'+idProduct, formData, {
+            const req =new HttpRequest('POST', this.host+this.requestMapping+'/uploadPhoto/'+idProduct, formData, {
 
                     reportProgress:true,
                     responseType:'text',
@@ -62,11 +71,22 @@ export class CatalogueService {
                 return this.http.request(req);
         }
 
-    // methode qui permet la modification d'un produit    
-      public patchResource(url:any,data:any){
+        uploadPhotoCategory(file:File, idCat :any): Observable<HttpEvent<{}>>
+        {
+            let formData:FormData =new FormData();
 
-        return this.http.patch(url,data);
-      }
+            formData.append('file',file);
+
+            const req =new HttpRequest('POST', this.host+this.requestMappingCat+'/uploadPhoto/'+idCat, formData, {
+
+                    reportProgress:true,
+                    responseType:'text',
+            });
+
+                return this.http.request(req);
+        }
+
+
 
       getNumberOfProductsForCategory(categoryId: number): any {
   

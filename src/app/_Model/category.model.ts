@@ -2,21 +2,12 @@ import { Product } from "./product.model";
 
 export interface Category
 {
-    id:number;
+    categoryId:number;
+    photoName:string;
     name:string;
     description:string;
-    _links:{
-        self:{
-          href:string;
-        },
-        category:{
-          href:string;
-        },
-        products:{
-          href:string
-        }
-      }
+    active :boolean;
 
-    
+    products:Product[];
 
 }

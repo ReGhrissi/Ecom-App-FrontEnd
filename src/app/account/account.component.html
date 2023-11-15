@@ -19,15 +19,15 @@
               <fa-icon class="mr-2" [icon]="myAccount"></fa-icon> Mon compte
             </h6>
 
-            <button *ngIf="changePassword" (click)="onChangeStatus_Password(false)" class="bg-red-600 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+            <button *ngIf="changePassword" (click)="onChangeStatus_Password(false)" class="bg-red-700 hover:bg-red-800 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
               <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> Annuler
             </button>
 
-            <button (click)="onChangeStatus_Password(true)" *ngIf="!editionProfil && !changePassword" class="bg-pink-600 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+            <button (click)="onChangeStatus_Password(true)" *ngIf="!editionProfil && !changePassword" class="bg-pink-600 hover:bg-pink-700 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
               <fa-icon class="mr-2" [icon]="myEdit"></fa-icon> Modifier votre mot de passe
             </button>
 
-            <button *ngIf="editionProfil" (click)="onChangeStatus_Profil(false)" class="bg-red-600 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+            <button *ngIf="editionProfil" (click)="onChangeStatus_Profil(false)" class="bg-red-700 hover:bg-red-800 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
               <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> Annuler
             </button>
 
@@ -35,14 +35,14 @@
               <fa-icon class="mr-2" [icon]="myEdit"></fa-icon> Modifier vos informations
             </button>
 
-            <button *ngIf="editionProfil" class="bg-green-600 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" 
+            <button *ngIf="editionProfil" class="bg-green-700 hover:bg-green-800 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" 
                     (click)="onEditProfil()" 
                     type="submit">
                     <fa-icon class="mr-2" [icon]="myValid"></fa-icon> Enregistrer
             </button>
 
             <button *ngIf="changePassword" class="bg-green-600 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" 
-                    (click)="onChangePassword" 
+                    (click)="onChangePassword()" 
                     type="submit">
                     <fa-icon class="mr-2" [icon]="myValid"></fa-icon> Enregistrer
             </button>
@@ -73,13 +73,23 @@
 
                     <p class="pt-2 text-lg font-semibold text-gray-50">{{currentUser.firstName}} {{ currentUser.lastName}}</p>
                     <p class="text-sm text-gray-100">{{currentUser.email}}</p>
+                    <p *ngIf="currentUser.admin" class="text-sm text-gray-100">
+                      <fa-icon class="mr-2" [icon]="myAdmin"></fa-icon>  Administrateur
+                    </p>
                     
                     <div class="mt-5">
-                        <a *ngIf="!editPhoto" (click)="onEditPhoto()" class="clicable border rounded-full py-2 px-4 text-xs font-semibold hover:bg-blue-800 text-gray-100">
+                        <a *ngIf="!editPhoto" (click)="onEditPhoto()" class="clicable border rounded-full py-2 px-4 text-xs font-semibold hover:bg-blue-700 bg-blue-800 text-gray-100">
                             Modifier votre photo de profil
                         </a>
 
                     </div>
+
+                    <div class="mt-5">
+                      <a *ngIf="editPhoto" (click)="onCancelUploadPhoto()" class="clicable border rounded-full py-2 px-4 text-xs font-semibold hover:bg-red-700 bg-blue-800 text-gray-100">
+                         Annuler
+                      </a>
+
+                  </div>
           
                 </div>
           
@@ -90,31 +100,31 @@
 
                     
                     <span *ngIf="editPhoto">
-      
-                        
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Changer la photo :</label>
-                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer 
-                                    bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 
-                                    dark:placeholder-gray-400" id="file_input" type="file" (change)="onSelectedFile($event)">
-      
-                        <br>
-                        <button (click)="uploadPhoto()" class="bg-blue-800 hover:bg-black text-white text-sm 
-                                                                font-semibold inline-flex items-center p-1.5 rounded"> Changer la photo
-                            <fa-icon [icon]="myUpload"></fa-icon>
-                        </button>
-      
-                        <button (click)="onCancelUploadPhoto()" class="bg-blue-800 hover:bg-black text-white text-sm 
-                                                                font-semibold inline-flex items-center p-1.5 rounded"> Annuler 
-                            <fa-icon [icon]="myCancel"></fa-icon>
-                        </button>
-                        <br>
+
+                        <div class="flex items-center justify-center w-full">
+
+                          <label for="dropzone-file" class=" flex flex-col items-center justify-center w-full h-auto border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                  <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                  </svg>
+                                  <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Cliquez pour changer la photo de votre profil</span></p>
+                                  <p class="text-xs text-gray-500 dark:text-gray-400">La photo doit etre en format JPG ou PNG (MAX. 800x400px)</p>
+                              </div>
+                              <input (change)="uploadPhoto($event)" id="dropzone-file" type="file" class="hidden" />
+                          </label>
+                     
+                        </div> 
+
+                        <!-- <br>
       
                         <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+
                             <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: 45%"> 45%</div>
                         </div>
       
                         {{progress}}
-      
+       -->
                     </span>
       
                   </div>
@@ -134,7 +144,7 @@
 
           <br><br>
           
-          <div>
+          <div >
 
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
               Informations du profil
@@ -159,7 +169,7 @@
                     <fa-icon class="mr-2" [icon]="myAdmin"></fa-icon> Role
                   </label>
                   <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  w-full ease-linear transition-all duration-150"
-                        value="Admin"
+                        value="Administrateur"
                         readonly>
                 </div>
               </div>
@@ -199,11 +209,39 @@
             </div>
 
             <hr class="mt-6 border-b-1 border-blueGray-300">
+            <br>
+            <div class="flex justify-between">
+                  <div>
+                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                      Coordonnées personnelles
+                    </h6>
+                  </div>
 
-            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Coordonnées personnelles
-            </h6>
-            <div class="flex flex-wrap">
+                  <div>
+                    <button (click)="onChangeStatus_Contact(true)" *ngIf="!currentUser.contact && !editionContact" class="bg-blue-800 text-white active:bg-black hover:bg-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                      <fa-icon class="mr-2" [icon]="myEdit"></fa-icon> Ajouter
+                    </button>
+                  
+                    <a *ngIf="currentUser.contact" class="text-red-700 text-xl" href="#">
+                      <fa-icon  [icon]="myDelete"></fa-icon>
+                    </a>  
+                  </div>
+            </div>
+            <div class="flex justify-between">
+
+                <button *ngIf="editionContact" (click)="onChangeStatus_Contact(false)" class="bg-red-700 hover:bg-red-800 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                    <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> Annuler
+                </button>
+
+                <button *ngIf="editionContact" class="bg-green-700 hover:bg-red-800 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" 
+                    (click)="onPostContact()" 
+                    type="submit">
+                    <fa-icon class="mr-2" [icon]="myValid"></fa-icon> Enregistrer
+                </button>
+
+            </div>
+
+            <div *ngIf="currentUser.contact" class="flex flex-wrap">
 
               <div class="w-full lg:w-12/12 px-4">
                 <div class="relative w-full mb-3">
@@ -253,14 +291,131 @@
               </div>
 
             </div>
+            
+            <br>
+            
+            <form [formGroup]="postContactForm" > <!--(ngSubmit)="onPostContact()"-->
+            
+                  <div *ngIf="editionContact" class="flex flex-wrap">
+
+
+
+                      <div class="w-full lg:w-4/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myCountry"></fa-icon> Pays
+                          </label>
+                          <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                                
+                                formControlName="country">
+                        </div>
+                      </div>
+
+                      <div class="w-full lg:w-4/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myCity"></fa-icon> Ville
+                          </label>
+                          <input type="email" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        
+                          formControlName="city">
+                        </div>
+                      </div>
+
+                      <div class="w-full lg:w-4/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myPostal"></fa-icon> Code postal
+                          </label>
+                          <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          
+                          formControlName="postal">
+                        </div>
+                      </div>
+
+                      <div class="w-full lg:w-12/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myStreet"></fa-icon> Quartier et Rue
+                          </label>
+                          <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                          
+                          formControlName="street">
+                        </div>
+                      </div>
+
+                      <div class="w-full lg:w-4/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myEmail"></fa-icon> Email
+                          </label>
+                          <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                          [value]="currentUser.email"
+                          readonly>
+                        </div>
+                      </div>
+
+                      <div class="w-full lg:w-4/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myPhone"></fa-icon> Téléphone 1
+                          </label>
+                          <input type="email" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                          
+                          formControlName="mobile">
+                        </div>
+                      </div>
+
+                      <div class="w-full lg:w-4/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myWhatsapp"></fa-icon> WhatsApp  /  <fa-icon class="mr-2 ml-1" [icon]="mySkype"></fa-icon> Skype
+                          </label>
+                          <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                          
+                          formControlName="skype">
+                        </div>
+                      </div>
+
+                </div>
+            </form>
+            <!-- -------------------------------------------------------------------------------------- -->
 
             <hr class="mt-6 border-b-1 border-blueGray-300">
+            <br>
+            <div class="flex justify-between">
+                  <div>
+                      <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                        Informations de payement
+                      </h6>
+                  </div>  
+                  <div>
+                      <button (click)="onChangeStatus_PaymentCard(true)" *ngIf="!currentUser.paymentCard && !editionPaymentCard" class="bg-blue-800 text-white active:bg-black hover:bg-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                        <fa-icon class="mr-2" [icon]="myEdit"></fa-icon> Ajouter
+                      </button>
+                 
+                      <a *ngIf="currentUser.paymentCard" class="text-red-700 text-xl" href="#">
+                        <fa-icon  [icon]="myDelete"></fa-icon>
+                      </a> 
+                </div>
+          
+            </div>
 
-            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Informations de payement
-            </h6>
+            <div class="flex justify-between">
+              <button *ngIf="editionPaymentCard" (click)="onChangeStatus_PaymentCard(false)" class="bg-red-700 hover:bg-red-800 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                  <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> Annuler
+              </button>
 
-            <div class="flex flex-wrap">
+              <button *ngIf="editionPaymentCard" class="bg-green-700 hover:bg-green-800 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" 
+                  (click)="onPostPaymentCard()" 
+                  type="submit">
+                  <fa-icon class="mr-2" [icon]="myValid"></fa-icon> Enregistrer
+              </button>
+            </div>
+
+            <br>
+
+            <div *ngIf="currentUser.paymentCard != null" class="flex flex-wrap">
 
               <div class="w-full lg:w-12/12 px-4">
                 <div class="relative w-full mb-3">
@@ -307,9 +462,59 @@
               </div>
 
             </div>
+            
+            <br>
 
+            <form [formGroup]="postPaymentCardForm" >      <!--  (ngSubmit)="onPostContact()" -->
 
+                <div *ngIf="editionPaymentCard" class="flex flex-wrap">
 
+                      <div class="w-full lg:w-12/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myCard"></fa-icon> Numéro du carte de payement
+                          </label>
+                          <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring  w-full ease-linear transition-all duration-150" 
+                        
+                          formControlName="cardNumber">
+                        </div>
+                      </div>
+
+                      <div class="w-full lg:w-4/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Nom du porteur de la carte
+                          </label>
+                          <input type="email" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          
+                          formControlName="cardOwner">
+                        </div>
+                      </div>
+
+                      <div class="w-full lg:w-4/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myDate"></fa-icon> Date d'expiration (Mois)
+                          </label>
+                          <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                                
+                                >
+                        </div>
+                      </div>
+
+                      <div class="w-full lg:w-4/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            <fa-icon class="mr-2" [icon]="myDate"></fa-icon> Date d'expiration (Année)
+                          </label>
+                          <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                              
+                                >
+                        </div>
+                      </div>
+                
+                </div>
+              </form>
           </div>
         </div>
 
@@ -317,21 +522,21 @@
 
         <div *ngIf="editionProfil" class="flex-auto px-4 lg:px-10 py-10 pt-0">
   
-          <form [formGroup]="editProfilForm" (ngSubmit)="onEditProfil()">
+          <form [formGroup]="editProfilForm" >
     
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
               Informations du profil
             </h6>
             <div class="flex flex-wrap">
               
-    
+     
               <div class="w-full lg:w-6/12 px-4">
                 <div class="relative w-full mb-3">
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                     <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Prénom
                   </label>
                   <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        [value]="currentUser.firstName"
+                        
                         formControlName="firstName">
     
                        
@@ -347,7 +552,7 @@
                     <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Nom
                   </label>
                   <input type="text" class=" form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        [value]="currentUser.lastName"
+                       
                         formControlName="lastName">
     
                         <!-- <div class="text-[11px] text-red-500">
@@ -362,7 +567,7 @@
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
               Coordonnées personnelles
             </h6>
-            <div class="flex flex-wrap">
+            <div *ngIf="currentUser.contact" class="flex flex-wrap">
 
               <div class="w-full lg:w-4/12 px-4">
                 <div class="relative w-full mb-3">
@@ -370,7 +575,7 @@
                     <fa-icon class="mr-2" [icon]="myCountry"></fa-icon> Pays
                   </label>
                   <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
-                        [value]="currentUser.contact.country"
+                       
                         formControlName="country">
                 </div>
               </div>
@@ -381,7 +586,7 @@
                     <fa-icon class="mr-2" [icon]="myCity"></fa-icon> Ville
                   </label>
                   <input type="email" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  [value]="currentUser.contact.city"
+                  
                   formControlName="city">
                 </div>
               </div>
@@ -392,7 +597,7 @@
                     <fa-icon class="mr-2" [icon]="myPostal"></fa-icon> Code postal
                   </label>
                   <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  [value]="currentUser.contact.postal"
+                 
                   formControlName="postal">
                 </div>
               </div>
@@ -403,7 +608,7 @@
                     <fa-icon class="mr-2" [icon]="myStreet"></fa-icon> Quartier et Rue
                   </label>
                   <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
-                  [value]="currentUser.contact.street"
+                  
                   formControlName="street">
                 </div>
               </div>
@@ -424,7 +629,7 @@
                     <fa-icon class="mr-2" [icon]="myPhone"></fa-icon> Téléphone 1
                   </label>
                   <input type="email" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
-                  [value]="currentUser.contact.mobile"
+                  
                   formControlName="mobile">
                 </div>
               </div>
@@ -435,12 +640,29 @@
                     <fa-icon class="mr-2" [icon]="myWhatsapp"></fa-icon> WhatsApp  /  <fa-icon class="mr-2 ml-1" [icon]="mySkype"></fa-icon> Skype
                   </label>
                   <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
-                  [value]="currentUser.contact.skype"
+                
                   formControlName="skype">
                 </div>
               </div>
 
 
+            </div>
+
+                        
+            <div *ngIf="!currentUser.contact">
+
+              <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+                  <div class="flex items-center">
+                    <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <h3 class="text-lg font-medium">Aucune Coordonnée personnelle à afficher</h3>
+                  </div>
+                  <div class="mt-2 mb-4 text-sm">
+                      <p>Vous pouvez les ajouter dans la page de votre compte !</p>
+                  </div>
+              </div>
             </div>
 
             
@@ -450,7 +672,7 @@
               Informations de payement
             </h6>
 
-            <div class="flex flex-wrap">
+            <div *ngIf="currentUser.paymentCard" class="flex flex-wrap">
 
               <div class="w-full lg:w-12/12 px-4">
                 <div class="relative w-full mb-3">
@@ -458,7 +680,7 @@
                     <fa-icon class="mr-2" [icon]="myCard"></fa-icon> Numéro du carte de payement
                   </label>
                   <input type="text" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring  w-full ease-linear transition-all duration-150" 
-                  [value]="currentUser.paymentCard.cardNumber"
+                
                   formControlName="cardNumber">
                 </div>
               </div>
@@ -469,7 +691,7 @@
                     <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Nom du porteur de la carte
                   </label>
                   <input type="email" class="form-control border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  [value]="currentUser.paymentCard.cardOwner"
+                  
                   formControlName="cardOwner">
                 </div>
               </div>
@@ -497,6 +719,23 @@
               </div>
 
             </div>
+            
+            <div *ngIf="!currentUser.paymentCard">
+
+                  <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+                      <div class="flex items-center">
+                        <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <h3 class="text-lg font-medium">Aucune Information de payement à afficher</h3>
+                      </div>
+                      <div class="mt-2 mb-4 text-sm">
+                          <p>Vous pouvez les ajouter dans la page de votre compte !</p>
+                      </div>
+                  </div>
+            </div>
+          
 
     
             <!-- <hr class="mt-6 border-b-1 border-blueGray-300">

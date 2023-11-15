@@ -11,6 +11,7 @@ import { faBasketShopping, faBullhorn, faCartPlus, faCheckCircle, faSplotch, faT
 import {} from '@fortawesome/free-regular-svg-icons';
 import {} from '@fortawesome/free-brands-svg-icons';
 import { Icons } from '../_Plugins/icons.model';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-caddy',
@@ -33,7 +34,7 @@ export class CaddyComponent implements OnInit {
               private router:Router,
               public catService:CatalogueService,         
               public panierService:PanierService, 
-              public authService:AuthentificationService,
+              public accountService:AccountService,
               ) 
 
               { 
@@ -44,7 +45,7 @@ export class CaddyComponent implements OnInit {
   ngOnInit() 
   {
 
-    if(this.authService.isAuthenticated) 
+    if(this.accountService.isAuth) 
     {
       this.getUserCaddy()
     }
@@ -58,7 +59,7 @@ export class CaddyComponent implements OnInit {
 
 
   onRemoveProductFromCaddy(p: ProductItem) {
-    this.panierService.removeProduct(p.id);
+    this.panierService.removeProduct(p.productId);
   }
 
 //---------------------------------------------- ici -----------------------
@@ -84,7 +85,7 @@ export class CaddyComponent implements OnInit {
 
       onNewOrder()
       {
-        if(!this.authService.isAuthenticated)
+        if(!this.accountService.isAuth)
             {
                 this.router.navigateByUrl('/login');
                 

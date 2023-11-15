@@ -84,37 +84,44 @@ export class ProductsComponent implements OnInit {
 
     this.route.params.subscribe((data)=>
      {              
-            this.p1 = +data['p1']
-            this.idCat=+data['p2']
+            this.p1 = +data['p1'];
+            this.idCat = data['p2'];
 
                         if(this.p1==1)
-                        {
-                          
+                        {  
                           this.title="Les produits sélectionés";
-                          this.getProducts('/products/search/selectedProducts');
+                          this.getProducts('/products/selectedProducts');
                         }
                         else if(this.p1==2)
                         {
                           
                           //let idCat=this.route.snapshot.params['p2'];
-
-                          
+       
                           this.title="Produits de la catégorie "+this.idCat;
-                          this.getProducts('/categories/'+this.idCat+'/products');
+                          this.getProducts('/categories/'+this.idCat);
                         }
                         else if(this.p1==3)
-                        { 
-                          
+                        {       
                           this.title="Les produits en promotion"; 
-                          this.getProducts('/products/search/promoProducts');
+                          this.getProducts('/products/promoProducts');
                         }
                         else if(this.p1==4)
-                        {
-                          
-                          this.title="Les produits disponibles";
-                          this.getProducts('/products/search/dispoProducts');
+                        {  
+                          this.title="Les produits tendances";
+                          this.getProducts('/products/tendancyProducts');
                         }
-    
+                        
+                        else if(this.p1==5)
+                        {  
+                          this.title="Les nouveaux produits";
+                          this.getProducts('/products/newProducts');
+                        }
+
+                        else if(this.p1==6)
+                        {  
+                          this.title="Les nouveaux produits";
+                          this.getProducts('/products/futurProducts');
+                        }
  
                       } );
     
@@ -248,12 +255,11 @@ export class ProductsComponent implements OnInit {
   }
 */
   // Methode qui permet de faire une redirection vers le detail du produit
-    onProductDetails(p:Product)
+    onProductDetails(p:any)
     {
-        let url=btoa(p._links.product.href);
-        this.router.navigateByUrl("product-detail/"+url);
+        this.router.navigateByUrl("product-detail/"+p.productId);
     }
-///-------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------
     onFilter(value: string)
     {
       //console.log(value)
@@ -270,7 +276,7 @@ export class ProductsComponent implements OnInit {
       if (value == "enPromotion" && this.products != undefined)
       {
         
-        this.products = this.products._embedded.products.filter((product :any) => product.promotion)
+        this.products = this.products.filter((product :any) => product.promotionProduct)
         //this.products=null
         console.log("222222222222222222222 :"+ this.products)
         

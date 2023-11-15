@@ -56,6 +56,10 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CommentsComponent } from './comments/comments.component';
+import { CategoryEditComponent } from './category-edit/category-edit.component';
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import { NewUserComponent } from './new-user/new-user.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 
 //import { FlowbiteModule } from 'flowbite';
@@ -90,7 +94,11 @@ import { CommentsComponent } from './comments/comments.component';
     AboutComponent,
     HistoryOrdersComponent,
     PasswordResetComponent,
-    CommentsComponent
+    CommentsComponent,
+    CategoryEditComponent,
+    CategoryDetailComponent,
+    NewUserComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

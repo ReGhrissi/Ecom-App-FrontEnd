@@ -39,10 +39,20 @@ export class CategoriesComponent implements OnInit{
           });
   }
 
+  onCategoryDetail(idCat :any)
+  {
+    this.router.navigateByUrl("/category-detail/"+idCat);
+  }
+  
+  onEdit(idCat:any)
+  {
+    this.router.navigateByUrl("/category-edit/"+idCat);
+  }
+
   newProduct(c :Category)
   {
   
-    let url=btoa(c._links.products.href);
+    let url= c.categoryId;
     this.router.navigateByUrl("/new-product/"+url);
       
   }

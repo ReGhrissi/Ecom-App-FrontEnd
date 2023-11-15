@@ -14,11 +14,12 @@ export class CommentsComponent implements OnInit {
 
   icons :Icons = new Icons()
   myDelete=this.icons.myDelete
+  myBack=this.icons.myBack
 
   idUser:any;
   comments:any;
   currentUser:any;
-
+  isComments :boolean =true;
   
 
   constructor(private activateRoute:ActivatedRoute, private commentService :CommentService, public userService:UserService)
@@ -44,7 +45,13 @@ export class CommentsComponent implements OnInit {
              next: (data:any) => {
 
                                this.comments=data;
-                               console.log("comments :"+ this.comments[0].commentText)
+
+                               if(this.comments)
+                               {
+                                this.isComments=false;
+                               }
+
+                            //   console.log("comments :"+ this.comments[0].commentText)
                               // console.log("current USER :"+data.addresses[0].type)
 
                            },

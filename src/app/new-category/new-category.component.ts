@@ -3,6 +3,9 @@ import { CatalogueService } from '../services/catalogue.service';
 import { catchError } from 'rxjs';
 import { Icons } from '../_Plugins/icons.model';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-new-category',
@@ -17,14 +20,46 @@ export class NewCategoryComponent {
   myNew =this.icons.myNew;
   myCancel=this.icons.myCancel
 
-  newCategorie:any;
+  newCategory:any;
 
-  constructor(public catService:CatalogueService, private router:Router)
+  constructor(public catService:CatalogueService, private router:Router, private location:Location)
   {
       
   }
 
+  newCategoryForm = new FormGroup ({
 
+    name: new FormControl('',[Validators.required]),
+    description: new FormControl('',[Validators.required]),
+    
+  });
+
+  onNewCategory()
+  {
+    const name = this.newCategoryForm.get('name')?.value || '' ;
+    const description = this.newCategoryForm.get('description')?.value || '' ;
+
+    this.catService.postRessource("/categories", { name, description}).pipe(
+
+      catchError(err => {
+                        console.log(err);
+        throw err;
+      })
+      ).subscribe((data:any)=> {
+
+          this.newCategory =data;
+          this.router.navigate(['/category-edit/'+this.newCategory.categoryId]).then(() => {
+            window.location.reload();
+          });
+          
+        });
+  }
+
+  onBack() 
+  {
+    this.location.back();
+  }
+  /*
   onNewCategory(f:any)
   {
     this.catService.postRessource('/categories',f).pipe(
@@ -53,6 +88,6 @@ export class NewCategoryComponent {
     });
   }
 
-
+*/
   
 }

@@ -1,84 +1,75 @@
-<div>
-
-    <label >  Ajouter une nouveau produit :</label>
-    <br>
-    <br>
+<section  class=" py-1 bg-blueGray-50">
+<div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
     
-    <form  #f="ngForm" (ngSubmit)="onNewProduct(f.value)">
+        <div class="rounded-t bg-white mb-0 px-6 py-6">
 
-        <div class="form-group mb-6">
-            <label for="name_p" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de Produit :</label>
-            <input type="text" id="name_p" name="name" ngModel class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
-                                                     focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                                                      dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                                       dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div class="text-center flex justify-between">
+
+                <label class="font-semibold text-gray-800 dark:text-white">
+                    <fa-icon class="mr-2" [icon]="myNew"></fa-icon>  Ajouter un nouveau produit :
+               </label>
+
+                <button (click)="onBack()"  class="bg-blue-800 text-white active:bg-black hover:bg-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                    <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> Annuler
+                </button>
+
+            </div>
+
+        </div>
+
+    <br>
+    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+    <form [formGroup]="newProductForm"  (ngSubmit)="onNewProduct()">
+
+        <div class=" mb-6">
+            <label for="name_p" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Désignation du Produit :</label>
+            
+            <input  class=" form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                                       dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Donner une désignation au nouveau produit ..." type="text" id="name_p"
+                    formControlName="name" >
                                                     
         </div>
 
-        <div class="form-group mb-6">       
-        <label for="descr" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description de produit :</label>
-        <textarea id="descr" name="description" rows="4" ngModel class="form-control block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg 
-                                                    border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 
-                                                    dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+        <div class="mb-6">       
+            <label for="descr" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description du produit :</label>
+            
+            <textarea  class="form-control block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                                                      dark:focus:border-blue-500"
-                                                placeholder="Leave a comment..."></textarea>
+                        placeholder="Saisir une déscription du produit ..." id="descr"  rows="4"
+                        formControlName="description"></textarea>
         </div> 
 
-        <div class="form-group mb-6">
-            <label for="price" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prix de produit:</label>
-            <input type="text" id="price" name="currentPrice" ngModel class="form-control bg-gray-50 border border-gray-300 text-gray-900 
-                                                                            text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block 
-                                                                            w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                                                                             dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <div class="mb-6">
+            <label for="price" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prix de produit :</label>
+            
+            <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Saisir le prix initial du produit ..." type="text" id="price" 
+                    formControlName="price">
+        </div>
+
+        <div class="mb-6">
+            <label for="currentPrice" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prix de vente :</label>
+            
+            <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Saisir le prix de vente du produit ..." type="text" id="currentPrice" 
+                    formControlName="currentPrice">
         </div>
 
 
 
-        <div class="form-group flex items-start mb-6">
-            <div class="flex items-center h-5">
-                <input id="promo" type="checkbox" name="promotion"  ngModel class="w-4 h-4 border border-gray-300 rounded bg-gray-50 
-                                                                                    focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 
-                                                                                    dark:border-gray-600 dark:focus:ring-blue-600 
-                                                                                    dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
-            </div>
-            <label for="promo" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Promotion :</label>
-        </div>
-
-        <div class=" form-group flex items-start mb-6">
-            <div class="flex items-center h-5">
-                <input id="select" type="checkbox" name="selected" ngModel class="w-4 h-4 border border-gray-300 rounded bg-gray-50
-                                                                                     focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 
-                                                                                     dark:border-gray-600 dark:focus:ring-blue-600 
-                                                                                     dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" >
-            </div>
-
-            <label for="select" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sélection :</label>
-
-        </div>
-
-        <div class="form-group flex items-start mb-6">
-            <div class="flex items-center h-5">
-                <input id="dispo" type="checkbox" name="available" ngModel class="w-4 h-4 border border-gray-300 rounded bg-gray-50 
-                                                                                  focus:ring-3 focus:ring-blue-300 dark:bg-gray-700
-                                                                                   dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
-                                                                                   dark:focus:ring-offset-gray-800" >
-            </div>
-
-            <label for="dispo" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Disponible :</label>
-
-        </div>
-
-        <div class="form-group mb-6">
+        <div class="mb-6">
             <label for="Cat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Catégorie du Produit :</label>
 
-            <select   name="category_id" ngModel id="Cat" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option *ngFor="let c of categories._embedded.categories" [value]="c.id">{{c.name}}</option>
+            <select   formControlName="categoryId" id="Cat" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option *ngFor="let c of categories" [value]="c.categoryId">{{c.name}}</option>
             </select>
       </div>
-      {{f.value | json}}
+     
 
         <div class="flex">
-            <button  type="submit" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button  type="submit" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <fa-icon [icon]="myNew"></fa-icon>
                 <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         
@@ -87,19 +78,10 @@
             </button>
          </div>
 
-         <br>
 
-         <div class="flex">
-            <button routerLink="/categories" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <fa-icon [icon]="myCancel"></fa-icon>
-                <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        
-                </svg>
-                <span >  Annuler </span>
-            </button>
-         </div>
     </form>
+    </div>
     
-    
-
+    </div>
 </div>
+</section>

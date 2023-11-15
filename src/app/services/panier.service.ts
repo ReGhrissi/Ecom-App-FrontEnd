@@ -4,6 +4,7 @@ import { Caddy } from '../_Model/caddy.model';
 import { ProductItem } from '../_Model/product-item.model';
 import { Product } from '../_Model/product.model';
 import { Client } from '../_Model/client.model';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class PanierService {
   public myCaddy;
  
   constructor(
-               public authService:AuthentificationService
+               public accountService:AccountService, public authenticationService:AuthentificationService
               ) 
 
                 { 
@@ -28,9 +29,9 @@ export class PanierService {
   {
         let productsFromCaddy : ProductItem[] = [];
 
-        if(this.authService.isAuthenticated)
+        if(this.accountService.isAuth)
         {
-                let productsUserCaddy =localStorage.getItem("monPanier_"+this.authService.userAuthenticated.username+"_");
+                let productsUserCaddy =localStorage.getItem("monPanier_"+this.authenticationService.userAuthenticated.email+"_");
 
               //  console.log ("les produis from panier :"+ productsUserCaddy)
 
@@ -41,7 +42,7 @@ export class PanierService {
                 }
                 for (let pFC of productsFromCaddy)
                 {
-                  this.myCaddy.items.set(pFC.id,pFC)
+                  this.myCaddy.items.set(pFC.productId,pFC)
                 }
                  
             return this.myCaddy;
@@ -57,7 +58,7 @@ export class PanierService {
                 }
                 for (let pFC of productsFromCaddy)
                 {
-                  this.myCaddy.items.set(pFC.id,pFC)
+                  this.myCaddy.items.set(pFC.productId,pFC)
                 }
 
             return this.myCaddy;
@@ -101,7 +102,7 @@ export class PanierService {
 
       public addProduct(product:Product)
       {
-          this.addProductToCaddy(product.id,product.name,product.currentPrice,product.quantity)
+          this.addProductToCaddy(product.productId,product.name,product.currentPrice,product.quantity)
           this.saveCaddyOnlocalStorage();
       }
 
@@ -122,7 +123,7 @@ export class PanierService {
                         if(item===undefined) 
                         {
                           item=new ProductItem();
-                            item.id=id;
+                            item.productId=id;
                             item.name=name;
                             item.price=price;
                             item.quantity=quantity;
@@ -164,9 +165,9 @@ export class PanierService {
               productsInCaddy.push(i);     
             }
 
-            if(this.authService.isAuthenticated)
+            if(this.accountService.isAuth)
             {
-                localStorage.setItem("monPanier_"+this.authService.userAuthenticated.username+"_",JSON.stringify(productsInCaddy));
+                localStorage.setItem("monPanier_"+this.authenticationService.userAuthenticated.email+"_",JSON.stringify(productsInCaddy));
             }
 
             localStorage.setItem("Panier_GUEST",JSON.stringify(productsInCaddy));

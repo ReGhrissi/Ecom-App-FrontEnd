@@ -1,6 +1,6 @@
 <div>
-    <div> 
-        
+    <div *ngIf="!editProduct"> 
+         
         <form>
             <div class="flex">
                 <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
@@ -39,7 +39,7 @@
     </div>
     <br>
     <div class="flex">
-        <button routerLink="/categories" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button routerLink="/categories" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <fa-icon [icon]="myNew"></fa-icon>
             <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     
@@ -48,7 +48,7 @@
         </button>
     </div>
     <br>
-    <div *ngIf="allProducts">
+    <div *ngIf="allProducts && !editProduct">
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg"> 
         
@@ -80,25 +80,25 @@
     
                 <tbody>
                     
-                    <tr  *ngFor= "let p of allProducts._embedded.products" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr  *ngFor= "let p of allProducts" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         
-                        <td class="w-32 p-4">
-                            <img src="{{this.catService.host+'/photoProduct/'+p.id}}" alt="Apple Watch">
+                        <td [routerLink]="'/product-detail/'+p.productId" class="clickable w-32 p-4">
+                            <img src="{{this.catService.host+this.catService.requestMapping+'/photoProduct/'+p.productId}}" alt="Apple Watch">
                         </td>
                         
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        <td [routerLink]="'/product-detail/'+p.productId" class="clickable px-6 py-4 font-semibold text-gray-900 dark:text-white">
                             {{p.name}}
                         </td>
                         
                         <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                            {{p.quantity}}
+                            {{p.stock}}
                         </td>
                         
                         <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                             {{p.currentPrice | number:'0.2'}}
                         </td>
                         
-                        <td (click)="updateProduct(p)" class="px-6 py-4" >
+                        <td (click)="onEdit(p.productId)" class="px-6 py-4" >
                             <a  class="clickable font-medium text-green-600 dark:text-red-500 hover:underline">Modifier</a>
                         </td>
 
@@ -117,3 +117,221 @@
 
     </div>
 </div>
+
+<!-- ------------------------------------------------------------------------------------------------- -->
+<section  class=" py-1 bg-blueGray-50">
+
+    <div *ngIf="editProduct" class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+
+        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+        
+            <div class="rounded-t bg-white mb-0 px-6 py-6">
+
+                <div class="text-center flex justify-between">
+
+                    <label class="font-semibold text-gray-800 dark:text-white">
+                        <fa-icon class="mr-2" [icon]="myEdit"></fa-icon>  Modifier le produit :
+                   </label>
+
+                    <button (click)="onBack()"  class="bg-blue-800 text-white active:bg-black hover:bg-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                        <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> Annuler
+                    </button>
+
+                </div>
+
+            </div>
+
+            <br>
+            <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+
+                <form [formGroup]="editProductForm"  (ngSubmit)="onUpdateProduct()">
+
+                    <div class=" mb-6">
+                        <label for="id_p" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID du Produit :</label>
+                        
+                        <input  class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                                                dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                type="text" id="id_p"
+                                [value]="currentProduct.productId"
+                                readonly>
+                                                                
+                    </div>
+
+                    <div class=" items-start mb-6">
+                        
+                        <label for="file_input" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo du produit : </label>
+                        
+                        <div class="flex">
+                            <div class="flex items-center justify-center w-full">
+
+                                <label for="dropzone-file" class="mr-1 flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                        </svg>
+                                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Cliquez pour changer la photo du produit</span></p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">La photo doit etre en format JPG (MAX. 800x400px)</p>
+                                    </div>
+                                    <input (change)="uploadPhoto($event)" id="dropzone-file" type="file" class="hidden" />
+                                </label>
+                                
+                            </div> 
+
+                            <figure class="rounded-lg border-2 border-gray-300 border-dashed max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                                <a >
+                                    <img class="rounded-lg" src="{{this.catService.host+this.catService.requestMapping+'/photoProduct/'+currentProduct.productId+'?ts='+getTS()}}" alt="image description">
+                                </a>
+                            </figure>
+                        </div>
+
+                    </div>
+
+                    <div class=" mb-6">
+                        <label for="name_p" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Désignation du Produit :</label>
+                        
+                        <input  class=" form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                                                dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                type="text" id="name_p"
+                                [value]="currentProduct.name"
+                                formControlName="name" >
+                                                                
+                    </div>
+
+                    <div class="mb-6">       
+                        <label for="descr" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Déscription du produit :</label>
+                        
+                        <textarea  class="form-control block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                                                dark:focus:border-blue-500"
+                                    id="descr"  rows="4"
+                                    [value]="currentProduct.description"
+                                    formControlName="description"></textarea>
+                    </div> 
+
+                    <div class="mb-6">
+                        <label for="price" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prix de produit :</label>
+                        
+                        <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                type="text" id="price" 
+                                [value]="currentProduct.price"
+                                formControlName="price">
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="currentPrice" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prix de vente :</label>
+                        
+                        <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                type="text" id="currentPrice" 
+                                [value]="currentProduct.currentPrice"
+                                formControlName="currentPrice">
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="stock" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock :</label>
+                        
+                        <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                type="text" id="stock" 
+                                [value]="currentProduct.stock"
+                                formControlName="stock">
+                    </div>
+
+
+                    <div class="flex items-start mb-6">
+                        <div class="flex items-center h-5">
+                            <input  class=" form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                                    id="promo" type="checkbox"
+                                    [value]="currentProduct.promotionProduct"
+                                    formControlName="promotionProduct">
+                            
+                        </div>
+                        <label for="promo" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">En Promotion :</label>
+                    </div>
+
+                    <div  class="mb-6">
+                        <label for="promotionRate" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pourcentage de la promotion :</label>
+                        
+                        <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                type="text" id="promotionRate" 
+                                [value]="currentProduct.promotionRate"
+                                formControlName="promotionRate">
+                    </div>
+
+
+                    <div class="flex items-start mb-6">
+                        <div class="flex items-center h-5">
+                            <input   class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                                    id="tendancyProduct" type="checkbox" 
+                                    [value]="currentProduct.tendancyProduct"
+                                    formControlName="tendancyProduct">
+                        </div>
+
+                        <label for="tendancyProduct" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Produit tendance :</label>
+
+                    </div>
+
+                    <div class="flex items-start mb-6">
+                        <div class="flex items-center h-5">
+                            <input   class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                                    id="select" type="checkbox" 
+                                    [value]="currentProduct.selectedProduct"
+                                    formControlName="selectedProduct">
+                        </div>
+
+                        <label for="select" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sélection :</label>
+
+                    </div>
+
+                    <div class="flex items-start mb-6">
+                        <div class="flex items-center h-5">
+                            <input  class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50  focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:focus:ring-offset-gray-800" 
+                                    id="dispo" type="checkbox"
+                                    [value]="currentProduct.availableProduct"
+                                    formControlName="availableProduct">
+                        </div>
+
+                        <label for="dispo" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Disponible :</label>
+
+                    </div>
+
+                    <div class="flex items-start mb-6">
+                        <div class="flex items-center h-5">
+                            <input   class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                                    id="newProduct" type="checkbox" 
+                                    [value]="currentProduct.newProduct"
+                                    formControlName="newProduct">
+                        </div>
+
+                        <label for="newProduct" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nouveau produit :</label>
+
+                    </div>
+
+                    <div class="flex items-start mb-6">
+                        <div class="flex items-center h-5">
+                            <input   class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                                    id="futurProduct" type="checkbox" 
+                                    [value]="currentProduct.futurProduct"
+                                    formControlName="futurProduct">
+                        </div>
+
+                        <label for="futurProduct" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Produit prochainement dans le stock :</label>
+
+                    </div>
+
+                   
+                    <br>
+                    <div class="flex">
+                        <button  type="submit" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <fa-icon [icon]="myEdit"></fa-icon>
+                            <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    
+                            </svg>
+                            <span >  Modifier le produit</span>
+                        </button>
+                    </div>
+
+                    <br>
+ 
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit {
 
   selectedProducts :any;
   promoProducts :any;
-  dispoProducts : any;
+  tendancyProducts : any;
+  newProducts:any;
+  futurProducts:any;
 
   categories:any;
 
@@ -37,24 +39,20 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getSelectedProducts('/products/search/selectedProducts');
+    this.getSelectedProducts('/products/selectedProducts');
 
-    this.getPromoProducts('/products/search/promoProducts');
+    this.getNewProducts('/products/newProducts');
 
-    this.getDispoProducts('/products/search/dispoProducts');
+    this.getFuturProducts('/products/futurProducts');
+
+    this.getPromoProducts('/products/promoProducts');
+
+    this.getDispoProducts('/products/tendancyProducts');
 
    this.catService.getRessource("/categories").subscribe((categories: any) => {
 
-      this.categories = categories._embedded.categories;
+      this.categories = categories;
 
-      // Pour chaque catégorie, récupérez les produits associés
-      this.categories.forEach((category :any)=> {
-
-            this.http.get(category._links.products.href).subscribe((products: any) => {
-              
-              category.products = products._embedded.products;
-            });
-      });
     });
 
 
@@ -74,6 +72,24 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  private getNewProducts(url :any)
+  {
+    this.catService.getRessource(url)
+      .subscribe({
+          next: data => {this.newProducts=data;},
+          error: err => console.error(err)
+      });
+  }
+
+  private getFuturProducts(url :any)
+  {
+    this.catService.getRessource(url)
+      .subscribe({
+          next: data => {this.futurProducts=data; console.log('futur prod :'+this.futurProducts)},
+          error: err => console.error(err)
+      });
+  }
+
   private getPromoProducts(url :any)
   {
     this.catService.getRessource(url)
@@ -87,7 +103,7 @@ export class HomeComponent implements OnInit {
   {
     this.catService.getRessource(url)
       .subscribe({
-          next: data => {this.dispoProducts=data;},
+          next: data => {this.tendancyProducts=data;},
           error: err => console.error(err)
       });
   }
@@ -96,8 +112,7 @@ export class HomeComponent implements OnInit {
     // Methode qui permet de faire une redirection vers le detail du produit
     onProductDetails(p:Product)
     {
-        let url=btoa(p._links.product.href);
-        this.router.navigateByUrl("product-detail/"+url);
+        this.router.navigateByUrl("product-detail/"+p.productId);
     }
 
     getTS()
@@ -142,4 +157,6 @@ export class HomeComponent implements OnInit {
       */
       nav: true
     }
+
+   
 }

@@ -4,6 +4,8 @@ import { CatalogueService } from '../services/catalogue.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import { Category } from '../_Model/category.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-new-product',
@@ -21,16 +23,24 @@ export class NewProductComponent implements OnInit{
 
   categories:any;
   newProduct:any;
-  url:any;
+  idCat:any;
 
-  constructor(public catService:CatalogueService, private router:Router, private route:ActivatedRoute)
-  {
-      
-  }
+  newProductForm = new FormGroup ({
+
+    name: new FormControl('',[Validators.required]),
+    description: new FormControl('',[Validators.required]),
+    price: new FormControl('',[Validators.required]), 
+    currentPrice: new FormControl('',[Validators.required]), 
+    categoryId: new FormControl('',[Validators.required]), 
+    
+  });
+
+  constructor(public catService:CatalogueService, private router:Router, 
+              private route:ActivatedRoute, private location:Location)
+  {}
+  
   ngOnInit(): void {
 
-    this.url = atob(this.route.snapshot.params['url']);
-    console.log("my URL :"+this.url)
 
     this.catService.getRessource("/categories") 
           .subscribe({
@@ -40,32 +50,36 @@ export class NewProductComponent implements OnInit{
 
     }
 
-  onNewProduct(f:any)
+  onBack()
+  {
+    this.location.back();
+  }
+  
+  onNewProduct()
   {
 
-    this.catService.postRessource("/products",f).pipe(
+    const name = this.newProductForm.get('name')?.value || '' ;
+    const description = this.newProductForm.get('description')?.value || '' ;
+    const price = this.newProductForm.get('price')?.value || '' ;
+    const currentPrice = this.newProductForm.get('currentPrice')?.value || '' ;
+    const categoryId = this.newProductForm.get('categoryId')?.value || '' ;
+
+
+    this.catService.postRessource("/products/"+categoryId, { name, description, price, currentPrice}).pipe(
 
       catchError(err => {
-        console.log(err);
-
+                        console.log(err);
         throw err;
-
       })
-    ).subscribe((data:any)=> {
+      ).subscribe((data:any)=> {
 
-          console.log("Retour de New Product :"+data)
+        //  console.log("Retour de New Product :"+data)
+          this.newProduct =data;
+          this.router.navigateByUrl('/product-edit/'+this.newProduct.productId)    
+         //   this.newProduct.id = data['id'];
+          //    console.log("ID commande apres submit :"+this.newProduct.id)
 
-      this.newProduct =data;
-      this.router.navigateByUrl('/categories')
-            
-            this.newProduct.id = data['id'];
-              console.log("ID commande apres submit :"+this.newProduct.id)
-    
-             
-           
- 
-    });
+        });
   }
-
 
 }

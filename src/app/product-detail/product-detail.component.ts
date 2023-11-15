@@ -13,6 +13,9 @@ import { OwlOptions } from 'ngx-owl-carousel-o/public_api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { CommentService } from '../services/comment.service';
+import { forkJoin, Observable } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+import { Location} from '@angular/common';
 
 
 @Component({
@@ -42,13 +45,18 @@ export class ProductDetailComponent implements OnInit {
   myCommentSolid=this.icons.myCommentSolid
   myUser=this.icons.myUser
   myDelete=faTrashCan
+  myAdmin=this.icons.myAdmin
+  myBack=this.icons.myBack
+  
 
 
 
   currentProduct : any;
   currentCategory:any;
   productsOfCategory :any
-
+  commentsOfProduct:any
+  usersOfComments:any;
+  currentUser :any;
 
   selectedFiles : any ;
   progress: any;
@@ -65,7 +73,8 @@ export class ProductDetailComponent implements OnInit {
                 public panierService:PanierService,
                 private httpClient:HttpClient,
                 public userService:UserService,
-                public commentService:CommentService  
+                public commentService:CommentService,
+                private location:Location
             
               )
     {
@@ -76,30 +85,37 @@ export class ProductDetailComponent implements OnInit {
     commentForm:any
 
   ngOnInit(): void {
+
+    this.currentUser = this.authService.userAuthenticated;
     
-    let url=atob(this.route.snapshot.params['url']);
-    console.log("aaaaaaaaaaa"+url);
+    let productId = this.route.snapshot.params['productId'];
+    console.log("aaaaaaaaaaa :"+productId);
 
-    this.catalService.getProduct(url)
-       .subscribe({
-           next: data => {this.currentProduct=data;},
-           error: err => console.error(err)
-       });
+        this.catalService.getRessource("/products/"+productId)
+          .subscribe({
+              next: product => {
+                  this.currentProduct=product;
 
-    
-       this.httpClient.get(url+"/category").subscribe((category: any) => {
+                  this.catalService.getRessource("/categories/"+this.currentProduct.categoryId).subscribe((category: any) => {
 
-        this.currentCategory = category;
+                      this.currentCategory = category;
+                              
+                      this.productsOfCategory = this.currentCategory.products;   
+                  });
 
-        let idCat = this.currentCategory.id;
-  
-        this.catalService.getRessource('/categories/'+idCat+'/products').subscribe((products: any) => {
-                
-          this.productsOfCategory = products._embedded.products;
+                  this.commentsOfProduct =this.currentProduct.comments;
+
+                  const userRequests = this.commentsOfProduct.map((comment :any) => this.userService.getUser(comment.userId));
+
+                  forkJoin(userRequests).subscribe((users :any) => {
+                      // Associer chaque commentaire à son utilisateur correspondant
+                      this.commentsOfProduct.forEach((comment :any, index :any) => {
+                        comment.user = users[index];
+                      });
+                  });  
+              },
+              error: err => console.error(err)
         });
-
-
-      });
 
       this.commentForm = new FormGroup({
 
@@ -108,6 +124,11 @@ export class ProductDetailComponent implements OnInit {
         });
   
 
+  }
+
+  onBack()
+  {
+      this.location.back();
   }
 
   onEditPhoto(p :any)
@@ -128,7 +149,7 @@ export class ProductDetailComponent implements OnInit {
 
     this.currentFileUpload = this.selectedFiles.item(0)
 
-    this.catalService.uploadPhotoProduct(this.currentFileUpload, this.currentProduct.id)
+    this.catalService.uploadPhotoProduct(this.currentFileUpload, this.currentProduct.productId)
     .subscribe({
 
       next: event=>
@@ -162,11 +183,12 @@ export class ProductDetailComponent implements OnInit {
   {
     this.editPhoto=false;
   }
-
+/*
   onCancelUpdateProduct()
   {
     this.mode=0;
   }
+*/
 /** 
   onAddProductToCaddy(p:Product) {
     if(!this.authService.isAuthenticated()){
@@ -193,11 +215,12 @@ onProductDetails(p :any) {
   this.router.navigateByUrl("/product/"+p.id);
 }
 
-onEditProduct()
+onEditProduct(idProduct:any)
 {
-  this.mode=1;
+  this.router.navigateByUrl("/product-edit/"+idProduct);
 } 
- 
+
+/*
 // methode qui permet la modif d un produit
 onUpdateProduct(data :any) 
 {
@@ -212,7 +235,7 @@ onUpdateProduct(data :any)
       console.log(err);
     })
 }
-
+*/
 
   // Methode qui permet d'ajouter un produit au panier
   onAddProductToCaddy(p:Product)
@@ -265,7 +288,7 @@ onUpdateProduct(data :any)
     const commentText = this.commentForm.get('commentText')?.value || '';
     const commentDate : Date = new Date()
 
-    let url = "/comments"
+    let url = "/comments/"+this.currentProduct.productId
 
     this.commentService.onPostComment(url,{commentText, commentDate})
       .subscribe({

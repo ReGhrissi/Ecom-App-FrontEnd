@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { Location} from '@angular/common';
 
 
 import { AuthentificationService } from './services/authentification.service';
@@ -11,6 +11,7 @@ import { CaddyComponent } from './caddy/caddy.component';
 import { initFlowbite } from 'flowbite';
 import { TokenService } from './services/token.service';
 import { AccountService } from './services/account.service';
+import { Icons } from './_Plugins/icons.model';
 
 
 
@@ -21,7 +22,9 @@ import { AccountService } from './services/account.service';
 })
 export class AppComponent implements OnInit{
 
- 
+ icons: Icons = new Icons();
+
+ myBack = this.icons.myBack;
 
   title = 'Ecommerce-Front';
 
@@ -35,7 +38,8 @@ export class AppComponent implements OnInit{
                public panierService:PanierService,
                public caddyComponent :CaddyComponent,
                private tokenService:TokenService,
-               private accountService : AccountService
+               private accountService : AccountService,
+               private location: Location
 
                ) { }
 
@@ -65,6 +69,7 @@ export class AppComponent implements OnInit{
 
   }
 
+
   // methode qui permet la recuperation des categories
       private getCategories()
       {
@@ -76,11 +81,11 @@ export class AppComponent implements OnInit{
       }
     
   // methode qui permet la recupération des produits selon la catégorie séléctioné
-      getProductsByCat(c :any)
-      {
+  getProductsByCat(c :any)
+  {
           this.currentCategory=c;
-          this.router.navigateByUrl('/products/2/'+c.id);
-      }
+          this.router.navigateByUrl('/products/2/'+c.categoryId);
+  }
   
   // methode qui permet la recupération des produits à l'etat Séléctioné
   onSelectedProducts()

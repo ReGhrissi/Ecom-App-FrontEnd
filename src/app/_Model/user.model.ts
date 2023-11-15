@@ -1,15 +1,23 @@
+import { Contact } from "./contact.model"
+import { paymentCard } from "./payment-card.model"
 
-export interface User {
+export class User {
 
-    userId?: string,
-	firstName?: string,
-	lastName?: string,
-	email: string,
-	password:string,
+    userId: string =''
+	photoName:string=''
+	firstName: string = ''
+	lastName: string=''
+	email: string=''
+	admin:boolean=false
 
-    contact? : 
+
+    contact :Contact = new Contact()
+
+	paymentCard :paymentCard =
 		{
-			mobile : string,
-			skype : string
+			cardNumber:'',
+			cardOwner:'',
+			expirationDate:new Date()
+			
 		}
 }

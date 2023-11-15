@@ -26,6 +26,7 @@ export class SidebarComponent implements OnInit{
   myUsersManage=this.icons.myUsersManage;
   myOrdersManager = this.icons.myOrdersManage;
   myComment=this.icons.myCommentSolid
+  myBack=this.icons.myBack
   
   
   @Input() _Categories : any;
@@ -82,10 +83,12 @@ export class SidebarComponent implements OnInit{
   
   onMyComments()
   {
-    this.router.navigate(['/comments/'+this.currentUser.id]).then(() => {
-      window.location.reload();
-    });
-  
+    if(this.currentUser)
+    {
+      this.router.navigate(['/comments/'+this.currentUser.userId]).then(() => {
+        window.location.reload();
+      });
+    }
   }
-
+ 
 }

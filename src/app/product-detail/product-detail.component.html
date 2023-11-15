@@ -1,7 +1,20 @@
 
 
+<div class="flex justify-between">
+    
+    <button (click)="onBack()"   class=" bg-blue-800 hover:bg-black text-white text-sm 
+        font-semibold inline-flex items-center p-1.5 rounded">
+        <fa-icon class="mr-2" [icon]="myBack"></fa-icon>  Retour
+    </button>
 
-<br><br>
+    <button *ngIf="this.authService.isAdmin" (click)="onEditProduct(currentProduct.productId)"  class="ml-auto bg-blue-800 hover:bg-black text-white
+             text-sm font-semibold inline-flex items-center p-1.5 rounded">
+                <fa-icon [icon]="myEdit"></fa-icon> 
+    </button>
+</div>
+
+<br>
+<br>
 
 <div *ngIf="currentProduct">     
 
@@ -10,9 +23,9 @@
         <div>
             <div class="flex items-center mb-6 space-x-4">
 
-                <img  id="Photo_Product_Det" src="{{this.catalService.host+'/photoProduct/'+currentProduct.id+'?ts='+getTS()}}"/>
+                <img  id="Photo_Product_Det" src="{{this.catalService.host+this.catalService.requestMapping+'/photoProduct/'+currentProduct.productId+'?ts='+getTS()}}"/>
 
-              
+               
 
             </div>
 
@@ -27,28 +40,38 @@
                 <span *ngIf="editPhoto">
 
                     
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Changer la photo :</label>
+                    <label class="font-semibold text-gray-800 dark:text-white">
+                        <fa-icon class="mr-2" [icon]="myEdit"></fa-icon>  Modifier la photo du produit :
+                    </label>
+                    <br>
+                    <br>
                     <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer 
                                 bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 
                                 dark:placeholder-gray-400" id="file_input" type="file" (change)="onSelectedFile($event)">
 
                     <br>
-                    <button (click)="uploadPhoto()" class="bg-blue-800 hover:bg-black text-white text-sm 
-                                                            font-semibold inline-flex items-center p-1.5 rounded"> Changer la photo
-                        <fa-icon [icon]="myUpload"></fa-icon>
-                    </button>
 
-                    <button (click)="onCancelUploadPhoto()" class="bg-blue-800 hover:bg-black text-white text-sm 
-                                                            font-semibold inline-flex items-center p-1.5 rounded"> Annuler 
-                        <fa-icon [icon]="myCancel"></fa-icon>
-                    </button>
-                    <br>
+                    <div class="flex justify-between">
+                        <button (click)="uploadPhoto()" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <fa-icon class="mr-3"  [icon]="myUpload"></fa-icon>
+                            <span >  Modifier</span>
+                        </button>
 
-                    <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
-                        <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: 45%"> 45%</div>
+                        <button (click)="onCancelUploadPhoto()" type="button" class=" text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <fa-icon class="mr-3"  [icon]="myCancel"></fa-icon>
+
+                            <span >  Annuler</span>
+                        </button>
+                        
                     </div>
 
-                    {{progress}}
+                    <br>
+
+                    <!-- <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                        <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: 45%"> {{progress}}</div>
+                    </div> -->
+
+                    
 
                 </span>
 
@@ -62,12 +85,7 @@
                 <div class="pr-4">
                     <h4 class="text-xl font-bold text-gray-900 dark:text-white">  {{currentProduct.name}}</h4>
                 </div>
-
-                <button *ngIf="this.authService.isAdmin" (click)="onEditProduct()"  class="ml-auto bg-blue-800 hover:bg-black text-white
-                                                                                             text-sm font-semibold inline-flex items-center p-1.5 rounded">
-                     <fa-icon [icon]="myEdit"></fa-icon> 
-                </button>
-
+                
             </div>
 
          
@@ -96,35 +114,36 @@
 
             <div class="flex items-center justify-between">
 
-                <span class="text-1xl font-bold text-gray-500 dark:text-white"> Prix : {{currentProduct.currentPrice|number:'0.2'}} DH</span>
+                <span class="text-lg font-medium text-gray-900 line-through dark:text-white">{{currentProduct.price|number:'0.2'}} DH</span>
 
             </div>
             <br>
 
             <div class="flex">
-                <span *ngIf="currentProduct.available">
+                <span *ngIf="currentProduct.tendancyProduct">
                     <fa-icon [icon]="myAvailable"></fa-icon>
-                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Disponible</h3>
+                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Tendance</h3>
                 </span>
 
-                <span *ngIf="currentProduct.promotion">
-                    <fa-icon [icon]="myPromo"></fa-icon>
-                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promo</h3>
-                </span>
-
-                <span *ngIf="currentProduct.selected">
+                <span *ngIf="currentProduct.newProduct">
                     <fa-icon [icon]="myNewPr"></fa-icon>
                     <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
                 </span>
+
+                <span *ngIf="currentProduct.promotionProduct">
+                    <fa-icon [icon]="myPromo"></fa-icon>
+                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promotion</h3>
+                </span>
             </div>
- 
+
+
             <br>
             <div>
-                                                     
                 <form #f="ngForm" (ngSubmit)="onAddProductToCaddy(currentProduct)">
-
-                    <div>
-
+                   
+                    <div>  
+                        <span class="text-1xl font-bold text-gray-500 dark:text-white"> Prix : {{currentProduct.currentPrice|number:'0.2'}} DH</span>
+            
                         <div class="flex items-center space-x-3">
 
                             <span class="text-1xl font-bold text-gray-500 dark:text-white">Quantité :</span>
@@ -204,7 +223,7 @@
     
     <br><br>
 
-    <div *ngIf="mode==1">
+    <!-- <div *ngIf="mode==1">
 
         <label >  Modification du produit :</label>
         <br>
@@ -291,7 +310,7 @@
         
         
 
-    </div>
+    </div> -->
 
 </div>
 <!-- ----------------------------------------------------------------------------------------------------------------- -->
@@ -321,14 +340,14 @@
             
                 <ng-container *ngFor="let p of productsOfCategory"> <!-- c._links.products._embedded.products-->
 
-                    <ng-template carouselSlide [id]="p.id">
+                    <ng-template carouselSlide [id]="p.productId">
 
                         <div  (click)="onProductDetails(p)">
           
                             <div class=" w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                                 <a>
-                                    <img class="p-8 rounded-t-lg" src="{{this.catalService.host+'/photoProduct/'+p.id+'?ts='+getTS()}}" alt="product image"
+                                    <img class="p-8 rounded-t-lg" src="{{this.catalService.host+this.catalService.requestMapping+'/photoProduct/'+p.productId+'?ts='+getTS()}}" alt="product image"
                                         (click)="onProductDetails(p)"id="Photo_Product" class="clickable"/>
                                 
                                 </a>
@@ -348,20 +367,21 @@
                                     <!----------------------------------------------------------------------------->
                                     <br>
                                     <div class="flex">
-                                            <span *ngIf="p.available">
+                                            <span *ngIf="p.tendancyProduct">
                                                 <fa-icon [icon]="myAvailable"></fa-icon>
-                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Disponible</h3>
+                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Tendance</h3>
                                             </span>
-                            
-                                            <span *ngIf="p.promotion">
-                                                <fa-icon [icon]="myPromo"></fa-icon>
-                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promo</h3>
-                                            </span>
-                            
-                                            <span *ngIf="p.selected">
+                        
+                                            <span *ngIf="p.newProduct">
                                                 <fa-icon [icon]="myNewPr"></fa-icon>
                                                 <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
                                             </span>
+
+                                            <span *ngIf="p.promotionProduct">
+                                                <fa-icon [icon]="myPromo"></fa-icon>
+                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promotion</h3>
+                                            </span>
+                            
                                     </div>
                                 </div>
 
@@ -521,31 +541,38 @@
 <!-- -------------------------------------------------------------------------------------------------------- -->
 
 <br><br>
-<div class="flex  top-1/3"> <!--justify-center relative -->
+<br><br>
+<div *ngIf="commentsOfProduct" class=" top-1/3"> <!--justify-center relative -->
 
 
     <!-- This is an example component -->
-    <div class="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
+    <div *ngFor="let c of commentsOfProduct" class="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
 
-        <div class="relative flex gap-4">
+        <div  class="relative flex gap-4">
 
-            <!-- <img src="https://icons.iconarchive.com/icons/diversity-avatars/avatars/256/charlie-chaplin-icon.png" class="relative rounded-lg -top-8 -mb-4 bg-white border h-20 w-20" alt="" loading="lazy"> -->
+            <!-- <img src="{{this.catalService.host+this.catalService.requestMapping+'/photoProduct/'+currentProduct.productId+'?ts='+getTS()}}" class="relative rounded-lg -top-8 -mb-4 bg-white border h-20 w-20" alt="" loading="lazy"> -->
+             <img src="{{this.userService.host+this.userService.requestMapping+'/photoUser/'+c.userId}}" class="relative rounded-lg -top-8 -mb-4 bg-white border h-20 w-20" alt="" loading="lazy">
             
-            <fa-icon class="relative rounded-lg -top-8 -mb-4 bg-white border h-20 w-20" [icon]="myUser"></fa-icon> 
+            
 
             <div class="flex flex-col w-full">
-                <div class="flex flex-row justify-between">
-                    <p class="relative text-xl whitespace-nowrap truncate overflow-hidden">Nom PRENOM</p>
-                     <a class="text-gray-500 text-xl" href="#">
+
+                <div *ngIf="c.user" class="flex flex-row justify-between">
+
+                    <p  class="relative text-xl whitespace-nowrap truncate overflow-hidden"> {{ c.user.firstName }} {{ c.user.lastName }} 
+                        <span *ngIf="c.user.admin" class="ml-4 text-orange-500 text-sm"> <fa-icon class="mr-1"  [icon]="myAdmin"></fa-icon>  Administrateur  </span></p>  <!--{{currentUser.firstName}} {{currentUser.lastName}}-->
+                     
+                    <a *ngIf="currentUser.isAdmin || (c.user.userId == currentUser.id) " class="text-gray-500 text-xl" href="#">
+
                         <fa-icon  [icon]="myDelete"></fa-icon>
                     </a> 
                 </div>
-                <p class="text-gray-400 text-sm">20 April 2022, at 14:88 PM</p>
+                <p class="text-gray-400 text-sm">{{c.commentDate}}</p> <!---->
             </div>
         </div>
-        <p class="-mt-4 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>Maxime quisquam vero adipisci beatae voluptas dolor ame.</p>
+        <p class="-mt-4 text-gray-500">{{c.commentText}}
+        </p>
     </div>
-    
-    
-    
+           
+    <br><br>
 </div>

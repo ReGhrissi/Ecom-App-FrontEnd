@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Icons } from '../_Plugins/icons.model';
 import { CatalogueService } from '../services/catalogue.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { User } from '../_Model/user.model';
 
 @Component({
   selector: 'app-account',
@@ -37,16 +38,22 @@ export class AccountComponent implements OnInit{
   myStreet=this.icons.myStreet
   myPostal=this.icons.myPostal
   myUpload=this.icons.myUpload
+  myDelete=this.icons.myDelete
+  myGoTo=this.icons.myGoTo
 
   currentUser:any;
+  currentContact:any;
+  currentPaymentCard:any;
   idUser:any;
 
   editionProfil : boolean =false;
+  editionContact :boolean=false;
+  editionPaymentCard:boolean=false;
   changePassword : boolean =false;
 
   editProfilForm :any;
-  editAddresForm:any;
-  editContactForm :any
+  //editAddresForm:any;
+ // editContactForm :any
 
   selectedFiles : any ;
   progress: any;
@@ -61,14 +68,16 @@ export class AccountComponent implements OnInit{
     
     });
 
-
+  //  cu :User = new User();
 
 
   constructor(public userService:UserService, private activateRoute :ActivatedRoute,
              private formBuilder:FormBuilder, public catalService :CatalogueService)
-  {}
+  {
+    
+  }
 
-  ngOnInit(): void
+  ngOnInit(): void 
   {
     this.activateRoute.params.subscribe((data)=>
      {              
@@ -78,53 +87,53 @@ export class AccountComponent implements OnInit{
 
               next: (data:any) => {
                                 this.currentUser=data;
+                              //  this.cu=this.currentUser;
                                // console.log("current USER :"+data.addresses[0].type)
-                              /*
+                              
                                 this.editProfilForm = new FormGroup({
 
-                                  firstName: new FormControl(this.currentUser.firstName,[Validators.required]),
-                                  lastName: new FormControl(this.currentUser.lastName,[Validators.required]),
-                                  country: new FormControl(this.currentUser.contact.country,[Validators.required]),
-                                  city: new FormControl(this.currentUser.contact.city,[Validators.required]),
-                                  street: new FormControl(this.currentUser.contact.street,[Validators.required]),
-                                  postal: new FormControl(this.currentUser.contact.postal,[Validators.required]),
-                                  mobile: new FormControl(this.currentUser.contact.mobile,[Validators.required]),
-                                  skype: new FormControl(this.currentUser.contact.skype,[Validators.required]),
-                                  cardNumber: new FormControl(this.currentUser.paymentCard.cardNumber,[Validators.required]),
-                                  cardOwner: new FormControl(this.currentUser.paymentCard.cardOwner,[Validators.required]),
+                                  firstName: new FormControl(null,[Validators.required]),
+                                  lastName: new FormControl(null,[Validators.required]),
+                                  country: new FormControl(null,[Validators.required]),
+                                  city: new FormControl(null,[Validators.required]),
+                                  street: new FormControl(null,[Validators.required]),
+                                  postal: new FormControl(null,[Validators.required]),
+                                  mobile: new FormControl(null,[Validators.required]),
+                                  skype: new FormControl(null,[Validators.required]),
+                                  cardNumber: new FormControl(null,[Validators.required]),
+                                  cardOwner: new FormControl(null,[Validators.required]),
 
                                   });
-                              */
-                                  const personalInfoGroup = this.formBuilder.group({
-                                    firstName: [this.currentUser.firstName, [Validators.required]],
-                                    lastName: [this.currentUser.lastName, [Validators.required]],
 
-                                  });
-                                                                    
-                                  // Créez un groupe de contrôles pour les informations de la carte de paiement
-                                  const contactInfoGroup = this.formBuilder.group({
-                                    country: [this.currentUser.contact.country, [Validators.required]],
-                                    city: [this.currentUser.contact.city, [Validators.required]],
-                                    street: [this.currentUser.contact.street, [Validators.required]],
-                                    postal: [this.currentUser.contact.postal, [Validators.required]],
-                                    mobile: [this.currentUser.contact.mobile, [Validators.required]],
-                                    skype: [this.currentUser.contact.skype, [Validators.required]],
-                                  });
-                                  // Créez un groupe de contrôles pour les informations de la carte de paiement
-                                  const paymentCardGroup = this.formBuilder.group({
-                                    cardNumber: [this.currentUser.paymentCard.cardNumber, [Validators.required]],
-                                    cardOwner: [this.currentUser.paymentCard.cardOwner, [Validators.required]],
-                                  });
-                                  
-                                  // Combine les groupes de contrôles si nécessaire
-                                  const editProfilForm = this.formBuilder.group({
-                                    personalInfo: personalInfoGroup,
-                                    contactInfo:contactInfoGroup,
-                                    paymentCardInfo: paymentCardGroup,
-                                  });
-                                  
-                                  // Utilisez editProfilForm comme votre formulaire principal
-                                  this.editProfilForm = editProfilForm;
+                                  if (this.currentUser) 
+                                  {
+                                    this.editProfilForm.patchValue({
+                                      firstName: this.currentUser.firstName,
+                                      lastName: this.currentUser.lastName,
+                                    });
+                                  }
+
+                                  if (this.currentUser.contact) 
+                                  {
+                                    this.editProfilForm.patchValue({
+                                      country : this.currentUser.contact.country,
+                                      city : this.currentUser.contact.city,
+                                      street : this.currentUser.contact.street,
+                                      postal : this.currentUser.contact.postal,
+                                      mobile : this.currentUser.contact.mobile,
+                                      skype :this.currentUser.contact.skype
+                                    });
+                                  }
+
+                                  if (this.currentUser.paymentCard) 
+                                  {
+                                    this.editProfilForm.patchValue({
+                                      cardNumber: this.currentUser.paymentCard.cardNumber,
+                                      cardOwner :this.currentUser.paymentCard.cardOwner
+                                    });
+                                  }
+                              
+                           
                             },
 
               error: err => console.error(err)
@@ -135,6 +144,26 @@ export class AccountComponent implements OnInit{
 
 
   }
+
+
+  postContactForm = new FormGroup({
+
+      country: new FormControl('',[Validators.required]),
+      city: new FormControl('',[Validators.required]),
+      street: new FormControl('',[Validators.required]),
+      postal: new FormControl('',[Validators.required]),
+      mobile: new FormControl('',[Validators.required]),
+      skype: new FormControl('',[Validators.required]),
+  
+  });
+
+  postPaymentCardForm = new FormGroup({
+
+      cardNumber: new FormControl('',[Validators.required]),
+      cardOwner: new FormControl('',[Validators.required]),
+    
+  });
+
 
   get FirstName()
   {
@@ -150,11 +179,69 @@ export class AccountComponent implements OnInit{
     this.editionProfil = value;
   }
 
+  onChangeStatus_Contact(value : boolean)
+  {
+    this.editionContact = value;
+  }
+
+  onChangeStatus_PaymentCard(value : boolean)
+  {
+    this.editionPaymentCard = value;
+  }
+
   onChangeStatus_Password(value : boolean)
   {
     this.changePassword = value;
   }
 
+  onPostContact()
+  {
+    const country = this.postContactForm.get('country')?.value || '';
+    const city = this.postContactForm.get('city')?.value || '';
+    const street = this.postContactForm.get('street')?.value || '';
+    const postal = this.postContactForm.get('postal')?.value || '';
+    const mobile = this.postContactForm.get('mobile')?.value || '';
+    const skype = this.postContactForm.get('skype')?.value || '';
+    
+    let url = "/contacts"
+
+    this.userService.postContact(url,{country,city,street,postal,mobile,skype})
+      .subscribe({
+
+          next: (data:any) => {
+                            this.currentContact=data;
+                            this.currentUser.contact =this.currentContact;
+                            window.location.reload();
+                            this.editionContact = false;
+                        },
+
+          error: err => console.error(err)
+      });
+
+  }
+
+  onPostPaymentCard()
+  {
+    const cardNumber = this.postPaymentCardForm.get('cardNumber')?.value || '';
+    const cardOwner = this.postPaymentCardForm.get('cardOwner')?.value || '';
+    
+    let url = "/paymentCards"
+
+    this.userService.postPaymentCard(url,{cardNumber,cardOwner})
+      .subscribe({
+
+          next: (data:any) => {
+                            this.currentPaymentCard=data;
+                            this.currentUser.paymentCard=this.currentPaymentCard;
+                            window.location.reload();
+                            this.editionPaymentCard = false;
+                        },
+
+          error: err => console.error(err)
+      });
+
+  }
+  
 
   onEditProfil()
   {
@@ -171,9 +258,10 @@ export class AccountComponent implements OnInit{
     
     let url = "/users/"+this.currentUser.userId
 
-    this.userService.updateUser(url,{firstName, lastName, contact:{country,city,street,postal,mobile,skype},
-                                                          paymentCard:{cardNumber,cardOwner}})
-      .subscribe({
+    this.userService.updateProfil(url,{   firstName, lastName, 
+                                          contact:{country,city,street,postal,mobile,skype},
+                                          paymentCard:{cardNumber,cardOwner}
+                                      }).subscribe({
 
           next: (data:any) => {
                             this.currentUser=data;
@@ -185,7 +273,56 @@ export class AccountComponent implements OnInit{
       });
 
   }
+/*
+  onEditContact()
+  {
+    const country = this.editProfilForm.get('country')?.value || '';
+    const city = this.editProfilForm.get('city')?.value || '';
+    const street = this.editProfilForm.get('street')?.value || '';
+    const postal = this.editProfilForm.get('postal')?.value || '';
+    const mobile = this.editProfilForm.get('mobile')?.value || '';
+    const skype = this.editProfilForm.get('skype')?.value || '';
 
+    
+    let url = "/contacts/"+this.currentContact.contactId
+
+    this.userService.updateContact(url,{country,city,street,postal,mobile,skype})
+      .subscribe({
+
+          next: (data:any) => {
+                            this.currentContact=data;
+                            window.location.reload();
+                            this.editionProfil = false;
+                        },
+
+          error: err => console.error(err)
+      });
+
+  }
+*/
+/*
+  onEditPaymentCard()
+  {
+
+    const cardNumber = this.editProfilForm.get('cardNumber')?.value || '';
+    const cardOwner = this.editProfilForm.get('cardOwner')?.value || '';
+    
+    let url = "/paymentCatrds/"+this.currentPaymentCard.paymentCardId 
+
+    this.userService.updatePaymentCard(url,{cardNumber,cardOwner})
+      .subscribe({
+
+          next: (data:any) => {
+                            this.currentPaymentCard=data;
+                            window.location.reload();
+                            this.editionProfil = false;
+                        },
+
+          error: err => console.error(err)
+      });
+
+  }
+*/
   onChangePassword()
   {
 
@@ -205,14 +342,10 @@ export class AccountComponent implements OnInit{
     this.editPhoto=true;
   }
 
-  onSelectedFile(event : any)
+  uploadPhoto(event : any)
   {
     this.selectedFiles=event.target.files;
 
-  }
-
-  uploadPhoto()
-  {
     this.progress= "0 %";
 
     this.currentFileUpload = this.selectedFiles.item(0)

@@ -23,9 +23,10 @@
            aria-label="Sidebar">
 
       <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+    
          <ul *ngIf="_Categories" class="space-y-2 font-medium">
 
-            <li *ngFor="let c of _Categories._embedded.categories" 
+            <li *ngFor="let c of _Categories" 
                 class="clickable">
 
                <a  (click)="ProductsByCat(c)" [ngClass]="c==Current_Category?'active-cat':''"  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100
@@ -69,8 +70,8 @@
                   <span class="ml-3">Gestion Utilisateurs</span>
                </a>
             </li>
-            <li class="clickable">
-               <a (click)="onMyComments()" [routerLink]='"/comments/"+currentUser.id' [routerLinkActive]="'active-link'" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+            <li *ngIf="currentUser" class="clickable">
+               <a (click)="onMyComments()" [routerLink]='"/comments/"+currentUser.userId' [routerLinkActive]="'active-link'" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                   <fa-icon [icon]="myComment"></fa-icon>
                   <span class="ml-3">Gestion Commentaires</span>
                </a>

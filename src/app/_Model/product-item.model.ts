@@ -1,7 +1,7 @@
 
 
 export class ProductItem {
-    public id:number;
+    public productId:number;
     public name:string;
     public price:number;
     public quantity:number;
@@ -9,7 +9,7 @@ export class ProductItem {
 
     constructor()
     {
-        this.id=0;
+        this.productId=0;
         this.name='';
         this.price=0;
         this.quantity=0;
