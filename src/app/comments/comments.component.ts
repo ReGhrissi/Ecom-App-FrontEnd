@@ -35,6 +35,7 @@ export class CommentsComponent implements OnInit {
 
                 next: (data:any) => {
                                   this.currentUser=data;
+                                  console.log(this.currentUser)
                               },
 
                 error: err => console.error(err)

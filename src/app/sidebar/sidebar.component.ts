@@ -54,6 +54,7 @@ export class SidebarComponent implements OnInit{
       if(res==true)
       {
         this.currentUser = this.tokenService.getInfos();
+       // console.log("user :"+this.currentUser.id)
       }
       
     
@@ -85,7 +86,7 @@ export class SidebarComponent implements OnInit{
   {
     if(this.currentUser)
     {
-      this.router.navigate(['/comments/'+this.currentUser.userId]).then(() => {
+      this.router.navigate(['/comments/'+this.currentUser.id]).then(() => {
         window.location.reload();
       });
     }

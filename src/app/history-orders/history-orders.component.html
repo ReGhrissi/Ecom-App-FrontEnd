@@ -1,1 +1,251 @@
-<p>history-orders works!</p>
+
+ 
+
+
+<br>
+
+<div  class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+
+    
+    <table *ngIf="currentUserOrders"  class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+         
+                <th scope="col" class="px-6 py-3">
+                    Client
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  ID de la commande
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Date 
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Montant (DH)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Etat
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <fa-icon [icon]="myEdit"></fa-icon>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+         <ng-container *ngFor="let o of currentUserOrders">
+            
+            <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+
+
+                <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                    <!-- <img class="w-10 h-10 rounded-full" src="{{this.userService.host+this.userService.requestMapping+'/photoUser/'+o.client.username}}"  alt="Jese image"> -->
+                    <div class="pl-3">
+                        
+                        <div class="text-base font-semibold"> {{o.client.name}} </div>
+                        <div class="font-normal text-blue-500"><fa-icon class="mr-1" [icon]="myEmail"></fa-icon>  {{o.client.email}} </div>
+                    </div>  
+                </th>
+
+                <td class="px-6 py-4">
+                    {{o.orderId}}
+                </td>
+                <td class="px-6 py-4">
+                     {{o.orderDate}}
+                </td>
+                <td class="px-6 py-4">
+                  {{o.totalAmount}}
+                </td>
+                <td class="px-6 py-4">
+                    <div *ngIf="o.orderStatus == 'REGISTERED'" class="flex items-center">
+                        <!-- <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Nouvelles -->
+                        <fa-icon class="mr-2 text-yellow-300 text-base " [icon]="myRegistered"></fa-icon> Nouvelle
+                    </div>
+                    <div *ngIf="o.orderStatus == 'DELIVERED'" class="flex items-center">
+                         <fa-icon class="mr-2 text-green-600 text-base " [icon]="myDelivered"></fa-icon> Livrée
+                    </div>
+                    <div *ngIf="o.orderStatus == 'CANCELLED'" class="flex items-center">
+                          <fa-icon class="mr-2 text-red-600 text-base " [icon]="myCancelled"></fa-icon> Annulée
+                    </div>
+                    <div *ngIf="o.orderStatus == 'SENT'" class="flex items-center">
+                        <fa-icon class="mr-2 text-blue-600 text-base " [icon]="mySent"></fa-icon> Envoyée
+                    </div>
+                    <div *ngIf="o.orderStatus == 'UNDER_TREATEMENT'" class="flex items-center">
+                         <fa-icon class="mr-2 text-orange-400 text-base " [icon]="myUnderTr"></fa-icon> En cours de Tr.
+                    </div>
+                    <div *ngIf="o.orderStatus == 'RETURNED'" class="flex items-center">
+                           <fa-icon class="mr-2 text-black text-base " [icon]="myReturned"></fa-icon> Retour
+                    </div>
+                </td>
+                <td class="clickable px-6 py-4">
+                    <a *ngIf="!(selectedOrder && selectedOrder.orderId==o.orderId)"(click)="toggleDetails(o)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Afficher détails</a>
+                    <a *ngIf="selectedOrder && selectedOrder.orderId==o.orderId" (click)="toggleDetails(null)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Réduire détails</a>
+                </td>
+                
+
+            </tr>  
+
+            <tr *ngIf="selectedOrder && selectedOrder.orderId==o.orderId" class="border border-blue-400  ">
+
+               <td colspan="7">
+
+                           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+
+                              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                 <tr>
+                          
+                                    
+                                 </tr>
+                              </thead>
+
+                     
+                              <tbody>
+                              
+                                 <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
+                                    
+          
+                                    <td colspan="7">
+                                       
+                                       <div id="alert-additional-content-5" class="mx-6 my-6 p-4 border border-gray-300 rounded-lg bg-gray-50 dark:border-gray-600 dark:bg-gray-800" role="alert">
+                                 
+                                             <div class="flex items-center">
+                                             <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                             </svg>
+                                             <span class="sr-only">Info</span>
+                                             <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Informations du client </h3>
+                                             </div>
+                                             <br>
+                                    
+                                             <div class="flex items-center">
+                                                <fa-icon [icon]="myClient"></fa-icon>
+                                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                   
+                                                </svg>
+                                                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Nom du client :</h3> 
+                                                <span >{{selectedOrder.client.name}}</span>
+                                                <div></div>
+                                             </div>
+                                             
+                                             <div class="flex items-center">
+                                                <fa-icon [icon]="myAddress"></fa-icon>
+                                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                   
+                                                </svg>
+                                                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Adresse Clinet :</h3>
+                                                <span>{{selectedOrder.client.address}}</span>
+                                             </div>
+                                    
+                                             <div class="flex items-center">
+                                                   <fa-icon [icon]="myPhone"></fa-icon>
+                                                   <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                      
+                                                   </svg>
+                                                   <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Téléphone :</h3>
+                                                   <span >{{selectedOrder.client.phoneNumber}}</span>
+                                             </div>
+                                    
+                                             <div class="flex items-center">
+                                                <fa-icon [icon]="myEmail"></fa-icon>
+                                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                         
+                                                </svg>
+                                                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Email :</h3>
+                                                <span >{{selectedOrder.client.email}}</span>
+                                             </div>
+                                          </div>
+                                          
+                                       </td>
+                        
+                                 </tr>
+                     
+                                 <tr  class="bg-white border-b dark:bg-gray-800   ">
+
+
+                                    <td colspan="7">
+
+                                    <div class=" mx-6 my-6 border border-gray-300 rounded-lg">
+
+                                    <table class=" w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
+
+                                       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                          <tr>
+                                             <th scope="col" class="px-6 py-3">
+                                                <span class="sr-only">Image</span>
+                                             </th>
+                                             <th scope="col" class="px-6 py-3">
+                                                Produit
+                                             </th>
+                                             <th scope="col" class="px-6 py-3">
+                                                Z
+                                             </th>
+                                             <th scope="col" class="px-6 py-3">
+                                                Prix
+                                             </th>
+                                             <th scope="col" class="px-6 py-3">
+                                                X
+                                             </th>
+                                             <th scope="col" class="px-6 py-3">
+                                                Y
+                                             </th>
+                                             
+                                       </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                       
+                                       <tr *ngFor="let i of selectedOrder.orderItems"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700  ">
+                                             
+                                             <td  class=" w-32 p-4">
+                                                <img src="{{this.catService.host+this.catService.requestMapping+'/photoProduct/'+i.product.productId}}" alt="Apple Watch">
+                                             </td>
+                                             
+                                             <td  class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                                {{i.product.name}}
+                                             </td>
+                                             
+                                             <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                                {{i.quantity}}
+                                             </td>
+                                    
+                                             <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                                {{i.product.stock}}
+                                             </td>
+                                    
+                                             <td class="px-6 py-4" >
+                                                <a  class="clickable font-medium text-green-600 dark:text-red-500 hover:underline">Modifier</a>
+                                             </td>
+                                    
+                                             <td class="px-6 py-4" >
+                                                <a  class="clickable font-medium text-red-600 dark:text-red-500 hover:underline">Retirer</a>
+                                             </td>
+                                             
+                                          </tr>
+                                    
+                                       </tbody>
+                                    
+                                    
+                                    </table>
+                                    </div>
+                                    </td>
+                               
+                                 </tr>
+
+                              </tbody>
+                              <br>
+                                                   
+                           </table>
+                   
+                  </td>
+               </tr>
+            </ng-container>
+         </tbody>   
+    </table>
+</div>
+
+<br>
+<br>
+
+

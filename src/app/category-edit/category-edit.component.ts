@@ -8,7 +8,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Icons } from '../_Plugins/icons.model';
 
 @Component({
-  selector: 'app-category-edit',
+  selector: 'app-category-edit', 
   templateUrl: './category-edit.component.html',
   styleUrls: ['./category-edit.component.css']
 })

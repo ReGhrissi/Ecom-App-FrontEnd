@@ -72,7 +72,7 @@
             <li class="mr-2">
                 <a routerLink="/home" fragment="new"  class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
                     
-                    <fa-icon class="mr-2" [icon]="myNewPr"></fa-icon>
+                    <fa-icon class="mr-2 text-blue-600" [icon]="myNewPr"></fa-icon>
                     
                     Nouveaux
                 </a>
@@ -80,7 +80,7 @@
             <li class="mr-2">
                 <a routerLink="/home" fragment="tendancy" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
                     
-                    <fa-icon class="mr-2" [icon]="myTendancy"></fa-icon>
+                    <fa-icon class="mr-2 text-yellow-400" [icon]="myTendancy"></fa-icon>
                     
                     Tendances
                 </a>
@@ -88,7 +88,7 @@
             <li class="mr-2">
                 <a routerLink="/home" fragment="promotions" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
                     
-                    <fa-icon class="mr-2" [icon]="myPromo"></fa-icon>
+                    <fa-icon class="mr-2 text-red-600" [icon]="myPromo"></fa-icon>
                     
                     Promotions
                 </a>
@@ -96,7 +96,7 @@
             <li class="mr-2">
                 <a routerLink="/home" fragment="futur" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
                     
-                    <fa-icon class="mr-2" [icon]="myFutur"></fa-icon>
+                    <fa-icon class="mr-2 text-green-500" [icon]="myFutur"></fa-icon>
                     
                     Prochainement
                 </a>
@@ -104,7 +104,7 @@
             <li class="mr-2">
                 <a routerLink="/home" fragment="ProductsByCat" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
                     
-                    <fa-icon class="mr-2" [icon]="myCatManage"></fa-icon>
+                    <fa-icon class="mr-2 text-black" [icon]="myCatManage"></fa-icon>
                     
                     Produits par catégorie
                 </a>
@@ -158,18 +158,19 @@
                             <br>
                             <div class="flex">
                                         <span *ngIf="p.tendancyProduct">
-                                            <fa-icon [icon]="myTendancy"></fa-icon> 
-                                            <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Tendance</h3>
+                                            <fa-icon class="text-yellow-400" [icon]="myTendancy"></fa-icon> 
+                                            <h3 class="ml-2 text-sm font-semibold text-yellow-300 dark:text-white">Tendance</h3>
                                         </span>
                         
                                         <span *ngIf="p.newProduct">
-                                            <fa-icon [icon]="myNewPr"></fa-icon>
-                                            <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
+                                            <fa-icon class="text-blue-600" [icon]="myNewPr"></fa-icon>
+                                            <h3 class="ml-2 text-sm font-semibold text-blue-400 dark:text-white">Nouveau</h3>
                                         </span>
                        
                                         <span *ngIf="p.promotionProduct">
-                                            <fa-icon [icon]="myPromo" class="mr-2"></fa-icon> <span class="ml-1 text-sm font-semibold text-gray-900 dark:text-white">(-25 %) </span>
-                                            <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promotion </h3>
+                                            <fa-icon class="mr-2 text-red-600" [icon]="myPromo" ></fa-icon> 
+                                            <span class="bg-red-50 text-red-600 text-xs font-bold me-2 px-1.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-600">- 25 %</span>
+                                            <h3 class="ml-2 text-sm font-semibold text-red-400 dark:text-white">Promotion </h3>
                                         </span>
                                 </div>
                         </div>

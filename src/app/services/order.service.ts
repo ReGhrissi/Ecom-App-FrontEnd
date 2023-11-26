@@ -9,6 +9,7 @@ import { Caddy } from '../_Model/caddy.model';
 import { ProductItem } from '../_Model/product-item.model';
 import { GatewayService } from './gateway.service';
 import { MicroServicesName } from '../_Enum/micro-service';
+import { OrderStatus } from '../_Enum/order-satus';
 
 @Injectable({
   providedIn: 'root'
@@ -42,16 +43,16 @@ export class OrderService {
   {
     this.order.client=client;
   }
-
-
+ 
+ 
   public loadProductsFromCaddy() 
   {
-      this.order.products = [];
-      let caddy : Caddy = this.panierService.loadCaddyFromLocalStorage();
+      this.order.orderItems = [];
+      let caddy : Caddy = this.panierService.loadUserCaddyFromLocalStorage();
 
       caddy.items.forEach((value, key) => {
 
-             this.order.products.push(value);
+             this.order.orderItems.push(value);
       });
   }
 
@@ -69,7 +70,7 @@ export class OrderService {
   public getTotal():number
   {
     let total:number=0;
-    this.order.products.forEach(p=>{
+    this.order.orderItems.forEach(p=>{
       total+=p.price*p.quantity;
     });
     
@@ -107,18 +108,21 @@ export class OrderService {
 
       console.log("currectOder :"+this.currentOrderData)
 
-              console.log("ID commande avant submit :"+this.order.id)
-            this.order.id = data['id'];
-              console.log("ID commande apres submit :"+this.order.id)
+            //  console.log("ID commande avant submit :"+this.order.id)
+            this.order.orderId = data['orderId'];
+            //  console.log("ID commande apres submit :"+this.order.id)
     
-              console.log("date commande avant submit :"+this.order.date)
-            this.order.date = data['date'];
-              console.log("date commande apres submit :"+this.order.date)
+              console.log("date commande avant submit :"+this.order.orderDate)
+            this.order.orderDate = data['orderDate'];
+              console.log("date commande apres submit :"+this.order.orderDate)
     
-           
- 
     });
     
+  }
+
+  updateOrderStatus(url :any, formData : {orderStatus:any , reasonOfStatus:string})
+  {
+    return this.httpClient.put(this.host+url,formData)
   }
 /*
   updateOrder(payment :any)
@@ -151,5 +155,19 @@ export class OrderService {
   }
 
 
+  getRegisterdOrdersStetus()
+  {
+    return this.httpClient.get(this.host+"/orders/registeredOrders")
+  }
 
+  getOrdersByStatus(status:any)
+  {
+    return this.httpClient.get(this.host+"/orders"+status)
+  }
+
+  getOrdersByUser(userId:any)
+  {
+    return this.httpClient.get(this.host+"/orders/"+userId)
+  }
 }
+

@@ -59,7 +59,7 @@
                </a>
             </li>
             <li class="clickable">
-               <a routerLink="/orders" [routerLinkActive]="'active-link'" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+               <a routerLink="/orders/ALL" [routerLinkActive]="'active-link'" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                   <fa-icon [icon]="myOrdersManager"></fa-icon>
                   <span class="ml-3">Gestion Commandes</span>
                </a>
@@ -71,7 +71,7 @@
                </a>
             </li>
             <li *ngIf="currentUser" class="clickable">
-               <a (click)="onMyComments()" [routerLink]='"/comments/"+currentUser.userId' [routerLinkActive]="'active-link'" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+               <a (click)="onMyComments()" [routerLink]='"/comments/"+currentUser.id' [routerLinkActive]="'active-link'" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                   <fa-icon [icon]="myComment"></fa-icon>
                   <span class="ml-3">Gestion Commentaires</span>
                </a>

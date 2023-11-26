@@ -29,6 +29,7 @@ export class CaddyComponent implements OnInit {
 
   //public Items : any
     public caddy : Caddy
+    isAuth:boolean=false;
 
   constructor(
               private router:Router,
@@ -44,57 +45,101 @@ export class CaddyComponent implements OnInit {
   
   ngOnInit() 
   {
+          this.accountService.isAuth.subscribe( res=> {
 
-    if(this.accountService.isAuth) 
-    {
-      this.getUserCaddy()
-    }
-
-    else
-    {
-      this.getGuestCaddy()
-    }
+              if(res==true)
+              {
+                this.isAuth=true;
+                this.getUserCaddy()
+              }
+              else this.getGuestCaddy()
+            
+          })
     
   }
 
 
   onRemoveProductFromCaddy(p: ProductItem) {
-    this.panierService.removeProduct(p.productId);
+
+        if(this.isAuth)
+        {
+          this.panierService.removeUserProduct(p.id);
+        }
+        else this.panierService.removeGusetProduct(p.id);     
   }
 
 //---------------------------------------------- ici -----------------------
 
+incrementQuantity(item :any) 
+{
+    if (item.quantity < 10) 
+    {     // Empêche d'aller au-delà de 10
+          item.quantity = (item.quantity - item.quantity)+1;
+          
+          if(this.isAuth)
+          {
+            this.panierService.addUserProduct(item);
+            this.ngOnInit();
+          }
+          else
+          {
+            this.panierService.addGuestProduct(item);
+            this.ngOnInit();
+          } 
+    }
+}
+
+decrementQuantity(item:any) 
+{
+      if (item.quantity > 1) 
+      { // Empêche d'aller en dessous de 1
+            item.quantity = (item.quantity - item.quantity)-1;
+
+            if(this.isAuth)
+            {
+              this.panierService.addUserProduct(item);
+              this.ngOnInit();
+            }
+            else
+            {
+              this.panierService.addGuestProduct(item);
+              this.ngOnInit();
+            } 
+      }
+}
       getTotal() 
       {
-        return this.panierService.getTotal();
+            if(this.isAuth)
+            {
+              return this.panierService.getUserTotal();
+            }
+
+            else return this.panierService.getGuestTotal();       
       }
 
       getUserCaddy()  :Caddy
       {
-        this.caddy = this.panierService.loadCaddyFromLocalStorage();
+        this.caddy = this.panierService.loadUserCaddyFromLocalStorage();
 
         return this.caddy;
       }
 
       getGuestCaddy() : Caddy
       {
-        this.caddy = this.panierService.loadCaddyFromLocalStorage();
+        this.caddy = this.panierService.loadGuestCaddyFromLocalStorage();
 
         return this.caddy
       }
 
       onNewOrder()
       {
-        if(!this.accountService.isAuth)
-            {
+        if(!this.isAuth)
+        {
                 this.router.navigateByUrl('/login');
                 
-            }
-          else
-            {
-              this.router.navigateByUrl("/client");
-            }
-            
+        }
+        else this.router.navigateByUrl("/client");
+                 
       }
 
 }

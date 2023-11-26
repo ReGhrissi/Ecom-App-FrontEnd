@@ -16,6 +16,7 @@ import { CommentService } from '../services/comment.service';
 import { forkJoin, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { Location} from '@angular/common';
+import { AccountService } from '../services/account.service';
 
 
 @Component({
@@ -74,7 +75,8 @@ export class ProductDetailComponent implements OnInit {
                 private httpClient:HttpClient,
                 public userService:UserService,
                 public commentService:CommentService,
-                private location:Location
+                private location:Location,
+                private accountService : AccountService
             
               )
     {
@@ -83,6 +85,7 @@ export class ProductDetailComponent implements OnInit {
 
     currentComment:any;
     commentForm:any
+    addProductToCaddyForm:any;
 
   ngOnInit(): void {
 
@@ -122,7 +125,7 @@ export class ProductDetailComponent implements OnInit {
         commentText: new FormControl('',[Validators.required]),
   
         });
-  
+   
 
   }
 
@@ -236,17 +239,36 @@ onUpdateProduct(data :any)
     })
 }
 */
+incrementQuantity() 
+{
+  if (this.currentProduct.quantity < 10) 
+  { // Empêche d'aller au-delà de 10
+    this.currentProduct.quantity++;
+  }
+}
+
+decrementQuantity() 
+{
+  if (this.currentProduct.quantity > 1) 
+  { // Empêche d'aller en dessous de 1
+    this.currentProduct.quantity--;
+  }
+}
 
   // Methode qui permet d'ajouter un produit au panier
   onAddProductToCaddy(p:Product)
   {
-    /**
-        if(!this.authService.isAuthenticated)
+        if(this.currentUser)
         {
-          this.router.navigateByUrl("/login");
+          this.panierService.addUserProduct(p);
+          this.currentProduct.quantity =1;
         }
-    */
-        this.panierService.addProduct(p);
+        else 
+        {
+          this.panierService.addGuestProduct(p);
+          this.currentProduct.quantity =1;
+        }
+
   
   }
 

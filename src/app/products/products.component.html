@@ -148,12 +148,12 @@
                       <br>
                       <div class="flex">
                                 <span *ngIf="p.tendancyProduct">
-                                    <fa-icon [icon]="myAvailable"></fa-icon>
+                                    <fa-icon class="text-yellow-200" [icon]="myAvailable"></fa-icon>
                                     <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Tendance</h3>
                                 </span>
                 
                                 <span *ngIf="p.promotionProduct">
-                                    <fa-icon [icon]="myPromo"></fa-icon>
+                                    <fa-icon class="text-red-500" [icon]="myPromo"></fa-icon>
                                     <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promo</h3>
                                 </span>
                 

@@ -28,7 +28,7 @@ export class OrderComponent implements OnInit {
   myCancel=faXmark;
 
   public mode:number=0;
-  
+   
   public mainPanelStyle:string= "";
   public clientPanelStyle:string= "panel-default";
   public productsPanelStyle:string= "panel-default";
@@ -65,7 +65,7 @@ export class OrderComponent implements OnInit {
       {
         this.orderService.submitOrder()
 
-        if(this.orderService.order.id!=0)
+        if(this.orderService.order.orderId!='')
         {
           this.mainPanelStyle="panel-success";
         }
@@ -74,7 +74,7 @@ export class OrderComponent implements OnInit {
     
   onPayOrder() {
         //faire un PATCH pour l'ordre
-        this.router.navigateByUrl("/payment/"+this.orderService.order.id);
+        this.router.navigateByUrl("/payment/"+this.orderService.order.orderId);
   }
     
   onBack()

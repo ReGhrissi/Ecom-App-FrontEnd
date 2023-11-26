@@ -5,7 +5,7 @@ import { faAngleRight, faArrowLeft, faBasketShopping, faBookAtlas, faBullhorn, f
       faRightLong,
       faRightToBracket, faSackDollar, faSackXmark, faSplotch, faThumbsUp, faTrash, faTruck, faTruckArrowRight, faUpload, faUser, faUserGear,
        faUserGraduate,
-       faUserPen, faUserPlus, faUserSecret, faUserTie, faUsers, faXmark, faCommentDots } from "@fortawesome/free-solid-svg-icons";
+       faUserPen, faUserPlus, faUserSecret, faUserTie, faUsers, faXmark, faCommentDots, faCircleXmark, faHourglass, faHourglassStart, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 
 export class Icons{
 
@@ -68,6 +68,9 @@ export class Icons{
     myComment= faComment
     myCommentSolid=faCommentDots
     
+    myDeny=faCircleXmark
+    myTimer=faHourglassStart
+    myReturn=faRotateRight
    
 
 }

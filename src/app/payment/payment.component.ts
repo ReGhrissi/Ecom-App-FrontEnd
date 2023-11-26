@@ -64,7 +64,7 @@ export class PaymentComponent implements OnInit {
       payment.cardNumber=data.cardNumber;
       payment.cardType=data.cardType;
       payment.order=this.orderService.currentOrderData;
-      payment.order.date = this.orderService.currentOrderData.date;
+      payment.order.orderDate = this.orderService.currentOrderData.orderDate;
       payment.order.client = this.orderService.currentOrderData.client;
       payment.order.totalAmount=this.orderService.currentOrderData.totalAmount;
       

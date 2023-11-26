@@ -1,7 +1,8 @@
 
 
 export class ProductItem {
-    public productId:number;
+    public id :number
+    public productId:string;
     public name:string;
     public price:number;
     public quantity:number;
@@ -9,7 +10,8 @@ export class ProductItem {
 
     constructor()
     {
-        this.productId=0;
+        this.id=0
+        this.productId='';
         this.name='';
         this.price=0;
         this.quantity=0;

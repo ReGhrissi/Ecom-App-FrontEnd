@@ -4,6 +4,7 @@ export interface Client
     name:string;
     email:string;
     phoneNumber:string;
+    whatsapp:string
     address:string;
     username:string;
 /*
