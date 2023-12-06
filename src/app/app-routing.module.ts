@@ -44,7 +44,7 @@ const routes: Routes = [
   {path:'product-edit/:productId', component:ProductEditComponent, canActivate: [AuthGuard]} ,
   {path:'new-product/:categoryId', component:NewProductComponent, canActivate: [AuthGuard] },
   {path:'products/:p1/:p2',component:ProductsComponent},
-  {path:'products',component:ProductsComponent},
+ // {path:'products/all',component:ProductsComponent},
   {path:'login',component:LoginComponent, canActivate: [AfterAuthGuard] },
   {path:'password-reset',component:PasswordResetComponent },
   {path:'register',component:RegisterComponent, canActivate: [AfterAuthGuard] },

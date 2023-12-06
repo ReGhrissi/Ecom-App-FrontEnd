@@ -216,14 +216,6 @@
                                 formControlName="price">
                     </div>
 
-                    <div class="mb-6">
-                        <label for="currentPrice" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prix de vente :</label>
-                        
-                        <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                type="text" id="currentPrice" 
-                                [value]="currentProduct.currentPrice"
-                                formControlName="currentPrice">
-                    </div>
 
                     <div class="mb-6">
                         <label for="stock" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock :</label>
@@ -234,85 +226,110 @@
                                 formControlName="stock">
                     </div>
 
-
                     <div class="flex items-start mb-6">
+                        <fa-icon  class="mr-6 text-rose-600" [icon]="myPromo" ></fa-icon>
+
                         <div class="flex items-center h-5">
-                            <input  class=" form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                            <input  class=" form-control w-4 h-4 border border-rose-600 rounded bg-gray-50 focus:ring-3 focus:ring-rose-500 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                                     id="promo" type="checkbox"
                                     [value]="currentProduct.promotionProduct"
                                     formControlName="promotionProduct">
                             
                         </div>
-                        <label for="promo" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">En Promotion :</label>
+                        <label for="promo" class="clickable control-label ml-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            En Promotion  
+                        </label>
                     </div>
 
-                    <div  class="mb-6">
+                    <div *ngIf="editProductForm.get('promotionProduct').value" class="mb-6">
                         <label for="promotionRate" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pourcentage de la promotion :</label>
                         
                         <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                type="text" id="promotionRate" 
+                                type="number" id="promotionRate" min="0" max="1"
                                 [value]="currentProduct.promotionRate"
                                 formControlName="promotionRate">
                     </div>
 
 
                     <div class="flex items-start mb-6">
+                        <fa-icon class="mr-5 text-yellow-400 " [icon]="myTendancy"></fa-icon>
+
                         <div class="flex items-center h-5">
-                            <input   class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                 
+                            <input   class="form-control w-4 h-4 border border-yellow-400 rounded bg-gray-50 focus:ring-3 focus:ring-yellow-400 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
                                     id="tendancyProduct" type="checkbox" 
                                     [value]="currentProduct.tendancyProduct"
                                     formControlName="tendancyProduct">
                         </div>
 
-                        <label for="tendancyProduct" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Produit tendance :</label>
+                        <label for="tendancyProduct" class="clickable control-label ml-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            Produit tendance  
+                        </label>
 
                     </div>
 
                     <div class="flex items-start mb-6">
+                        <fa-icon   class="mr-6 text-fuchsia-700" [icon]="mySelected" ></fa-icon>
+
                         <div class="flex items-center h-5">
-                            <input   class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+
+                            <input   class="form-control w-4 h-4 border border-fuchsia-700 rounded bg-gray-50 focus:ring-3 focus:ring-fuchsia-700 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
                                     id="select" type="checkbox" 
                                     [value]="currentProduct.selectedProduct"
                                     formControlName="selectedProduct">
                         </div>
 
-                        <label for="select" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sélection :</label>
+                        <label for="select" class="clickable control-label ml-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            Sélectioné  
+                        </label>
 
                     </div>
 
                     <div class="flex items-start mb-6">
+                        <fa-icon  class="mr-6 text-green-400" [icon]="myAvailable" ></fa-icon> 
+
                         <div class="flex items-center h-5">
-                            <input  class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50  focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:focus:ring-offset-gray-800" 
+                            <input  class="form-control w-4 h-4 border border-green-400 rounded bg-gray-50  focus:ring-3 focus:ring-green-400 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:focus:ring-offset-gray-800" 
                                     id="dispo" type="checkbox"
                                     [value]="currentProduct.availableProduct"
                                     formControlName="availableProduct">
                         </div>
 
-                        <label for="dispo" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Disponible :</label>
+                        <label for="dispo" class="clickable control-label ml-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            Disponible 
+                        </label>
 
                     </div>
 
                     <div class="flex items-start mb-6">
+                        <fa-icon  class="mr-6 text-blue-600" [icon]="myNewPr"></fa-icon>
+
                         <div class="flex items-center h-5">
-                            <input   class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                            <input   class="form-control w-4 h-4 border border-blue-600 rounded bg-gray-50 focus:ring-3 focus:ring-blue-600 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
                                     id="newProduct" type="checkbox" 
                                     [value]="currentProduct.newProduct"
                                     formControlName="newProduct">
                         </div>
 
-                        <label for="newProduct" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nouveau produit :</label>
+                        <label for="newProduct" class="clickable control-label ml-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            Nouveau produit 
+                        </label>
 
                     </div>
 
                     <div class="flex items-start mb-6">
+                        <fa-icon  class="mr-5 text-emerald-700" [icon]="myFutur" ></fa-icon> 
+
                         <div class="flex items-center h-5">
-                            <input   class="form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                            <input   class="form-control w-4 h-4 border border-emerald-700 rounded bg-gray-50 focus:ring-3 focus:ring-emerald-700-700 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
                                     id="futurProduct" type="checkbox" 
                                     [value]="currentProduct.futurProduct"
                                     formControlName="futurProduct">
                         </div>
 
-                        <label for="futurProduct" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Produit prochainement dans le stock :</label>
+                        <label for="futurProduct" class="clickable control-label ml-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            Produit prochainement dans le stock 
+                        </label>
 
                     </div>
 

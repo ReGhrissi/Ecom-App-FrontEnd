@@ -5,11 +5,12 @@ import { faAngleRight, faArrowLeft, faBasketShopping, faBookAtlas, faBullhorn, f
       faRightLong,
       faRightToBracket, faSackDollar, faSackXmark, faSplotch, faThumbsUp, faTrash, faTruck, faTruckArrowRight, faUpload, faUser, faUserGear,
        faUserGraduate,
-       faUserPen, faUserPlus, faUserSecret, faUserTie, faUsers, faXmark, faCommentDots, faCircleXmark, faHourglass, faHourglassStart, faRotateRight } from "@fortawesome/free-solid-svg-icons";
+       faUserPen, faUserPlus, faUserSecret, faUserTie, faUsers, faXmark, faCommentDots, faCircleXmark, faHourglass, faHourglassStart, faRotateRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 export class Icons{
 
     myAngle = faAngleRight;
+    myAngleLeft=faAngleLeft
     myCatManage=faListCheck;
     myProdManage=faProductHunt;
     myUsersManage=faUsers;

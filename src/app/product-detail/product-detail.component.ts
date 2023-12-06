@@ -35,7 +35,7 @@ export class ProductDetailComponent implements OnInit {
   myUpload=this.icons.myUpload;
   myCancel=this.icons.myCancel;
   myAddToCart = this.icons.myAddToCart;
-  myAvailable= this.icons.myAvailable;
+  myTendancy= this.icons.myTendancy;
   myPromo=this.icons.myPromo;
   myNewPr = this.icons.myNewPr;
   myGoTo = this.icons.myGoTo;
@@ -286,7 +286,7 @@ decrementQuantity()
     navSpeed: 600,
     navText: ['<', '>'],
     margin:15,
-    /* 
+     
     responsive: {
       0: {
         items: 1
@@ -298,10 +298,10 @@ decrementQuantity()
         items: 3
       },
       940: {
-        items: 4
+        items: 5
       }
     },
-    */
+    
     nav: true
   }
 

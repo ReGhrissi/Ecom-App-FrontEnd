@@ -33,10 +33,16 @@ export class NavbarComponent implements OnInit{
   myNewPr=this.icons.myNewPr;
   myFutur=this.icons.myFutur;
   myTendancy=this.icons.myTendancy;
+  myProdManage=this.icons.myProdManage;
   
   @Output() Selected_Products: EventEmitter<void> = new EventEmitter<void>();
-  @Output() products_Promo: EventEmitter<void> = new EventEmitter<void>();
   @Output() products_Dispo: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output() all_Products: EventEmitter<void> = new EventEmitter<void>();
+  @Output() products_Promo: EventEmitter<void> = new EventEmitter<void>();
+  @Output() products_New: EventEmitter<void> = new EventEmitter<void>();
+  @Output() products_Tendancy: EventEmitter<void> = new EventEmitter<void>();
+  @Output() products_Futur: EventEmitter<void> = new EventEmitter<void>();
   @Output() Log_Out: EventEmitter<void> = new EventEmitter<void>();
   @Output() Log_In: EventEmitter<void> = new EventEmitter<void>();
 
@@ -81,15 +87,36 @@ export class NavbarComponent implements OnInit{
       this.Selected_Products.emit();
   }
 
+  ProductsDispo()
+  {
+      this.products_Dispo.emit();
+  }
+
+  AllProducts()
+  {
+      this.all_Products.emit();
+  }
+
   ProductsPromo()
   {
       this.products_Promo.emit();
   }
 
-  ProductsDispo()
+  ProductsNew()
   {
-      this.products_Dispo.emit();
+      this.products_New.emit();
   }
+
+  ProductsTendancy()
+  {
+      this.products_Tendancy.emit();
+  }
+
+  ProductsFutur()
+  {
+      this.products_Futur.emit();
+  }
+
 
   Logout()
   {

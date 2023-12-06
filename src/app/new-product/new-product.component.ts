@@ -29,8 +29,6 @@ export class NewProductComponent implements OnInit{
 
     name: new FormControl('',[Validators.required]),
     description: new FormControl('',[Validators.required]),
-    price: new FormControl('',[Validators.required]), 
-    currentPrice: new FormControl('',[Validators.required]), 
     categoryId: new FormControl('',[Validators.required]), 
     
   });
@@ -60,12 +58,10 @@ export class NewProductComponent implements OnInit{
 
     const name = this.newProductForm.get('name')?.value || '' ;
     const description = this.newProductForm.get('description')?.value || '' ;
-    const price = this.newProductForm.get('price')?.value || '' ;
-    const currentPrice = this.newProductForm.get('currentPrice')?.value || '' ;
     const categoryId = this.newProductForm.get('categoryId')?.value || '' ;
 
 
-    this.catService.postRessource("/products/"+categoryId, { name, description, price, currentPrice}).pipe(
+    this.catService.postRessource("/products/"+categoryId, { name, description}).pipe(
 
       catchError(err => {
                         console.log(err);

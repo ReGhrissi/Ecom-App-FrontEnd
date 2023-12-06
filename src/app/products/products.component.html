@@ -1,33 +1,22 @@
+<br>
+<br>
 <div>
-    <div> 
-        
-        <form>
+    <div>      
+        <form [formGroup]="searchForm" (submit)="onSearchProducts()">
             <div class="flex">
                 <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
-                <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">All categories <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-              </svg></button>
-                <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
-                    </li>
-                    </ul>
-                </div>
-                <div class="relative w-full">
-                    <input type="search" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" 
-                          placeholder="Rechercher des produits en utilisant la désignation ou bien une déscription !" required>
+                <button routerLink="/products/all/p" id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-blue-500 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
+                    Tous les produits <fa-icon class="ml-3 text-blue-800" [icon]="myAngle"></fa-icon>
+                </button>
 
-                    <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <div class="relative w-full">
+                    <input  type="search" id="search-dropdown" 
+                            class=" form-control block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-blue-500 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" 
+                            placeholder="Rechercher des produits en utilisant la désignation ou bien une déscription !" 
+                            required
+                            formControlName="keyword">
+
+                    <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-800 rounded-r-lg border border-blue-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
@@ -36,7 +25,6 @@
                 </div>
             </div>
         </form>
-         
 
     </div>
 
@@ -44,42 +32,68 @@
     
     <br>
 
-    <div>
+    <div *ngIf="productsByCat && !searchMode">
 
-        <h6 class="mb-4 font-semibold text-gray-900 dark:text-white">Rechercher des produits par type : </h6>
+        <h6 class="mb-4 font-semibold text-gray-900 dark:text-white">Rechercher dans la meme catégorie, des produits par type : </h6>
 
         <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
             
             <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                 <div class="flex items-center pl-3">
 
-                    <input id="en-promotion" type="checkbox" #EnPromotion value="enPromotion" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                    <input id="all" type="radio" name="searchBy"  class="w-4 h-4 text-fuchsia-700 bg-gray-100 border-gray-300 rounded focus:ring-fuchsia-600 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                     
-                    <label for="en-promotion" 
+                    <label for="all"  
                           
-                          (click)="onFilter(EnPromotion.value)"
-                          class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">En promotion</label>
+                          (click)="onFilter('All')"
+                          class="clickable w-full py-3 ml-6 text-sm font-medium text-gray-900 dark:text-gray-300">
+                          Tous <fa-icon class="ml-3 text-fuchsia-700" [icon]="myProdManage"></fa-icon> 
+                        </label>
                 
                   </div>
             </li>
 
             <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
 
-              <a  class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
-                        
-                <fa-icon class="mr-2" [icon]="myNewPr"></fa-icon>
+                <div class="flex items-center pl-3">
+
+                    <input id="en-promotion" type="radio" name="searchBy" #promotionProducts value="promotionProducts" class="w-4 h-4 text-rose-600 bg-gray-100 border-gray-300 rounded focus:ring-rose-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                    
+                    <label for="en-promotion"  
+                          
+                          (click)="onFilter(promotionProducts.value)"
+                          class="clickable w-full py-3 ml-6 text-sm font-medium text-gray-900 dark:text-gray-300">
+                           En promotion <fa-icon class="ml-3 text-rose-600" [icon]="myPromo"></fa-icon> </label>
                 
-                Nouveaux
-            </a>
+                </div>
             </li>
 
             <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
 
                 <div class="flex items-center pl-3">
 
-                    <input id="tendances" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="tendances" 
-                          class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tendances</label>
+                    <input id="new" type="radio" name="searchBy" #newProducts value="newProducts" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                
+                    <label for="new"  
+                            
+                            (click)="onFilter(newProducts.value)"
+                            class="clickable w-full py-3 ml-6 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            Nouveaux  <fa-icon class="ml-3 text-blue-600" [icon]="myNewPr"></fa-icon> </label>
+                </div>
+            </li>
+
+            <li class=" w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+
+                <div class=" flex items-center pl-3">
+
+                    <input id="tendancy" type="radio" name="searchBy" #tendancyProducts value="tendancyProducts" class="w-4 h-4 text-yellow-400 bg-gray-100 border-gray-300 rounded focus:ring-yellow-300 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                    
+                    <label for="tendancy"  
+                          
+                          (click)="onFilter(tendancyProducts.value)"
+                          class="clickable w-full py-3 ml-6 text-sm font-medium text-gray-900 dark:text-gray-300">
+                           Tendances <fa-icon class="ml-3 text-yellow-400" [icon]="myTendancy"></fa-icon> </label>
+                
                 </div>
             </li>
 
@@ -87,11 +101,15 @@
 
                 <div class="flex items-center pl-3">
 
-                    <input id="prochainement" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="prochainement" 
-                          class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Prochainement</label>
+                    <input id="futur" type="radio" name="searchBy" #futurProducts value="futurProducts" class="w-4 h-4 text-emerald-700 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-emerald-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                    
+                    <label for="futur"  
+                          
+                          (click)="onFilter(futurProducts.value)"
+                          class="clickable w-full py-3 ml-6 text-sm font-medium text-gray-900 dark:text-gray-300">
+                           Prochainement <fa-icon class="ml-3 text-emerald-700" [icon]="myFutur"></fa-icon> </label>
                 
-                  </div>
+                </div>
             </li>
 
         </ul>
@@ -105,15 +123,23 @@
 
 <br><br>
 
-<div >
-<div *ngIf="products">
 
-    
+<div *ngIf="products && !searchMode">
 
+    <div>
+       
+      <h6 class="mb-4 font-semibold text-gray-900 dark:text-white">
+        <fa-icon *ngIf="p1==2"  class="mr-2 text-fuchsia-700" [icon]="myCatManage" ></fa-icon> 
+        <fa-icon *ngIf="all=='all'"  class="mr-2 text-fuchsia-700" [icon]="myProdManage" ></fa-icon>
+        <fa-icon *ngIf="p1==4" class="mr-2 text-yellow-400 " [icon]="myTendancy"></fa-icon>
+        <fa-icon *ngIf="p1==5" class="mr-2 text-blue-600" [icon]="myNewPr"></fa-icon>
+        <fa-icon *ngIf="p1==3"  class="mr-2 text-rose-600" [icon]="myPromo" ></fa-icon> 
+        <fa-icon *ngIf="p1==6"  class="mr-2 text-emerald-700" [icon]="myFutur" ></fa-icon> 
 
-    <div><h6 class="mb-4 font-semibold text-gray-900 dark:text-white">{{title}}</h6></div>
+        {{title}}</h6>
+    </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" >
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" >
 
         <div  *ngFor="let p of products">
             
@@ -122,46 +148,55 @@
 
                 
                 
-                <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="myHight w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                     <a>
                         <img class="p-8 rounded-t-lg" src="{{this.catService.host+this.catService.requestMapping+'/photoProduct/'+p.productId+'?ts='+getTS()}}" alt="product image"
-                            (click)="onProductDetails(p)"id="Photo_Product" class="clickable"/>         
+                            (click)="onProductDetails(p)"id="Photo_Product"
+                            class="clickable  rounded-t-lg" style="width: 100%; height: 255px;"/>         
                     </a>
 
                     <div class="px-5 pb-5">
 
                         <a>
-                            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                {{p.name}}</h5>
+                          <p class="text-black font-semibold   dark:text-white">
+                            {{p.name}}</p>
                         </a>
 
                         
 
                         <div class="flex items-center justify-between">
-                          <span class="text-lg font-medium text-gray-900 line-through dark:text-white">{{p.price|number:'0.2'}} DH</span>
-                            <span class="text-1xl font-bold text-gray-500 dark:text-white">Prix : {{p.currentPrice|number:'0.2'}} DH</span>
+
+                          <span *ngIf="p.promotionProduct && !p.futurProduct" class="text-base font-medium text-rose-600 line-through dark:text-white">{{p.price|number:'0.2'}} DH</span>
+                          <span *ngIf="p.futurProduct" class="text-base font-medium text-blue-800 line-through dark:text-white">{{p.price|number:'0.2'}} DH</span>
+                          <span *ngIf="!p.futurProduct" class="text-base font-bold text-blue-800 dark:text-white">  Prix : {{p.currentPrice|number:'0.2'}}  DH </span>
 
                         </div>
                       <!----------------------------------------------------------------------------->
-
-                      <br>
                       <div class="flex">
-                                <span *ngIf="p.tendancyProduct">
-                                    <fa-icon class="text-yellow-200" [icon]="myAvailable"></fa-icon>
-                                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Tendance</h3>
+                            <span *ngIf="p.tendancyProduct && !p.futurProduct">
+                                <fa-icon class="text-yellow-400" [icon]="myTendancy"></fa-icon> 
+                                <h3 class="ml-2 text-sm font-semibold text-yellow-300 dark:text-white">Tendance</h3>
+                            </span>
+            
+                            <span *ngIf="p.newProduct && !p.futurProduct">
+                                <fa-icon class="text-blue-600" [icon]="myNewPr"></fa-icon>
+                                <h3 class="ml-2 text-sm font-semibold text-blue-400 dark:text-white">Nouveau</h3>
+                            </span>
+          
+                            <span *ngIf="p.promotionProduct && !p.futurProduct">
+                                <fa-icon class="mr-2 text-rose-600" [icon]="myPromo" ></fa-icon> 
+                                <span class="bg-red-50 text-rose-600 text-xs font-bold me-2 px-1.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-600">
+                                    - {{ p.promotionRate * 100 }} %
                                 </span>
-                
-                                <span *ngIf="p.promotionProduct">
-                                    <fa-icon class="text-red-500" [icon]="myPromo"></fa-icon>
-                                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promo</h3>
-                                </span>
-                
-                                <span *ngIf="p.newProduct">
-                                    <fa-icon [icon]="myNewPr"></fa-icon>
-                                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
-                                </span>
-                        </div>
+                                <h3 class="ml-2 text-sm font-semibold text-rose-500 dark:text-white">Promotion </h3>
+                            </span>
+  
+                            <span *ngIf="p.futurProduct">
+                              <fa-icon class="text-emerald-700" [icon]="myFutur"></fa-icon>
+                               <h3 class="ml-2 text-sm font-semibold text-emerald-600 dark:text-white">Prochainement</h3>
+                            </span>
+                      </div>
                 </div>
 
             </div>  
@@ -172,69 +207,140 @@
 </div>
 </div>
 
+<div *ngIf="searchMode">
+
+    <div *ngIf="products">
+
+    
+
+
+        <div>
+           
+          <h6 class="mb-4 font-semibold text-gray-900 dark:text-white">
+            <fa-icon  class="mr-2 text-fuchsia-700" [icon]="myProdManage" ></fa-icon>
+    
+            {{title}}</h6>
+        </div>
+        <br>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" >
+    
+            <div  *ngFor="let p of products">
+                
+                <div (click)="onProductDetails(p)">
+    
+    
+                    
+                    
+                    <div class="myHight w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    
+                        <a>
+                            <img class="p-8 rounded-t-lg" src="{{this.catService.host+this.catService.requestMapping+'/photoProduct/'+p.productId+'?ts='+getTS()}}" alt="product image"
+                                (click)="onProductDetails(p)"id="Photo_Product"
+                                class="clickable  rounded-t-lg" style="width: 100%; height: 255px;"/>         
+                        </a>
+    
+                        <div class="px-5 pb-5">
+    
+                            <a>
+                              <p class="text-black font-semibold   dark:text-white">
+                                {{p.name}}</p>
+                            </a>
+    
+                            
+    
+                            <div class="flex items-center justify-between">
+    
+                              <span *ngIf="p.promotionProduct && !p.futurProduct" class="text-base font-medium text-rose-600 line-through dark:text-white">{{p.price|number:'0.2'}} DH</span>
+                              <span *ngIf="p.futurProduct" class="text-base font-medium text-blue-800 line-through dark:text-white">{{p.price|number:'0.2'}} DH</span>
+                              <span *ngIf="!p.futurProduct" class="text-base font-bold text-blue-800 dark:text-white">  Prix : {{p.currentPrice|number:'0.2'}}  DH </span>
+    
+                            </div>
+                          <!----------------------------------------------------------------------------->
+                          <div class="flex">
+                                <span *ngIf="p.tendancyProduct && !p.futurProduct">
+                                    <fa-icon class="text-yellow-400" [icon]="myTendancy"></fa-icon> 
+                                    <h3 class="ml-2 text-sm font-semibold text-yellow-300 dark:text-white">Tendance</h3>
+                                </span>
+                
+                                <span *ngIf="p.newProduct && !p.futurProduct">
+                                    <fa-icon class="text-blue-600" [icon]="myNewPr"></fa-icon>
+                                    <h3 class="ml-2 text-sm font-semibold text-blue-400 dark:text-white">Nouveau</h3>
+                                </span>
+              
+                                <span *ngIf="p.promotionProduct && !p.futurProduct">
+                                    <fa-icon class="mr-2 text-rose-600" [icon]="myPromo" ></fa-icon> 
+                                    <span class="bg-red-50 text-rose-600 text-xs font-bold me-2 px-1.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-600">
+                                        - {{ p.promotionRate * 100 }} %
+                                    </span>
+                                    <h3 class="ml-2 text-sm font-semibold text-rose-500 dark:text-white">Promotion </h3>
+                                </span>
+      
+                                <span *ngIf="p.futurProduct">
+                                  <fa-icon class="text-emerald-700" [icon]="myFutur"></fa-icon>
+                                   <h3 class="ml-2 text-sm font-semibold text-emerald-600 dark:text-white">Prochainement</h3>
+                                </span>
+                          </div>
+                    </div>
+    
+                </div>  
+    
+            </div>
+        </div>
+    
+        </div>
+    </div>
+    
+    
+    
+</div>
 
 
 <div>
-
-  
 
 <br><br>
 
-<div>
+<div class="flex justify-center">
 
-    
-<nav aria-label="Page navigation example">
-    <ul class="inline-flex -space-x-px text-sm">
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-      </li>
-      <li>
-        <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-      </li>
-    </ul>
-  </nav>
   <nav aria-label="Page navigation example">
+
     <ul class="inline-flex -space-x-px text-base h-10">
-      <li>
-        <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+
+      <li *ngIf="!(firstPage==currentPage)">
+        <a (click)="loadPreviousPage()" class="clickable mr-4 flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-blue-800 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <fa-icon class="mr-2 text-blue-800" [icon]="myAngleLeft"></fa-icon> Précédent
+        </a>
       </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+
+      <ng-container *ngFor="let pageNum of getPageNumbers()">
+
+        <li class="clickable ">
+
+            <a  *ngIf="pageNum !== '...'; else ellipsis"  
+                [class]="isPageActive(pageNum) ? 'rounded-md bg-blue-800 mr-2 ml-2 flex items-center justify-center px-4 h-10 text-white border border-gray-300   dark:border-gray-700 dark:bg-gray-700 dark:text-white' 
+                                               : 'rounded-md mr-2 ml-2 flex items-center justify-center px-4 h-10 text-blue-600 border border-blue-800 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white'"
+                (click)="loadProductsByPage(+pageNum)">
+                
+                {{ pageNum }}
+            </a>
+            <ng-template #ellipsis>
+              <span class="px-4 h-10 flex items-center justify-center text-blue-600">...</span>
+            </ng-template>
+        </li>
+
+      </ng-container>
+
+      <li *ngIf="!(lastPage==currentPage)">
+        <a (click)="loadNextPage()" class="clickable ml-4 flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-blue-800 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          Suivant <fa-icon class="ml-3 text-blue-800" [icon]="myAngle"></fa-icon>
+        </a>
       </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-      </li>
-      <li>
-        <a href="#" aria-current="page" class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-      </li>
-      <li>
-        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-      </li>
+
     </ul>
   </nav>
   
 
 </div>
+
+<br>
 
 </div>

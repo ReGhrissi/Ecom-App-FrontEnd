@@ -30,12 +30,11 @@ export class SidebarComponent implements OnInit{
   
   
   @Input() _Categories : any;
+  @Input() Total_Products_By_Category : { [key: string]: number } = {};
   @Input() Current_Category : any;
 
   @Output() Products_By_Cat: EventEmitter<void> = new EventEmitter<void>();
   
-  numberOfProducts:number=0;
-
   currentUser :any= null;
   
   constructor(public catService:CatalogueService, public router:Router,
@@ -44,11 +43,9 @@ export class SidebarComponent implements OnInit{
   {
 
   }
-
+ 
   ngOnInit(): void { 
-    
-    // pour afficher le nombre des produits par categorie 
-    this.getCount()
+
     
     this.accountService.isAuth.subscribe( res=> {
       if(res==true)
@@ -65,21 +62,6 @@ export class SidebarComponent implements OnInit{
   ProductsByCat(category :any)
   {
     this.Products_By_Cat.emit(category);
-  }
-/** 
-  getAllProduct()
-  {
-    this.router.navigateByUrl('/products/0/0');
-  }
-*/
-  getCount()
-  {
-    
-    this.catService.getNumberOfProductsForCategory(1)
-        .subscribe((count: number) => {
-          console.log(count)
-            this.numberOfProducts = count;
-      });
   }
   
   onMyComments()

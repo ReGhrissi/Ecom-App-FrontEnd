@@ -29,6 +29,7 @@ export class AppComponent implements OnInit{
   title = 'Ecommerce-Front';
 
   categories:any;
+  totalProductsByCategory: { [key: string]: number } = {};
   public currentCategory :any;
 
   constructor (private catService:CatalogueService, 
@@ -47,26 +48,25 @@ export class AppComponent implements OnInit{
     
         initFlowbite();
 
-    if(this.tokenService.loggedIn())
-    {
-      this.authService.loadAuthUserFromLocalStorage();
-    }
-     
-    this.getCategories();
+      if(this.tokenService.loggedIn())
+      {
+        this.authService.loadAuthUserFromLocalStorage();
+      }
+      
+      this.getCategories();
 
 
-/**
-    if(this.authService.isAuthenticated) 
-    {
-      this.caddyComponent.getUserCaddy()
-    }
+      /**
+          if(this.authService.isAuthenticated) 
+          {
+            this.caddyComponent.getUserCaddy()
+          }
 
-    else
-    {
-      this.caddyComponent.getGuestCaddy()
-    }
- */  
-
+          else
+          {
+            this.caddyComponent.getGuestCaddy()
+          }
+      */  
   }
 
 
@@ -75,7 +75,23 @@ export class AppComponent implements OnInit{
       {
           this.catService.getRessource("/categories")
               .subscribe({
-                  next: data => {this.categories=data;console.log("all categories:"+data)},
+
+                  next: data => {
+                    
+                      this.categories=data;
+                      
+                      // Récupérer le nombre total d'articles pour chaque catégorie
+                      this.categories.forEach((category:any) => {
+
+                          this.catService.getTotalProductsCountByCategory(category.categoryId)
+                              .subscribe((count: any) => 
+                              {
+                                  this.totalProductsByCategory[category.categoryId] = count;
+                                  
+                              });
+                        });
+                  
+                  },
                   error: err => console.error(err)
               });
       }
@@ -94,19 +110,42 @@ export class AppComponent implements OnInit{
     this.router.navigateByUrl("/products/1/0")
   }
 
-  // methode qui permet la recupération des produits à l'etat Promo
-  OnProductsPromo()
-  {
-    this.currentCategory=undefined;
-    this.router.navigateByUrl("/products/3/0")
-
-  }
-
   // methode qui permet la recupération des produits à l'etat Disponiple
   onProductsDispo()
   {
     this.currentCategory=undefined;
     this.router.navigateByUrl("/products/4/0")
+  }
+
+  OnAllProducts()
+  {
+    this.currentCategory=undefined;
+    this.router.navigateByUrl("/products/all/p")
+  }
+
+  // methode qui permet la recupération des produits à l'etat Promo
+  OnProductsPromo()
+  {
+    this.currentCategory=undefined;
+    this.router.navigateByUrl("/products/3/0")
+  }
+
+  OnProductsNew()
+  {
+    this.currentCategory=undefined;
+    this.router.navigateByUrl("/products/5/0")
+  }
+
+  OnProductsTendancy()
+  {
+    this.currentCategory=undefined;
+    this.router.navigateByUrl("/products/4/0")
+  }
+
+  OnProductsFutur()
+  {
+    this.currentCategory=undefined;
+    this.router.navigateByUrl("/products/6/0")
   }
 
   // methode qui permet de faire un LogOut (suppression du tocken)

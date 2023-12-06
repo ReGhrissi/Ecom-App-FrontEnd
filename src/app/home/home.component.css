@@ -2,3 +2,15 @@
 section{
     background-color: rgb(235, 235, 235);
 }*/
+.clickable
+{
+    cursor: pointer;
+}
+.myHight
+{
+    height: 350px;
+}
+.myWidth
+{
+    width: 265px; 
+}

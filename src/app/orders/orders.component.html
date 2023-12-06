@@ -11,50 +11,64 @@
             <div class="flex items-center pl-3">
                <input id="all-orders" type="radio" name="orderStatus" value="ALL" 
                      [routerLinkActive]="'active-link'" [routerLinkActiveOptions]="{exact: true}" routerLink="/orders/ALL"
-                     (change)="onStatusChange('ALL')" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-               <label for="all-orders" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Toutes les commandes</label>
-            </div>
+                     (change)="onStatusChange('ALL')" class="w-4 h-4 text-fuchsia-700 bg-gray-100 border-gray-300 rounded focus:ring-fuchsia-600 dark:focus:ring-blue-700 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+               <label for="all-orders" class=" clickable w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Toutes les commandes
+               </label>
+            </div> 
          </li>
       
         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
             <div class="flex items-center pl-3">
-                <input id="registered-orders" type="radio" name="orderStatus" value="REGISTERED" (change)="onStatusChange('REGISTERED')" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                <label for="registered-orders" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nouvelles commandes</label>
+                <input id="registered-orders" type="radio" name="orderStatus" value="REGISTERED" (change)="onStatusChange('REGISTERED')" class="w-4 h-4 text-yellow-300 bg-gray-100 border-gray-300 rounded focus:ring-yellow-300 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                <label for="registered-orders" class=" clickable w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      Nouvelles  <fa-icon class="ml-2 text-yellow-300 text-base " [icon]="myRegistered"></fa-icon> 
+                </label>
             </div>
         </li>
 
         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
             <div class="flex items-center pl-3">
-               <input id="under-treatement-orders" type="radio" name="orderStatus" value="UNDER_TREATEMENT" (change)="onStatusChange('UNDER_TREATEMENT')" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-               <label for="under-treatement-orders" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">En cours de traitement</label>
+               <input id="under-treatement-orders" type="radio" name="orderStatus" value="UNDER_TREATEMENT" (change)="onStatusChange('UNDER_TREATEMENT')" class="w-4 h-4 text-orange-400 bg-gray-100 border-gray-300 rounded focus:ring-orange-300 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+               <label for="under-treatement-orders" class="clickable w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  En cours de Tr. <fa-icon class="ml-2 text-orange-400 text-base " [icon]="myUnderTr"></fa-icon>
+               </label>
             </div>
          </li>
 
         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
             <div class="flex items-center pl-3">
                 <input id="sent-orders" type="radio" name="orderStatus" value="SENT" (change)="onStatusChange('SENT')" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                <label for="sent-orders" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">En cours de livraison</label>
+                <label for="sent-orders" class="clickable w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Envoyées <fa-icon class="ml-2 text-blue-600 text-base " [icon]="mySent"></fa-icon> 
+               </label>
             </div>
         </li>
 
         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
             <div class="flex items-center pl-3">
-                <input id="delivered-orders" type="radio" name="orderStatus" value="DELIVERED" (change)="onStatusChange('DELIVERED')"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                <label for="delivered-orders" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Livrées</label>
+                <input id="delivered-orders" type="radio" name="orderStatus" value="DELIVERED" (change)="onStatusChange('DELIVERED')"  class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                <label for="delivered-orders" class="clickable w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      Livrées <fa-icon class="ml-2 text-green-600 text-base " [icon]="myDelivered"></fa-icon> 
+                </label>
             </div>
         </li>
 
         <li class="w-full dark:border-gray-600">
             <div class="flex items-center pl-3">
-               <input id="cancelled-orders" type="radio" name="orderStatus" value="CANCELLED" (change)="onStatusChange('CANCELLED')"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-               <label for="cancelled-orders" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Annulées</label>
+               <input id="cancelled-orders" type="radio" name="orderStatus" value="CANCELLED" (change)="onStatusChange('CANCELLED')"  class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+               <label for="cancelled-orders" class=" clickable w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Annulées <fa-icon class="ml-2 text-red-600 text-base " [icon]="myCancelled"></fa-icon> 
+               </label>
             </div>
          </li>
 
         <li class="w-full dark:border-gray-600">
             <div class="flex items-center pl-3">
-                <input id="returned-orders" type="radio" name="orderStatus" value="RETURNED" (change)="onStatusChange('RETURNED')"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                <label for="returned-orders" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Retours</label>
+                <input id="returned-orders" type="radio" name="orderStatus" value="RETURNED" (change)="onStatusChange('RETURNED')"  class="w-4 h-4 text-gray-900 bg-gray-100 border-gray-300 rounded focus:ring-gray-800 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                <label for="returned-orders" class="clickable w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                   Retours <fa-icon class="ml-2 text-black text-base " [icon]="myReturned"></fa-icon>
+               </label>
             </div>
         </li>
     </ul>
@@ -191,7 +205,7 @@
 
             <tr *ngIf="selectedOrder && selectedOrder.orderId==o.orderId" class="border border-blue-400  ">
 
-               <td colspan="7">
+               <td colspan="8">
 
                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
@@ -208,7 +222,7 @@
                                  <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
                                     
           
-                                    <td colspan="7">
+                                    <td colspan="8">
                                        
                                        <div id="alert-additional-content-5" class="mx-6 my-6 p-4 border border-gray-300 rounded-lg bg-gray-50 dark:border-gray-600 dark:bg-gray-800" role="alert">
                                  
@@ -217,47 +231,74 @@
                                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                                              </svg>
                                              <span class="sr-only">Info</span>
-                                             <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Informations du client </h3>
+                                             <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Informations du client :</h3>
                                              </div>
                                              <br>
-                                    
-                                             <div class="flex items-center">
-                                                <fa-icon [icon]="myClient"></fa-icon>
-                                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                   
-                                                </svg>
-                                                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Nom du client :</h3> 
-                                                <span >{{selectedOrder.client.name}}</span>
-                                                <div></div>
-                                             </div>
                                              
-                                             <div class="flex items-center">
-                                                <fa-icon [icon]="myAddress"></fa-icon>
-                                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                   
-                                                </svg>
-                                                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Adresse Clinet :</h3>
-                                                <span>{{selectedOrder.client.address}}</span>
+
+                                             <div class="relative overflow-x-auto shadow-lg sm:rounded-lg ">
+                                                <table class="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400">
+
+                                                   <tbody>
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                            <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-white dark:text-white dark:bg-gray-800">    
+                                                                  <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300">
+                                                                     <fa-icon class="ml-6 mr-6" [icon]="myClient"></fa-icon> Nom du client :
+                                                                  </h3> 
+                                                            </th>
+                                                            <td class="px-6 py-2 bg-white">
+                                                               {{selectedOrder.client.name}}
+                                                            </td>
+                                                      </tr>
+
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                            <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-blue-50 dark:text-white dark:bg-gray-800">
+                                                               <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                                                                  <fa-icon class="ml-6 mr-6" [icon]="myAddress"></fa-icon> Adresse Client :
+                                                               </h3> 
+                                                            </th>
+                                                            <td class="px-6 py-2 bg-blue-50">
+                                                               {{selectedOrder.client.address}}
+                                                            </td>    
+                                                      </tr>
+
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                            <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-white dark:text-white dark:bg-gray-800">
+                                                               <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                                                                  <fa-icon class="ml-6 mr-6" [icon]="myEmail"></fa-icon> Email :
+                                                               </h3> 
+                                                            </th>
+                                                            <td class="px-6 py-2 bg-white">
+                                                               {{selectedOrder.client.email}}
+                                                            </td>
+                                                      </tr>
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                            <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-blue-50 dark:text-white dark:bg-gray-800">
+                                                               <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                                                                  <fa-icon class="ml-6 mr-6" [icon]="myPhone"></fa-icon> Téléphone :</h3> 
+                                                            </th>
+                                                            <td class="px-6 py-2 bg-blue-50">
+                                                               {{selectedOrder.client.phoneNumber}}
+                                                            </td>  
+                                                      </tr>
+
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                         <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-white dark:text-white dark:bg-gray-800">
+                                                            <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                                                               <fa-icon class="ml-6 mr-6" [icon]="myWhatsapp"></fa-icon> WhatsApp :
+                                                            </h3> 
+                                                         </th>
+                                                         <td class="px-6 py-2 bg-white">
+                                                            {{selectedOrder.client.whatsapp}}
+                                                         </td>                
+                                                      </tr>
+                                             
+                                                   </tbody>
+                                                </table>
+                                                
                                              </div>
-                                    
-                                             <div class="flex items-center">
-                                                   <fa-icon [icon]="myPhone"></fa-icon>
-                                                   <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                      
-                                                   </svg>
-                                                   <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Téléphone :</h3>
-                                                   <span >{{selectedOrder.client.phoneNumber}}</span>
-                                             </div>
-                                    
-                                             <div class="flex items-center">
-                                                <fa-icon [icon]="myEmail"></fa-icon>
-                                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                         
-                                                </svg>
-                                                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Email :</h3>
-                                                <span >{{selectedOrder.client.email}}</span>
-                                             </div>
-                                          </div>
+                                             <br>
+                                       </div>
                                           
                                        </td>
                         
@@ -266,7 +307,7 @@
                                  <tr  class="bg-white border-b dark:bg-gray-800   ">
 
 
-                                    <td colspan="7">
+                                    <td colspan="8">
 
                                     <div class=" mx-6 my-6 border border-gray-300 rounded-lg">
 
@@ -281,18 +322,14 @@
                                                 Produit
                                              </th>
                                              <th scope="col" class="px-6 py-3">
-                                                Stock
+                                                Quantité
                                              </th>
                                              <th scope="col" class="px-6 py-3">
-                                                Prix
+                                                Prix (DH)
                                              </th>
                                              <th scope="col" class="px-6 py-3">
-                                                X
-                                             </th>
-                                             <th scope="col" class="px-6 py-3">
-                                                Y
-                                             </th>
-                                             
+                                                Total (DH)
+                                             </th>      
                                        </tr>
                                     </thead>
                                     
@@ -313,15 +350,11 @@
                                              </td>
                                     
                                              <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                                {{i.product.stock}}
+                                                {{i.product.currentPrice}}
                                              </td>
                                     
-                                             <td class="px-6 py-4" >
-                                                <a  class="clickable font-medium text-green-600 dark:text-red-500 hover:underline">Modifier</a>
-                                             </td>
-                                    
-                                             <td class="px-6 py-4" >
-                                                <a  class="clickable font-medium text-red-600 dark:text-red-500 hover:underline">Retirer</a>
+                                             <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white" >
+                                                {{i.quantity * i.product.currentPrice}}
                                              </td>
                                              
                                           </tr>
@@ -355,7 +388,7 @@
                                              <select   formControlName="orderStatus" id="New_Status" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <option *ngFor="let status of Object.values(orderStatusEnum)" [value]="status" >{{ status }}</option>
                                              </select>
-                                            ss {{updateOrderForm.orderStatus}}
+                                            
                                              <br>
                                              
                                              <div *ngIf="updateOrderForm.get('orderStatus').value === 'CANCELLED' || 

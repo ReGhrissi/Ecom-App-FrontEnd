@@ -36,6 +36,11 @@ export class CatalogueService {
             
         }
 
+        getTotalRessourceCount(url:any): Observable<number> 
+        {
+            return this.http.get<number>(this.host+url);
+        }
+
         public postRessource(url:any, data:any)
         {
             return this.http.post(this.host+url,data);
@@ -88,9 +93,9 @@ export class CatalogueService {
 
 
 
-      getNumberOfProductsForCategory(categoryId: number): any {
+      getTotalProductsCountByCategory(categoryId: any) {
   
-            return this.http.get<number>(`/categories/${categoryId}/products/count`);
+            return this.http.get(this.host+"/products/totalProductsCountByCat/"+categoryId);
       }
 
 }

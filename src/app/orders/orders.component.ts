@@ -22,6 +22,7 @@ export class OrdersComponent implements OnInit {
 
   myEmail=this.icons.myEmail
   myPhone=this.icons.myPhone
+  myWhatsapp=this.icons.myWhatsapp
   myAddress=this.icons.myaddress
   myClient=this.icons.myClinet
   myEdit=this.icons.myEdit
@@ -91,15 +92,15 @@ export class OrdersComponent implements OnInit {
   }
 
 
- onStatusChange(status: string) 
- {
+onStatusChange(status: string) 
+{
    
         this.router.navigate(['/orders/' + status]);
     
 }
 
-  onGetOrdersByStatus(statusURL:any)
-  {
+onGetOrdersByStatus(statusURL:any)
+{
         this.orderService.getOrdersByStatus(statusURL).subscribe({
 
             next: (data:any) => {
@@ -121,10 +122,10 @@ export class OrdersComponent implements OnInit {
 
             error: err => console.error(err)
         }); 
-  }
+}
 
-  toggleDetails(order: any): void 
-  {
+toggleDetails(order: any): void 
+{
     this.selectedOrder = order;
     console.log(this.selectedOrder)
 
@@ -134,7 +135,7 @@ export class OrdersComponent implements OnInit {
       reasonOfStatus: new FormControl('',[Validators.required]),
     
     });
-  }
+}
 
 onFormatDate(dateFromBackend :any)
 {
@@ -192,9 +193,12 @@ onFormatTime(dateFromBackend:any)
                     },
 
       error: err => console.error(err)
-  });
+    });
 
   }
+
+
+  
 }
 
 declare var Object: any;

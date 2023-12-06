@@ -13,6 +13,7 @@ import { faBullhorn, faCartPlus, faCheckCircle, faSplotch } from '@fortawesome/f
 import {} from '@fortawesome/free-regular-svg-icons';
 import {} from '@fortawesome/free-brands-svg-icons';
 import { Icons } from '../_Plugins/icons.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
@@ -24,10 +25,15 @@ export class ProductsComponent implements OnInit {
   icons :Icons = new Icons();
 
   myAddToCart = this.icons.myAddToCart;
-  myAvailable= this.icons.myAvailable;
+  myTendancy= this.icons.myTendancy;
   myNewPr = this.icons.myNewPr;
   myNew = this.icons.myNew;
   myPromo = this.icons.myPromo;
+  myFutur=this.icons.myFutur
+  myProdManage=this.icons.myProdManage
+  myCatManage=this.icons.myCatManage
+  myAngle= this.icons.myAngle;
+  myAngleLeft =this.icons.myAngleLeft;
 
   public products :any;
   public allProducts :any;
@@ -72,55 +78,95 @@ export class ProductsComponent implements OnInit {
               }
 
       p1:any;
+      all:any;
       idCat:any;
+      currentCat:any
+      productsByCat :boolean = false;
 
       currentRoute : any;
       searchString : any;
 
+      totalProducts: any; // Nombre total de produits
+      limitPerPage = 15; // Limite par page
+      totalPageCount: number[] = []; // Tableau pour stocker les numéros de page
+      lastPage:any;
+      firstPage=1;
+
+      currentPage = 1;
+      KeyWord:any;
+      searchMode :any;
+    
   ngOnInit(): void {
 
-    this.title="Tous les produits";
-    this.getProducts('/products');
+      this.searchMode = false;
 
-    this.route.params.subscribe((data)=>
-     {              
+      this.route.params.subscribe((data)=>
+
+      {      
             this.p1 = +data['p1'];
             this.idCat = data['p2'];
-
-                        if(this.p1==1)
+            this.all=data['p1'];
+            
+                        if(this.all=='all')
+                        {
+                          this.title="Tous les produits";
+                          this.productsByCat=false;
+                          this.getProducts('/products');
+                          this.getTotalProductsCount("/products/totalProductsCount");
+                          //window.location.reload();
+                        }
+                        else if(this.p1==1)
                         {  
                           this.title="Les produits sélectionés";
                           this.getProducts('/products/selectedProducts');
+                          this.getTotalProductsCount("/products/totalSelectedProductsCount");
                         }
                         else if(this.p1==2)
                         {
+
+                          this.productsByCat=true;
+                          this.catService.getRessource("/categories/"+this.idCat)
+                                  .subscribe({
+                                      next: data => {
+                                                      this.currentCat=data;
+                                                      this.title="Produits de la catégorie  " +this.currentCat.name;
+                                                    },
+                                      error: err => console.error(err)
+                                  });
+
                           
-                          //let idCat=this.route.snapshot.params['p2'];
-       
-                          this.title="Produits de la catégorie "+this.idCat;
-                          this.getProducts('/categories/'+this.idCat);
+                          this.getProducts('/products/productsByCat/'+this.idCat);
+                          this.getTotalProductsCount("/products/totalProductsCountByCat/"+this.idCat);
                         }
                         else if(this.p1==3)
                         {       
                           this.title="Les produits en promotion"; 
+                          this.productsByCat=false;
                           this.getProducts('/products/promoProducts');
+                          this.getTotalProductsCount("/products/totalPromoProductsCount");
                         }
                         else if(this.p1==4)
                         {  
                           this.title="Les produits tendances";
+                          this.productsByCat=false;
                           this.getProducts('/products/tendancyProducts');
+                          this.getTotalProductsCount("/products/totalTendancyProductsCount");
                         }
                         
                         else if(this.p1==5)
                         {  
                           this.title="Les nouveaux produits";
+                          this.productsByCat=false;
                           this.getProducts('/products/newProducts');
+                          this.getTotalProductsCount("/products/totalNewProductsCount");
                         }
 
                         else if(this.p1==6)
                         {  
-                          this.title="Les nouveaux produits";
+                          this.title="Prochainement dans nos stocks";
+                          this.productsByCat=false;
                           this.getProducts('/products/futurProducts');
+                          this.getTotalProductsCount("/products/totalFuturProductsCount");
                         }
  
                       } );
@@ -184,17 +230,168 @@ export class ProductsComponent implements OnInit {
   }
 
   // Methode qui permet de recuperer les produits
-  private getProducts(url :any)
-  {
+private getProducts(url :any)
+{
     this.catService.getRessource(url)
       .subscribe({
-          next: data => {this.products=data;},
+          next: data => {
+                          this.products=data;
+                        },
           error: err => console.error(err)
       });
+}
+
+//-------------------------------------------------------------------------------------------
+
+searchForm = new FormGroup ({
+
+  keyword: new FormControl('',[Validators.required])
+
+});
+
+onSearchProducts()
+{
+    this.KeyWord  = this.searchForm.get('keyword')?.value || '' ;
+
+    this.title="Résultat de la recherche par :  " +this.KeyWord;
+
+    this.getTotalProductsCount("/products/totalProductsCountByKeyword/"+this.KeyWord);
+
+    let url = "/products/search/"+this.KeyWord;
+
+    this.getProducts(url);
+
+    this.searchMode = true;
+}
+//---------------------------------------------------------------------------------------------------
+getTotalProductsCount(url :any)
+{
+    this.catService.getTotalRessourceCount(url)
+      .subscribe({
+          next: count  => {
+                              this.totalProducts = count; // Récupère le nombre total de produits
+                              console.log("nombre des prod :" ,this.totalProducts )
+                              this.calculateTotalPages(); // Calcule le nombre total de pages
+                        },
+          error: err => console.error(err)
+      });
+}
+
+calculateTotalPages() 
+{
+    const pages = Math.ceil(this.totalProducts / this.limitPerPage);
+
+    this.totalPageCount = Array.from({ length: pages }, (_, i) => i + 1);
+    console.log("this.totalPageCount :"+ this.totalPageCount)
+}
+
+
+
+ getPageNumbers(): (number | string) [] 
+ {
+      const pageNumbers: (number | string)[] = [];
+
+      if (this.totalPageCount.length <= 5) 
+      {
+        pageNumbers.push(...this.totalPageCount);
+        this.lastPage = this.totalPageCount.length;
+      } 
+      else 
+      {
+            const currentPage = this.currentPage;
+            const lastPage = this.totalPageCount[this.totalPageCount.length - 1];
+
+            this.lastPage = lastPage;
+
+            if (currentPage <= 3) 
+            {
+              pageNumbers.push(1, 2, 3, '...', lastPage);
+            } 
+
+            else if (currentPage >= lastPage - 2) 
+            {
+              pageNumbers.push(1, '...', lastPage - 2, lastPage - 1, lastPage);
+            } 
+
+            else 
+            {
+              pageNumbers.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', lastPage);
+            }
+      }
+
+      return pageNumbers;
+}
+
+loadProductsByPage(pageNumber: number) 
+{
+
+  this.route.params.subscribe((data)=>
+
+  {      
+         this.p1 = +data['p1'];
+         this.idCat = data['p2'];
+         this.all=data['p1'];
+         
+                     if(this.all=='all')
+                     {
+                       this.getProducts('/products?page='+pageNumber);   
+                     //  this.currentPage = pageNumber;
+                      // window.scrollTo({ top: 200, behavior: 'smooth' });
+                     }
+                     else if(this.p1==1)
+                     {  
+                       this.getProducts('/products/selectedProducts?page='+pageNumber);
+                     }
+                     else if(this.p1==2)
+                     {
+
+                       this.getProducts('/products/productsByCat/'+this.idCat+'?page='+pageNumber);
+                     }
+                     else if(this.p1==3)
+                     {       
+                       this.getProducts('/products/promoProducts?page='+pageNumber);
+                     }
+                     else if(this.p1==4)
+                     {  
+                       this.getProducts('/products/tendancyProducts?page='+pageNumber);
+                     }
+                     
+                     else if(this.p1==5)
+                     {  
+                       this.getProducts('/products/newProducts?page='+pageNumber);
+                     }
+
+                     else if(this.p1==6)
+                     {  
+                       this.getProducts('/products/futurProducts?page='+pageNumber);
+                     }
+
+                   } );
+
+                   this.currentPage = pageNumber;
+                   window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+loadNextPage() 
+{
+  if (this.currentPage < this.totalPageCount.length) {
+    const nextPage = this.currentPage + 1;
+    this.loadProductsByPage(nextPage);
   }
+}
 
+loadPreviousPage() 
+{
+  if (this.currentPage > 1) {
+    const previousPage = this.currentPage - 1;
+    this.loadProductsByPage(previousPage);
+  }
+}
 
-
+isPageActive(pageNum: number | string): boolean 
+{
+  return pageNum === this.currentPage;
+}
 
   onEditPhoto(p :any)
   {
@@ -262,28 +459,37 @@ export class ProductsComponent implements OnInit {
 //-------------------------------------------------------------------------------------------
     onFilter(value: string)
     {
-      //console.log(value)
-      this.router.navigate(['/products'], { queryParams: {search: value}});
+      
+      this.router.navigate(['/products/2/'+this.idCat], { queryParams: {search: value}});
 
-     // this.route.queryParams.subscribe((data)=> {
-     //   this.searchString = data['search']
-
-    //  if(this.searchString === undefined || this.searchString ==='' || this.searchString === null)
-     // {
-       // this.router.navigate([this.currentRoute]);
-     //  console.log("1111111111111111111")
-     // }
-      if (value == "enPromotion" && this.products != undefined)
+      if (value == "All")
       {
         
-        this.products = this.products.filter((product :any) => product.promotionProduct)
-        //this.products=null
-        console.log("222222222222222222222 :"+ this.products)
+        this.getProducts('/products/productsByCat/'+this.idCat);
+        this.getTotalProductsCount("/products/totalProductsCountByCat/"+this.idCat);
         
       }
-      else
+      else if (value == "promotionProducts")
       {
-      console.log("3333333333")
+        
+        this.getProducts('/products/promotionProductsByCat/'+this.idCat);
+        this.getTotalProductsCount("/products/totalPromotionProductsCountByCat/"+this.idCat);
+        
+      }
+      else if (value == "newProducts")
+      {
+        this.getProducts('/products/newProductsByCat/'+this.idCat);
+        this.getTotalProductsCount("/products/totalNewProductsCountByCat/"+this.idCat);
+      }
+      else if (value == "tendancyProducts")
+      {
+        this.getProducts('/products/tendancyProductsByCat/'+this.idCat);
+        this.getTotalProductsCount("/products/totalTendancyProductsCountByCat/"+this.idCat);
+      }
+      else if (value == "futurProducts")
+      {
+        this.getProducts('/products/futurProductsByCat/'+this.idCat);
+        this.getTotalProductsCount("/products/totalFuturProductsCountByCat/"+this.idCat);
       }
       
     }

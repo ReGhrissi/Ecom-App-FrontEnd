@@ -23,6 +23,13 @@ export class ProductEditComponent implements OnInit {
   myNew=faUserPlus;
   myUpload=this.icons.myUpload;
   myCancel=this.icons.myCancel;
+
+  myTendancy= this.icons.myTendancy;
+  myNewPr = this.icons.myNewPr;
+  myPromo = this.icons.myPromo;
+  myFutur=this.icons.myFutur
+  myAvailable=this.icons.myAvailable
+  mySelected=this.icons.myValid
   
 
   public title :any;
@@ -67,12 +74,12 @@ export class ProductEditComponent implements OnInit {
                                             name: new FormControl(this.currentProduct.name,[Validators.required]),
                                             description: new FormControl(this.currentProduct.description,[Validators.required]),
                                             price: new FormControl(this.currentProduct.price,[Validators.required]), 
-                                            currentPrice: new FormControl(this.currentProduct.currentPrice,[Validators.required]), 
                                   
                                             stock : new FormControl(this.currentProduct.stock,[Validators.required]), 
                                   
                                             promotionProduct : new FormControl(this.currentProduct.promotionProduct,[Validators.required]),
-                                            promotionRate : new FormControl(this.currentProduct.promotionRate,[Validators.required]),
+                                            promotionRate : new FormControl(this.currentProduct.promotionRate,[Validators.required,
+                                                                                                              Validators.min(0), Validators.max(1)]),
                                   
                                             newProduct : new FormControl(this.currentProduct.newProduct,[Validators.required]),
                                             futurProduct : new FormControl(this.currentProduct.futurProduct,[Validators.required]),
@@ -125,7 +132,6 @@ export class ProductEditComponent implements OnInit {
     const name = this.editProductForm.get('name')?.value || '' ;
     const description = this.editProductForm.get('description')?.value || '' ;
     const price = this.editProductForm.get('price')?.value || '' ;
-    const currentPrice = this.editProductForm.get('currentPrice')?.value || '' ;
 
     const stock = this.editProductForm.get('stock')?.value || '' ;
 
@@ -140,7 +146,7 @@ export class ProductEditComponent implements OnInit {
     const availableProduct = this.editProductForm.get('availableProduct')?.value || '' ;
 
 
-    this.catService.putResource("/products/"+this.currentProduct.productId, { name, description, price, currentPrice, stock, promotionProduct, 
+    this.catService.putResource("/products/"+this.currentProduct.productId, { name, description, price, stock, promotionProduct, 
                                 promotionRate, newProduct, futurProduct, tendancyProduct, selectedProduct, availableProduct}).pipe(
 
       catchError(err => {

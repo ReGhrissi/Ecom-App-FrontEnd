@@ -1,15 +1,16 @@
 
 
 
-<div >
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+<div>
+
+    <nav class=" bg-white border-b border-gray-200 shadow-lg dark:bg-gray-900">
 
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       
               <a href="#" class="flex items-center">
               <!--  <mat-icon class="h-8 mr-3">store</mat-icon> --> 
                   
-                  <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Ecom APP</span>
+                  <span class="self-center text-2xl font-semibold whitespace-nowrap text-blue-800 dark:text-white">Ecom APP</span>
               </a>
                   <!------------------------------------------------------------>
         
@@ -101,20 +102,24 @@
                           
                         <ul class=" py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
                             <li>
+                              <a (click)="AllProducts()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600
+                                                                  dark:hover:text-white"><span class="mr-2"><fa-icon [icon]="myProdManage"></fa-icon></span> Tous les produits</a>
+                            </li>
+                            <li>
                               <a (click)="ProductsPromo()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600
                                                                   dark:hover:text-white"><span class="mr-2"><fa-icon [icon]="myPromo"></fa-icon></span> En Promotion</a>
                             </li>
                             <li>
-                              <a href="#"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 
+                              <a (click)="ProductsNew()"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 
                                                                   dark:hover:text-white"><span class="mr-2"><fa-icon [icon]="myNewPr"></fa-icon></span> Nouveaux</a>
-                            </li>
+                            </li> 
                             <li>
-                              <a (click)="ProductsDispo()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 
+                              <a (click)="ProductsTendancy()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 
                                                                   dark:hover:text-white"><span class="mr-2"><fa-icon [icon]="myTendancy"></fa-icon></span> Tendances</a>
                             </li>
                         </ul>
                           <div class="py-1">
-                            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600
+                            <a (click)="ProductsFutur()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600
                                               dark:text-gray-400  dark:hover:text-white"><span class="mr-2"><fa-icon [icon]="myFutur"></fa-icon></span> Prochainement</a>
                           </div>
                       </div>

@@ -16,14 +16,15 @@
 <br>
 <br> 
 
-<div *ngIf="currentProduct">     
+<div *ngIf="currentProduct" >     
 
-    <article *ngIf="mode==0" class="md:gap-8 md:grid md:grid-cols-3">
+    <article *ngIf="mode==0" class="md:gap-8 md:grid md:grid-cols-3 shadow-lg">
 
-        <div>
+        <div class="ml-10 mt-10">
             <div class="flex items-center mb-6 space-x-4">
 
-                <img  id="Photo_Product_Det" src="{{this.catalService.host+this.catalService.requestMapping+'/photoProduct/'+currentProduct.productId+'?ts='+getTS()}}"/>
+                <img  id="Photo_Product_Det" src="{{this.catalService.host+this.catalService.requestMapping+'/photoProduct/'+currentProduct.productId+'?ts='+getTS()}}"
+                      style="width: 380px; height: 430px;"/>
 
                
 
@@ -35,8 +36,7 @@
                                                                                         font-semibold inline-flex items-center p-1.5 rounded">
                     <fa-icon [icon]="myEdit"></fa-icon> 
                 </button>
-                
-                
+
                 <span *ngIf="editPhoto">
 
                     
@@ -76,6 +76,7 @@
                 </span>
 
             </div>
+            <br>
         </div>
 
         <div class="col-span-2 mt-6 md:mt-0">
@@ -89,7 +90,7 @@
             </div>
 
          
-            <span class="text-1xl font-bold text-gray-500 dark:text-white">Description :</span>
+            <span class="text-1xl font-bold text-blue-800 dark:text-white">Description :</span>
             <p class="mb-5 text-gray-500 dark:text-gray-400"> {{currentProduct.description}}</p>
            
             <div class="flex items-center mt-2.5 mb-5">
@@ -114,25 +115,28 @@
 
             <div class="flex items-center justify-between">
 
-                <span class="text-lg font-medium text-gray-900 line-through dark:text-white">{{currentProduct.price|number:'0.2'}} DH</span>
-
+                <span *ngIf="currentProduct.promotionProduct" class="text-base font-medium text-rose-600 line-through dark:text-white">{{currentProduct.price|number:'0.2'}} DH</span>
+            
             </div>
             <br>
 
             <div class="flex">
                 <span *ngIf="currentProduct.tendancyProduct">
-                    <fa-icon [icon]="myAvailable"></fa-icon>
-                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Tendance</h3>
+                    <fa-icon class="text-yellow-400" [icon]="myTendancy"></fa-icon> 
+                    <h3 class="ml-2 text-sm font-semibold text-yellow-300 dark:text-white">Tendance</h3>                  
                 </span>
 
                 <span *ngIf="currentProduct.newProduct">
-                    <fa-icon [icon]="myNewPr"></fa-icon>
-                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
+                    <fa-icon class="text-blue-600" [icon]="myNewPr"></fa-icon>
+                    <h3 class="ml-2 text-sm font-semibold text-blue-400 dark:text-white">Nouveau</h3>
                 </span>
 
                 <span *ngIf="currentProduct.promotionProduct">
-                    <fa-icon [icon]="myPromo"></fa-icon>
-                    <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promotion</h3>
+                    <fa-icon class="mr-2 text-rose-600" [icon]="myPromo" ></fa-icon> 
+                    <span class="bg-red-50 text-rose-600 text-xs font-bold me-2 px-1.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-600">
+                        - {{ currentProduct.promotionRate * 100 }} %
+                    </span>
+                    <h3 class="ml-2 text-sm font-semibold text-rose-500 dark:text-white">Promotion </h3>
                 </span>
             </div>
 
@@ -142,14 +146,14 @@
                 <form #f="ngForm" (ngSubmit)="onAddProductToCaddy(currentProduct)">
                    
                     <div>  
-                        <span class="text-1xl font-bold text-gray-500 dark:text-white"> Prix : {{currentProduct.currentPrice|number:'0.2'}} DH</span>
+                        <span class="text-1xl font-bold text-blue-800 dark:text-white"> Prix : <span class="ml-10 text-black"> {{currentProduct.currentPrice|number:'0.2'}} DH</span></span>
             
                         <div class="flex items-center space-x-3">
 
-                            <span class="text-1xl font-bold text-gray-500 dark:text-white">Quantité :</span>
+                            <span class="text-1xl font-bold text-blue-800 dark:text-white">Quantité :</span>
 
                             <button (click)="decrementQuantity()" class="inline-flex items-center justify-center p-1 text-sm font-bold h-6 w-6 text-black
-                                             bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-red-500 
+                                             bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-rose-600 
                                              focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400
                                               dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600
                                                dark:focus:ring-gray-700" type="button">
@@ -321,22 +325,22 @@
 
 <div *ngIf="currentCategory" >
 
-<section id="ProductsByCat"  >
+<section id="ProductsByCat" >
 
-    <div id="accordion-open" data-accordion="open">
+    <div id="accordion-open" data-accordion="open" class="shadow-lg">
 
         <h2 id="accordion-open-heading-1">
-            <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-400 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
+            <button type="button" class="flex items-center justify-between w-full p-5 font-semibold text-left text-gray-700 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-600 bg-blue-50 dark:hover:bg-gray-800" data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
                 
                 <span class="flex items-center">
-                    <fa-icon class="mr-2" [icon]="myCatManage"></fa-icon>
+                    <fa-icon class="mr-3 text-fuchsia-700" [icon]="myCatManage"></fa-icon>
                     Produits de la même catégorie ( {{currentCategory.name}} )
                 </span>
                  
             </button>
         </h2>
 
-        <div *ngIf="productsOfCategory">
+        <div *ngIf="productsOfCategory" class="shadow-lg">
                 
             <owl-carousel-o [options]="customOptions">
             
@@ -346,44 +350,46 @@
 
                         <div  (click)="onProductDetails(p)">
           
-                            <div class=" w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                            <div class="myHight w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                                 <a>
                                     <img class="p-8 rounded-t-lg" src="{{this.catalService.host+this.catalService.requestMapping+'/photoProduct/'+p.productId+'?ts='+getTS()}}" alt="product image"
-                                        (click)="onProductDetails(p)"id="Photo_Product" class="clickable"/>
+                                        (click)="onProductDetails(p)"id="Photo_Product" 
+                                        class="clickable  rounded-t-lg" style="width: 100%; height: 255px;"/>
                                 
                                 </a>
 
                                 <div class="px-5 pb-5">
 
                                     <a>
-                                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                            {{p.name}}</h5>
+                                        <p class="text-black font-semibold   dark:text-white">
+                                            {{p.name}}</p>
                                     </a>
 
                                     <div class="flex items-center justify-between">
-                                    <span class="text-lg font-medium text-gray-900 line-through dark:text-white">$109</span>
-                                        <span class="text-1xl font-bold text-gray-500 dark:text-white">Prix : {{p.currentPrice|number:'0.2'}} DH</span>
+                                        <span *ngIf="p.promotionProduct" class="text-base font-medium text-rose-600 line-through dark:text-white">{{p.price|number:'0.2'}} DH</span>
+                                        <span class="text-1xl font-bold text-blue-800 dark:text-white">Prix : {{p.currentPrice|number:'0.2'}} DH</span>
 
                                     </div>
                                     <!----------------------------------------------------------------------------->
-                                    <br>
                                     <div class="flex">
-                                            <span *ngIf="p.tendancyProduct">
-                                                <fa-icon [icon]="myAvailable"></fa-icon>
-                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Tendance</h3>
-                                            </span>
+                                        <span *ngIf="p.tendancyProduct">
+                                            <fa-icon class="text-yellow-400" [icon]="myTendancy"></fa-icon> 
+                                            <h3 class="ml-2 text-sm font-semibold text-yellow-300 dark:text-white">Tendance</h3>
+                                        </span>
                         
-                                            <span *ngIf="p.newProduct">
-                                                <fa-icon [icon]="myNewPr"></fa-icon>
-                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Nouveau</h3>
+                                        <span *ngIf="p.newProduct">
+                                            <fa-icon class="text-blue-600" [icon]="myNewPr"></fa-icon>
+                                            <h3 class="ml-2 text-sm font-semibold text-blue-400 dark:text-white">Nouveau</h3>
+                                        </span>
+                      
+                                        <span *ngIf="p.promotionProduct">
+                                            <fa-icon class="mr-2 text-rose-600" [icon]="myPromo" ></fa-icon> 
+                                            <span class="bg-red-50 text-rose-600 text-xs font-bold me-2 px-1.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-600">
+                                                - {{ p.promotionRate * 100 }} %
                                             </span>
-
-                                            <span *ngIf="p.promotionProduct">
-                                                <fa-icon [icon]="myPromo"></fa-icon>
-                                                <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">Promotion</h3>
-                                            </span>
-                            
+                                            <h3 class="ml-2 text-sm font-semibold text-rose-500 dark:text-white">Promotion </h3>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -400,8 +406,8 @@
         </div>
 
     </div>
- 
-    <div  class="flex">
+    <br>
+    <div  class="flex justify-center">
         <button routerLink="/products/2/{{currentCategory.id}}"  type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             
             <span > VOIR PLUS </span>

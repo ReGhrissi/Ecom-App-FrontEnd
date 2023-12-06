@@ -2,15 +2,27 @@
 {
     cursor: pointer;
 }
+.myHight
+{
+    height: 350px;
+}
+/*
+.active {
+    background-color: rgb(30 66 159);
+    
+  }
+  */
 /*
 .heighted
 {
     height: 450px;
 }
 */
+/*
 #Photo_Product 
 {
     height: 250px;
     width: 200px;
 }
 
+*/
