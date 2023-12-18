@@ -46,11 +46,16 @@ export class CatalogueService {
             return this.http.post(this.host+url,data);
         }
 
-     // methode qui permet la modification d'un produit    
-      public putResource(url:any,data:any){
+        // methode qui permet la modification d'un produit    
+        public putResource(url:any,data:any){
 
-        return this.http.put(this.host+url,data);
-      }
+            return this.http.put(this.host+url,data);
+        }
+
+        public deleteResource(url:any){
+
+            return this.http.delete(this.host+url);
+        }
    
       
     // methode qui permet la recuperation d'un produit

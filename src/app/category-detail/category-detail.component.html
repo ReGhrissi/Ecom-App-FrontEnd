@@ -15,13 +15,13 @@
 <br>
 <br>
 
-<div *ngIf="currentCategory">
+<div *ngIf="currentCategory" >
 
-<div >     
+<div class="shadow-xl rounded-lg bg-gray-100 border  border-gray-300 ">     
 
     <article  class="md:gap-8 md:grid md:grid-cols-3">
 
-        <div>
+        <div class="py-10 px-10">
             <div class="flex items-center mb-6 space-x-4">
 
                 <img  id="Photo_cat_Det" src="{{this.catService.host+this.catService.requestMappingCat+'/photoCategory/'+currentCategory.categoryId+'?ts='+getTS()}}"/>
@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <div class="col-span-2 mt-6 md:mt-0">
+        <div class="col-span-2 mt-6 md:mt-0 py-10">
 
             <div class="flex items-start mb-5">
 
@@ -96,9 +96,14 @@
             <br>
             <br>
 
-            <span class="text-1xl font-bold text-gray-500 dark:text-white">Status :</span>
-            <p *ngIf="currentCategory.active" class="mb-5 text-gray-500 dark:text-gray-400"> Activée</p>
-            <p *ngIf="!currentCategory.active" class="mb-5 text-gray-500 dark:text-gray-400"> Désactivée</p>
+            <span class="text-1xl font-bold text-gray-500 dark:text-white">Etat :</span>
+            <br>
+            <p *ngIf="currentCategory.active" class="mb-5 text-gray-500 dark:text-gray-400">
+                 <fa-icon class="mr-2 text-green-600" [icon]="myActive"></fa-icon>  Activée
+            </p>
+            <p *ngIf="!currentCategory.active" class="mb-5 text-gray-500 dark:text-gray-400">
+                <fa-icon class="mr-2 text-rose-600" [icon]="myDisabled"></fa-icon>  Désactivée
+            </p>
 
             <br>
 
@@ -106,49 +111,51 @@
         </div>
     </article>
 
+</div>
+<br>
+<br>
+<div>      
+    <form [formGroup]="searchForm" (submit)="onSearchProducts()">
+        <div class="flex">
+            <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
+            <button (click)="onAllProductsByCat()" id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-blue-500 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
+                Tous les produits de la catégorie<fa-icon class="ml-3 text-blue-800" [icon]="myAngle"></fa-icon>
+            </button>
 
-    <br><br>
+            <div class="relative w-full">
+                <input  type="search" id="search-dropdown" 
+                        class=" form-control block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-blue-500 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" 
+                        placeholder="Rechercher des produits en utilisant la désignation ou bien une déscription !" 
+                        required
+                        formControlName="keyword">
+
+                <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-800 rounded-r-lg border border-blue-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                    <span class="sr-only">Search</span>
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<br>
+<br>
+<div class="flex justify-center">
+    <div *ngIf="searchMode" class="font-bold text-base text-blue-800 flex justify-between w-1/2">
+        <div>
+            <fa-icon class="mr-2" [icon]="mySearch"></fa-icon> {{title}}
+        </div>
+        <div>
+            <button (click)="onAllProductsByCat()" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> <span >  Annuler</span>
+            </button>
+        </div>
+    </div>
 </div>
 
-    <div> 
-         
-        <form>
-            <div class="flex">
-                <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
-                <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">All categories <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-        </svg></button>
-                <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
-                    </li>
-                    </ul>
-                </div>
-                <div class="relative w-full">
-                    <input type="search" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." required>
-                    <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                        </svg>
-                        <span class="sr-only">Search</span>
-                    </button>
-                </div>
-            </div>
-        </form>
-        
-
-    </div>
-    <br>
+<br>
     <div class="flex">
         <button routerLink="/new-product/{{currentCategory.categoryId}}" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <fa-icon [icon]="myNew"></fa-icon>
@@ -214,7 +221,7 @@
                         </td>
 
                         <td class="px-6 py-4" >
-                            <a  class="clickable font-medium text-red-600 dark:text-red-500 hover:underline">Retirer</a>
+                            <a (click)="onDelete(p.productId)" class="clickable font-medium text-red-600 dark:text-red-500 hover:underline">Retirer</a>
                         </td>
                         
                     </tr>
@@ -224,7 +231,57 @@
                
             </table>
         </div>
-
-
     </div>
+
+    <div>
+
+        <br><br>
+        
+        <div class="flex justify-center">
+        
+          <nav aria-label="Page navigation example">
+        
+            <ul class="inline-flex -space-x-px text-base h-10">
+        
+              <li *ngIf="!(firstPage==currentPage)">
+                <a (click)="loadPreviousPage()" class="clickable mr-4 flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-blue-800 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <fa-icon class="mr-2 text-blue-800" [icon]="myAngleLeft"></fa-icon> Précédent
+                </a>
+              </li>
+        
+              <ng-container *ngFor="let pageNum of getPageNumbers()">
+        
+                <li class="clickable ">
+        
+                    <a  *ngIf="pageNum !== '...'; else ellipsis"  
+                        [class]="isPageActive(pageNum) ? 'rounded-md bg-blue-800 mr-2 ml-2 flex items-center justify-center px-4 h-10 text-white border border-gray-300   dark:border-gray-700 dark:bg-gray-700 dark:text-white' 
+                                                       : 'rounded-md mr-2 ml-2 flex items-center justify-center px-4 h-10 text-blue-600 border border-blue-800 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white'"
+                        (click)="loadProductsByPage(+pageNum)">
+                        
+                        {{ pageNum }}
+                    </a>
+                    <ng-template #ellipsis>
+                      <span class="px-4 h-10 flex items-center justify-center text-blue-600">...</span>
+                    </ng-template>
+                </li>
+        
+              </ng-container>
+        
+              <li *ngIf="!(lastPage==currentPage)">
+                <a (click)="loadNextPage()" class="clickable ml-4 flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-blue-800 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  Suivant <fa-icon class="ml-3 text-blue-800" [icon]="myAngle"></fa-icon>
+                </a>
+              </li>
+        
+            </ul>
+          </nav>
+          
+        
+        </div>
+        
+        <br>
+        
+        </div>
+
 </div>
+

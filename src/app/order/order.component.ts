@@ -10,6 +10,7 @@ import { CatalogueService } from '../services/catalogue.service';
 import { faCartShopping, faCircleUser, faRightToBracket, faRightFromBracket, faUserTie, faLocationDot, faMobileScreen, faEnvelope, faCheck, faArrowLeft, faCreditCard, faXmark } from '@fortawesome/free-solid-svg-icons';
 import {} from '@fortawesome/free-regular-svg-icons';
 import {} from '@fortawesome/free-brands-svg-icons';
+import { Icons } from '../_Plugins/icons.model';
 
 @Component({
   selector: 'app-order',
@@ -18,12 +19,15 @@ import {} from '@fortawesome/free-brands-svg-icons';
 })
 export class OrderComponent implements OnInit {
 
+  icons :Icons = new Icons()
   myClinet=faUserTie;
   myaddress=faLocationDot;
   myPhone=faMobileScreen;
   myEmail=faEnvelope;
   myValid=faCheck;
-  myBack=faArrowLeft;
+  myBack=this.icons.myNext;
+  myOrder=this.icons.myOrder;
+  myWhatsapp=this.icons.myWhatsapp
   myCard=faCreditCard;
   myCancel=faXmark;
 
@@ -64,10 +68,12 @@ export class OrderComponent implements OnInit {
       onOrder() 
       {
         this.orderService.submitOrder()
-
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
         if(this.orderService.order.orderId!='')
         {
-          this.mainPanelStyle="panel-success";
+           
+          //this.mainPanelStyle="panel-success";
         }
       }
     
@@ -87,5 +93,17 @@ export class OrderComponent implements OnInit {
         this.router.navigateByUrl("/caddy"); 
   }
 
+  onFormatDate(dateFromBackend :any)
+  {
+    let dateObj = new Date(dateFromBackend);
+
+    return `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
+  }
+
+  onFormatTime(dateFromBackend:any)
+  {
+    let dateObj = new Date(dateFromBackend);
+    return `${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
+  }
 
 }

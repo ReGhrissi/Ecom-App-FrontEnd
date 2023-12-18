@@ -12,6 +12,7 @@ import { initFlowbite } from 'flowbite';
 import { TokenService } from './services/token.service';
 import { AccountService } from './services/account.service';
 import { Icons } from './_Plugins/icons.model';
+import Swal from 'sweetalert2';
 
 
 
@@ -100,58 +101,83 @@ export class AppComponent implements OnInit{
   getProductsByCat(c :any)
   {
           this.currentCategory=c;
-          this.router.navigateByUrl('/products/2/'+c.categoryId);
+          this.router.navigateByUrl('/products/2/'+c.categoryId).then((result) =>{
+            window.location.reload(); 
+          });
   }
   
   // methode qui permet la recupération des produits à l'etat Séléctioné
   onSelectedProducts()
   {
     this.currentCategory=undefined;
-    this.router.navigateByUrl("/products/1/0")
+    this.router.navigateByUrl("/products/1/0").then((result) =>{
+      window.location.reload(); 
+    })
   }
 
   // methode qui permet la recupération des produits à l'etat Disponiple
   onProductsDispo()
   {
     this.currentCategory=undefined;
-    this.router.navigateByUrl("/products/4/0")
+    this.router.navigateByUrl("/products/4/0").then((result) =>{
+      window.location.reload(); 
+    })
   }
 
   OnAllProducts()
   {
     this.currentCategory=undefined;
-    this.router.navigateByUrl("/products/all/p")
+    this.router.navigateByUrl("/products/all/p").then((result) =>{
+      window.location.reload(); 
+    })
   }
 
   // methode qui permet la recupération des produits à l'etat Promo
   OnProductsPromo()
   {
     this.currentCategory=undefined;
-    this.router.navigateByUrl("/products/3/0")
+    this.router.navigateByUrl("/products/3/0").then((result) =>{
+      window.location.reload(); 
+    })
   }
 
   OnProductsNew()
   {
     this.currentCategory=undefined;
-    this.router.navigateByUrl("/products/5/0")
+    this.router.navigateByUrl("/products/5/0").then((result) =>{
+      window.location.reload(); 
+    })
   }
 
   OnProductsTendancy()
   {
     this.currentCategory=undefined;
-    this.router.navigateByUrl("/products/4/0")
+    this.router.navigateByUrl("/products/4/0").then((result) =>{
+      window.location.reload(); 
+    })
   }
 
   OnProductsFutur()
   {
     this.currentCategory=undefined;
-    this.router.navigateByUrl("/products/6/0")
+    this.router.navigateByUrl("/products/6/0").then((result) =>{
+      window.location.reload(); 
+    })
   }
 
   // methode qui permet de faire un LogOut (suppression du tocken)
   onLogout()
   {
       this.authService.onLogout();
+
+      Swal.fire({
+        position: "bottom-end",
+        icon: "info",
+        title: "Vous êtes déconnectés !",
+        showConfirmButton: false,
+        timer: 2000
+      });
+      
   }
 
   // methode qui permet de faire un LogOut (suppression du tocken)

@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError } from 'rxjs';
 import { UserService } from '../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-edit',
@@ -18,6 +19,9 @@ export class UserEditComponent implements OnInit {
   myCancel=this.icons.myCancel;
   myNew=this.icons.myNew
   myEdit=this.icons.myEdit
+  myId=this.icons.myKey;
+  myUserName=this.icons.myUserName
+  myAdmin=this.icons.myAdmin
 
   idUser:any;
   currentUser:any;
@@ -91,12 +95,37 @@ export class UserEditComponent implements OnInit {
 
       catchError(err => {
                         console.log(err);
+
+                        Swal.fire({
+                          position: "top-end",
+                          icon: "error",
+                          title: "Erreur : "+err.status,
+                          text:"",
+                          showConfirmButton: false,
+                          timer: 2000
+                        });
         throw err;
       })
       ).subscribe((data:any)=> {
 
           this.currentUser =data;
-          this.location.back();
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "",
+            text:"",
+            showConfirmButton: false,
+            timer: 2000
+          });
+
+          setTimeout(() => 
+          {
+            this.location.back();
+              
+          }, 1500);
+      
+          
 
         });
   }

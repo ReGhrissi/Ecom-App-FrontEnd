@@ -42,6 +42,7 @@ const routes: Routes = [
   {path:'category-detail/:categoryId', component:CategoryDetailComponent, canActivate: [AuthGuard]} , 
   {path:'product-edit', component:ProductEditComponent, canActivate: [AuthGuard]} , 
   {path:'product-edit/:productId', component:ProductEditComponent, canActivate: [AuthGuard]} ,
+  {path:'new-product', component:NewProductComponent, canActivate: [AuthGuard] },
   {path:'new-product/:categoryId', component:NewProductComponent, canActivate: [AuthGuard] },
   {path:'products/:p1/:p2',component:ProductsComponent},
  // {path:'products/all',component:ProductsComponent},

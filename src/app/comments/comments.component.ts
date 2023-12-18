@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Icons } from '../_Plugins/icons.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommentService } from '../services/comment.service';
 import { UserService } from '../services/user.service';
 
@@ -15,6 +15,7 @@ export class CommentsComponent implements OnInit {
   icons :Icons = new Icons()
   myDelete=this.icons.myDelete
   myBack=this.icons.myBack
+  myReply=this.icons.myReply
 
   idUser:any;
   comments:any;
@@ -22,7 +23,8 @@ export class CommentsComponent implements OnInit {
   isComments :boolean =true;
   
 
-  constructor(private activateRoute:ActivatedRoute, private commentService :CommentService, public userService:UserService)
+  constructor(private activateRoute:ActivatedRoute, private commentService :CommentService, 
+            public userService:UserService, private router:Router)
   {}
 
   ngOnInit(): void {
@@ -64,6 +66,23 @@ export class CommentsComponent implements OnInit {
 
 
 
+  }
+
+  onReplyComment(productId:any)
+  {
+    this.router.navigateByUrl("/product-detail/"+productId)
+  }
+  onFormatDate(dateFromBackend :any)
+  {
+    let dateObj = new Date(dateFromBackend);
+
+    return `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
+  }
+
+  onFormatTime(dateFromBackend:any)
+  {
+    let dateObj = new Date(dateFromBackend);
+    return `${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
   }
 
 

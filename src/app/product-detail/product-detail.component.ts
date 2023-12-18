@@ -17,6 +17,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { Location} from '@angular/common';
 import { AccountService } from '../services/account.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -107,6 +108,17 @@ export class ProductDetailComponent implements OnInit {
                   });
 
                   this.commentsOfProduct =this.currentProduct.comments;
+
+                            this.commentsOfProduct.sort((a:any, b:any) => {           
+                             const dateA = new Date(a.commentDate);
+                             const dateB = new Date(b.commentDate); 
+                             if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+                             
+                               return 0;
+                             }
+                          
+                             return dateB.getTime() - dateA.getTime();
+                           });  
 
                   const userRequests = this.commentsOfProduct.map((comment :any) => this.userService.getUser(comment.userId));
 
@@ -262,6 +274,8 @@ decrementQuantity()
         {
           this.panierService.addUserProduct(p);
           this.currentProduct.quantity =1;
+
+
         }
         else 
         {
@@ -269,6 +283,14 @@ decrementQuantity()
           this.currentProduct.quantity =1;
         }
 
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "",
+          text:"",
+          showConfirmButton: false,
+          timer: 1000
+        });
   
   }
 
@@ -291,7 +313,7 @@ decrementQuantity()
       0: {
         items: 1
       },
-      400: {
+      400: { 
         items: 2
       },
       740: {
@@ -318,11 +340,50 @@ decrementQuantity()
           next: (data:any) => {
               console.log("comment :"+data)
                             this.currentComment=data;
-                            window.location.reload();
+
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "success",
+                              title: "",
+                              text:"",
+                              showConfirmButton: false,
+                              timer: 1000
+                            });
+
+                            setTimeout(() => 
+                            {
+                              window.location.reload();
+                              
+                            }, 1000);
+                            
                             
                         },
 
-          error: err => console.error(err)
+          error: err => {
+            console.error(err)
+
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Erreur : "+err.status,
+              text:"",
+              showConfirmButton: false,
+              timer: 2000
+            });
+          }
       });
+  }
+
+  onFormatDate(dateFromBackend :any)
+  {
+    let dateObj = new Date(dateFromBackend);
+
+    return `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
+  }
+
+  onFormatTime(dateFromBackend:any)
+  {
+    let dateObj = new Date(dateFromBackend);
+    return `${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
   }
 }

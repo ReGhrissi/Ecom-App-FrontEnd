@@ -5,6 +5,7 @@ import { Icons } from '../_Plugins/icons.model';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -43,14 +44,40 @@ export class NewCategoryComponent {
 
       catchError(err => {
                         console.log(err);
+
+                        Swal.fire({
+                          position: "top-end",
+                          icon: "error",
+                          title: "Erreur : "+err.status,
+                          text:"",
+                          showConfirmButton: false,
+                          timer: 2000
+                        });
+                        
         throw err;
       })
       ).subscribe((data:any)=> {
 
           this.newCategory =data;
-          this.router.navigate(['/category-edit/'+this.newCategory.categoryId]).then(() => {
-            window.location.reload();
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "",
+            text:"",
+            showConfirmButton: false,
+            timer: 2000
           });
+
+          setTimeout(() => 
+          {
+            this.router.navigate(['/category-edit/'+this.newCategory.categoryId]).then(() => {
+              window.location.reload();
+            });
+            
+          }, 1500);
+      
+
           
         });
   }

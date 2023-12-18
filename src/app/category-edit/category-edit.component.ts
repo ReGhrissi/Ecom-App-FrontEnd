@@ -6,6 +6,7 @@ import { catchError } from 'rxjs';
 import { Location } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Icons } from '../_Plugins/icons.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-category-edit', 
@@ -18,6 +19,11 @@ export class CategoryEditComponent implements OnInit {
   myCancel=this.icons.myCancel;
   myNew=this.icons.myNew
   myEdit=this.icons.myEdit
+  myId =this.icons.myKey
+  myCat=this.icons.myCatManage
+  myImage=this.icons.myImage
+  myDesc=this.icons.myDesc
+  myActive=this.icons.myAvailable
 
   idCat:any;
   currentCategory:any
@@ -38,7 +44,7 @@ export class CategoryEditComponent implements OnInit {
     this.activeRoute.params.subscribe((data)=>
     {           
         this.idCat = data['categoryId'];
-
+ 
             if(this.idCat)
             {
                 this.catService.getRessource('/categories/'+this.idCat).subscribe({
@@ -57,7 +63,18 @@ export class CategoryEditComponent implements OnInit {
                                   }
                                   
                                 },
-                  error: err => console.error(err)
+                  error: err => 
+                  {
+                    console.error(err)
+                    Swal.fire({
+                      position: "top-end",
+                      icon: "error",
+                      title: "Erreur : "+err.status,
+                      text:"",
+                      showConfirmButton: false,
+                      timer: 2000
+                    });
+                  }
                 });  
               } 
 
@@ -82,11 +99,30 @@ export class CategoryEditComponent implements OnInit {
 
       catchError(err => {
                         console.log(err);
+
+                        Swal.fire({
+                          position: "top-end",
+                          icon: "error",
+                          title: "Erreur : "+err.status,
+                          text:"",
+                          showConfirmButton: false,
+                          timer: 2000
+                        });
         throw err;
       })
       ).subscribe((data:any)=> {
-
+          
           this.currentCategory =data;
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "",
+            text:"",
+            showConfirmButton: false,
+            timer: 2000
+          });
+
           this.location.back();
 
         });
@@ -118,21 +154,33 @@ export class CategoryEditComponent implements OnInit {
                               else if(event instanceof HttpResponse)
                               {
                                   this.timeStamp=Date.now(); 
+
+                                  Swal.fire({
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: "",
+                                    text:"",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                  });
                               }
                           },
               error:  err=>
                           {
-                            alert("Problème de chargement !");   
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "error",
+                              title: "Erreur : "+err.status,
+                              text:"",
+                              showConfirmButton: false,
+                              timer: 2000
+                            });  
                           }                
         });
         
         this.selectedFiles =undefined;
     
   }
-
-
-
-
 
 
 }

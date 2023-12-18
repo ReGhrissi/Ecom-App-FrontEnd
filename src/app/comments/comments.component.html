@@ -36,12 +36,19 @@
 
             <div class="flex flex-col w-full">
                 <div class="flex flex-row justify-between">
-                    <p class="relative text-xl whitespace-nowrap truncate overflow-hidden">{{currentUser.firstName}} {{currentUser.lastName}}</p>
-                     <a class="text-gray-500 text-xl" href="#">
-                        <fa-icon  [icon]="myDelete"></fa-icon>
-                    </a> 
+                    <div>
+                      <p class="relative text-xl whitespace-nowrap truncate overflow-hidden">{{currentUser.firstName}} {{currentUser.lastName}}</p>
+                    </div>
+                    <div>
+                      <a class="text-green-500 text-xl mr-6 clickable" (click)="onReplyComment(c.productId)">
+                        <fa-icon class="mr-1"  [icon]="myReply"></fa-icon> Répondre  
+                      </a>
+                      <a class="text-rose-600 text-xl" href="#">
+                          <fa-icon  [icon]="myDelete"></fa-icon>
+                      </a> 
+                    </div>
                 </div>
-                <p class="text-gray-400 text-sm">{{c.commentDate}}</p>
+                <p class="text-gray-400 text-sm">{{onFormatDate(c.commentDate)}} - {{onFormatTime(c.commentDate)}}</p>
             </div>
         </div>
         <p class="-mt-4 text-gray-500">{{c.commentText}}

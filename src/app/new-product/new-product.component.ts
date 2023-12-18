@@ -6,6 +6,7 @@ import { catchError } from 'rxjs';
 import { Category } from '../_Model/category.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-product',
@@ -20,6 +21,9 @@ export class NewProductComponent implements OnInit{
 
   myNew=this.icons.myNew;
   myCancel=this.icons.myCancel;
+  myProduct=this.icons.myProdManage;
+  myDesc=this.icons.myDesc;
+  myCat=this.icons.myCatManage
 
   categories:any;
   newProduct:any;
@@ -29,6 +33,7 @@ export class NewProductComponent implements OnInit{
 
     name: new FormControl('',[Validators.required]),
     description: new FormControl('',[Validators.required]),
+    details: new FormControl('',[Validators.required]),
     categoryId: new FormControl('',[Validators.required]), 
     
   });
@@ -58,20 +63,46 @@ export class NewProductComponent implements OnInit{
 
     const name = this.newProductForm.get('name')?.value || '' ;
     const description = this.newProductForm.get('description')?.value || '' ;
+    const details = this.newProductForm.get('details')?.value || '' ;
     const categoryId = this.newProductForm.get('categoryId')?.value || '' ;
 
 
-    this.catService.postRessource("/products/"+categoryId, { name, description}).pipe(
+    this.catService.postRessource("/products/"+categoryId, { name, description, details}).pipe(
 
       catchError(err => {
                         console.log(err);
+
+                        Swal.fire({
+                          position: "top-end",
+                          icon: "error",
+                          title: "Erreur : "+err.status,
+                          text:"",
+                          showConfirmButton: false,
+                          timer: 2000
+                        });
         throw err;
       })
       ).subscribe((data:any)=> {
 
         //  console.log("Retour de New Product :"+data)
           this.newProduct =data;
-          this.router.navigateByUrl('/product-edit/'+this.newProduct.productId)    
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "",
+            text:"",
+            showConfirmButton: false,
+            timer: 2000
+          });
+
+          setTimeout(() => 
+          {
+            this.router.navigateByUrl('/product-edit/'+this.newProduct.productId) 
+            
+          }, 1500);
+      
+           
          //   this.newProduct.id = data['id'];
           //    console.log("ID commande apres submit :"+this.newProduct.id)
 

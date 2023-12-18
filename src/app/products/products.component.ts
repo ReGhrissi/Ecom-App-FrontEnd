@@ -34,6 +34,9 @@ export class ProductsComponent implements OnInit {
   myCatManage=this.icons.myCatManage
   myAngle= this.icons.myAngle;
   myAngleLeft =this.icons.myAngleLeft;
+  mySearch=this.icons.mySearch
+  mySearch2=this.icons.mySearch2
+  myCancel=this.icons.myCancel
 
   public products :any;
   public allProducts :any;
@@ -87,7 +90,7 @@ export class ProductsComponent implements OnInit {
       searchString : any;
 
       totalProducts: any; // Nombre total de produits
-      limitPerPage = 15; // Limite par page
+      limitPerPage = 20; // Limite par page
       totalPageCount: number[] = []; // Tableau pour stocker les numéros de page
       lastPage:any;
       firstPage=1;
@@ -99,6 +102,7 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
 
       this.searchMode = false;
+      //this.currentPage=1;
 
       this.route.params.subscribe((data)=>
 
@@ -113,6 +117,8 @@ export class ProductsComponent implements OnInit {
                           this.productsByCat=false;
                           this.getProducts('/products');
                           this.getTotalProductsCount("/products/totalProductsCount");
+                          this.currentPage=1;
+                          
                           //window.location.reload();
                         }
                         else if(this.p1==1)
@@ -120,6 +126,7 @@ export class ProductsComponent implements OnInit {
                           this.title="Les produits sélectionés";
                           this.getProducts('/products/selectedProducts');
                           this.getTotalProductsCount("/products/totalSelectedProductsCount");
+                          this.currentPage=1;
                         }
                         else if(this.p1==2)
                         {
@@ -132,11 +139,12 @@ export class ProductsComponent implements OnInit {
                                                       this.title="Produits de la catégorie  " +this.currentCat.name;
                                                     },
                                       error: err => console.error(err)
-                                  });
+                                  }); 
 
                           
                           this.getProducts('/products/productsByCat/'+this.idCat);
                           this.getTotalProductsCount("/products/totalProductsCountByCat/"+this.idCat);
+                          this.currentPage=1;
                         }
                         else if(this.p1==3)
                         {       
@@ -144,6 +152,7 @@ export class ProductsComponent implements OnInit {
                           this.productsByCat=false;
                           this.getProducts('/products/promoProducts');
                           this.getTotalProductsCount("/products/totalPromoProductsCount");
+                          this.currentPage=1;
                         }
                         else if(this.p1==4)
                         {  
@@ -151,6 +160,7 @@ export class ProductsComponent implements OnInit {
                           this.productsByCat=false;
                           this.getProducts('/products/tendancyProducts');
                           this.getTotalProductsCount("/products/totalTendancyProductsCount");
+                          this.currentPage=1;
                         }
                         
                         else if(this.p1==5)
@@ -159,6 +169,7 @@ export class ProductsComponent implements OnInit {
                           this.productsByCat=false;
                           this.getProducts('/products/newProducts');
                           this.getTotalProductsCount("/products/totalNewProductsCount");
+                          this.currentPage=1;
                         }
 
                         else if(this.p1==6)
@@ -167,6 +178,7 @@ export class ProductsComponent implements OnInit {
                           this.productsByCat=false;
                           this.getProducts('/products/futurProducts');
                           this.getTotalProductsCount("/products/totalFuturProductsCount");
+                          this.currentPage=1;
                         }
  
                       } );
@@ -236,11 +248,45 @@ private getProducts(url :any)
       .subscribe({
           next: data => {
                           this.products=data;
+
+                          // this.products.sort((a:any, b:any) => {
+                                        
+                          //   const dateA = new Date(a.creationDate);
+                          //   const dateB = new Date(b.creationDate);
+                            
+                          //   if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+                             
+                          //     return 0;
+                          //   }
+                          
+                          //   return dateB.getTime() - dateA.getTime();
+                          // });  
                         },
           error: err => console.error(err)
       });
 }
 
+onAllProducts()
+{
+  this.route.params.subscribe((data)=>
+    {      
+          this.p1 = +data['p1'];
+
+          if(this.p1==2)
+          {
+              this.router.navigateByUrl('/products/2/'+this.idCat).then((result) =>{
+                window.location.reload(); 
+              })
+          }
+          else
+          {
+              this.router.navigateByUrl('/products/all/p').then((result) =>{
+                window.location.reload(); 
+              })
+          }
+    })
+
+}
 //-------------------------------------------------------------------------------------------
 
 searchForm = new FormGroup ({
@@ -253,15 +299,38 @@ onSearchProducts()
 {
     this.KeyWord  = this.searchForm.get('keyword')?.value || '' ;
 
+    this.route.params.subscribe((data)=>
+    {      
+          this.p1 = +data['p1'];
+          this.idCat = data['p2'];
+
+          if(this.p1==2)
+          {
+
+              this.getTotalProductsCount("/products/totalProductsCountByCategoryAndKeyword/"+this.idCat+"/"+this.KeyWord);
+
+              let url = "/products/search/"+this.idCat+"/"+this.KeyWord;
+          
+              this.getProducts(url);
+
+          }
+          else
+          {
+            
+              this.getTotalProductsCount("/products/totalProductsCountByKeyword/"+this.KeyWord);
+
+              let url = "/products/search/"+this.KeyWord;
+
+              this.getProducts(url);
+            
+          }
+          
+    })
+
     this.title="Résultat de la recherche par :  " +this.KeyWord;
 
-    this.getTotalProductsCount("/products/totalProductsCountByKeyword/"+this.KeyWord);
-
-    let url = "/products/search/"+this.KeyWord;
-
-    this.getProducts(url);
-
     this.searchMode = true;
+    this.currentPage=1
 }
 //---------------------------------------------------------------------------------------------------
 getTotalProductsCount(url :any)
@@ -332,44 +401,60 @@ loadProductsByPage(pageNumber: number)
          this.idCat = data['p2'];
          this.all=data['p1'];
          
-                     if(this.all=='all')
-                     {
-                       this.getProducts('/products?page='+pageNumber);   
-                     //  this.currentPage = pageNumber;
-                      // window.scrollTo({ top: 200, behavior: 'smooth' });
-                     }
-                     else if(this.p1==1)
-                     {  
-                       this.getProducts('/products/selectedProducts?page='+pageNumber);
-                     }
-                     else if(this.p1==2)
-                     {
+         if(this.searchMode == true)
+         {
+                  if(this.p1==2)
+                  {
+                      this.getProducts('/products/search/'+this.idCat+"/"+this.KeyWord+'?page='+pageNumber);
+                  }
+                  else
+                  {
+                      this.getProducts("/products/search/"+this.KeyWord+'?page='+pageNumber);  
+                  }
+                   
+         }
+         else
+         {
+                  if(this.all=='all')
+                  {
+                    this.getProducts('/products?page='+pageNumber);   
+                  //  this.currentPage = pageNumber;
+                  // window.scrollTo({ top: 200, behavior: 'smooth' });
+                  }
+                  else if(this.p1==1)
+                  {  
+                    this.getProducts('/products/selectedProducts?page='+pageNumber);
+                  }
+                  else if(this.p1==2)
+                  {
 
-                       this.getProducts('/products/productsByCat/'+this.idCat+'?page='+pageNumber);
-                     }
-                     else if(this.p1==3)
-                     {       
-                       this.getProducts('/products/promoProducts?page='+pageNumber);
-                     }
-                     else if(this.p1==4)
-                     {  
-                       this.getProducts('/products/tendancyProducts?page='+pageNumber);
-                     }
-                     
-                     else if(this.p1==5)
-                     {  
-                       this.getProducts('/products/newProducts?page='+pageNumber);
-                     }
+                    this.getProducts('/products/productsByCat/'+this.idCat+'?page='+pageNumber);
+                  }
+                  else if(this.p1==3)
+                  {       
+                    this.getProducts('/products/promoProducts?page='+pageNumber);
+                  }
+                  else if(this.p1==4)
+                  {  
+                    this.getProducts('/products/tendancyProducts?page='+pageNumber);
+                  }
+                  
+                  else if(this.p1==5)
+                  {  
+                    this.getProducts('/products/newProducts?page='+pageNumber);
+                  }
 
-                     else if(this.p1==6)
-                     {  
-                       this.getProducts('/products/futurProducts?page='+pageNumber);
-                     }
+                  else if(this.p1==6)
+                  {  
+                    this.getProducts('/products/futurProducts?page='+pageNumber);
+                  }
+         }
 
-                   } );
 
-                   this.currentPage = pageNumber;
-                   window.scrollTo({ top: 200, behavior: 'smooth' });
+      } );
+
+      this.currentPage = pageNumber;
+      window.scrollTo({ top: 200, behavior: 'smooth' });
 }
 
 loadNextPage() 
@@ -467,6 +552,7 @@ isPageActive(pageNum: number | string): boolean
         
         this.getProducts('/products/productsByCat/'+this.idCat);
         this.getTotalProductsCount("/products/totalProductsCountByCat/"+this.idCat);
+        this.currentPage=1;
         
       }
       else if (value == "promotionProducts")
@@ -474,22 +560,26 @@ isPageActive(pageNum: number | string): boolean
         
         this.getProducts('/products/promotionProductsByCat/'+this.idCat);
         this.getTotalProductsCount("/products/totalPromotionProductsCountByCat/"+this.idCat);
+        this.currentPage=1;
         
       }
       else if (value == "newProducts")
       {
         this.getProducts('/products/newProductsByCat/'+this.idCat);
         this.getTotalProductsCount("/products/totalNewProductsCountByCat/"+this.idCat);
+        this.currentPage=1;
       }
       else if (value == "tendancyProducts")
       {
         this.getProducts('/products/tendancyProductsByCat/'+this.idCat);
         this.getTotalProductsCount("/products/totalTendancyProductsCountByCat/"+this.idCat);
+        this.currentPage=1;
       }
       else if (value == "futurProducts")
       {
         this.getProducts('/products/futurProductsByCat/'+this.idCat);
         this.getTotalProductsCount("/products/totalFuturProductsCountByCat/"+this.idCat);
+        this.currentPage=1;
       }
       
     }

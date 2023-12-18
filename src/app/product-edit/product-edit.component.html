@@ -1,45 +1,53 @@
 <div>
     <div *ngIf="!editProduct"> 
          
-        <form>
-            <div class="flex">
-                <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
-                <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">All categories <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-        </svg></button>
-                <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
-                    </li>
-                    </ul>
-                </div>
-                <div class="relative w-full">
-                    <input type="search" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." required>
-                    <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                        </svg>
-                        <span class="sr-only">Search</span>
+        <div>      
+            <form [formGroup]="searchForm" (submit)="onSearchProducts()">
+                <div class="flex">
+                    <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
+                    <button (click)="onAllProducts()" id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-blue-500 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
+                        Tous les produits <fa-icon class="ml-3 text-blue-800" [icon]="myAngle"></fa-icon>
                     </button>
+    
+                    <div class="relative w-full">
+                        <input  type="search" id="search-dropdown" 
+                                class=" form-control block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-blue-500 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" 
+                                placeholder="Rechercher des produits en utilisant la désignation ou bien une déscription !" 
+                                required
+                                formControlName="keyword">
+    
+                        <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-800 rounded-r-lg border border-blue-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                            </svg>
+                            <span class="sr-only">Search</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+    
+        </div>
+    
+        <br>
         
 
     </div>
     <br>
-    <div class="flex">
-        <button routerLink="/categories" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    <div class="flex justify-center">
+        <div *ngIf="searchMode" class="font-bold text-base text-blue-800 flex justify-between w-1/2">
+            <div>
+                <fa-icon class="mr-2" [icon]="mySearch"></fa-icon> {{title}}
+            </div>
+            <div>
+                <button (click)="onAllProducts()" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> <span >  Annuler</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div *ngIf="!editProduct" class="flex">
+        <button routerLink="/new-product" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <fa-icon [icon]="myNew"></fa-icon>
             <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     
@@ -61,6 +69,9 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Produit
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Catégorie du Produit
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Stock
@@ -89,7 +100,9 @@
                         <td [routerLink]="'/product-detail/'+p.productId" class="clickable px-6 py-4 font-semibold text-gray-900 dark:text-white">
                             {{p.name}}
                         </td>
-                        
+                        <td [routerLink]="'/product-detail/'+p.productId" class=" px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            {{ categoryOfProduct[p.categoryId] || ' ' }}
+                        </td>
                         <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                             {{p.stock}}
                         </td>
@@ -102,7 +115,7 @@
                             <a  class="clickable font-medium text-green-600 dark:text-red-500 hover:underline">Modifier</a>
                         </td>
 
-                        <td class="px-6 py-4" >
+                        <td (click)="onDelete(p.productId)" class="px-6 py-4" >
                             <a  class="clickable font-medium text-red-600 dark:text-red-500 hover:underline">Retirer</a>
                         </td>
                         
@@ -123,13 +136,13 @@
 
     <div *ngIf="editProduct" class="w-full lg:w-8/12 px-4 mx-auto mt-6">
 
-        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
         
             <div class="rounded-t bg-white mb-0 px-6 py-6">
 
                 <div class="text-center flex justify-between">
 
-                    <label class="font-semibold text-gray-800 dark:text-white">
+                    <label class="font-semibold text-blue-800 dark:text-white">
                         <fa-icon class="mr-2" [icon]="myEdit"></fa-icon>  Modifier le produit :
                    </label>
 
@@ -147,7 +160,9 @@
                 <form [formGroup]="editProductForm"  (ngSubmit)="onUpdateProduct()">
 
                     <div class=" mb-6">
-                        <label for="id_p" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID du Produit :</label>
+                        <label for="id_p" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myId"></fa-icon> ID du Produit :
+                        </label>
                         
                         <input  class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                                                 dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -159,7 +174,9 @@
 
                     <div class=" items-start mb-6">
                         
-                        <label for="file_input" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo du produit : </label>
+                        <label for="file_input" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myImage"></fa-icon> Photo du produit :
+                         </label>
                         
                         <div class="flex">
                             <div class="flex items-center justify-center w-full">
@@ -187,9 +204,11 @@
                     </div>
 
                     <div class=" mb-6">
-                        <label for="name_p" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Désignation du Produit :</label>
+                        <label for="name_p" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myProduct"></fa-icon> Désignation du Produit :
+                        </label>
                         
-                        <input  class=" form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                        <input  class=" form-control bg-white border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                                                 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 type="text" id="name_p"
                                 [value]="currentProduct.name"
@@ -198,19 +217,35 @@
                     </div>
 
                     <div class="mb-6">       
-                        <label for="descr" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Déscription du produit :</label>
+                        <label for="descr" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myDesc"></fa-icon> Déscription du produit :
+                        </label>
                         
-                        <textarea  class="form-control block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                        <textarea  class="form-control block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                                                                 dark:focus:border-blue-500"
                                     id="descr"  rows="4"
                                     [value]="currentProduct.description"
                                     formControlName="description"></textarea>
                     </div> 
 
-                    <div class="mb-6">
-                        <label for="price" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prix de produit :</label>
+                    <div class="mb-6">       
+                        <label for="details" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myDesc"></fa-icon> Détails du produit :
+                        </label>
                         
-                        <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        <textarea  class="form-control block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                                                dark:focus:border-blue-500"
+                                    id="details"  rows="4"
+                                    [value]="currentProduct.details"
+                                    formControlName="details"></textarea>
+                    </div> 
+
+                    <div class="mb-6">
+                        <label for="price" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myPrice"></fa-icon> Prix de produit :
+                        </label>
+                        
+                        <input  class="form-control bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 type="text" id="price" 
                                 [value]="currentProduct.price"
                                 formControlName="price">
@@ -218,9 +253,10 @@
 
 
                     <div class="mb-6">
-                        <label for="stock" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock :</label>
+                        <label for="stock" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myStock"></fa-icon> Stock :</label>
                         
-                        <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        <input  class="form-control bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 type="text" id="stock" 
                                 [value]="currentProduct.stock"
                                 formControlName="stock">
@@ -230,7 +266,7 @@
                         <fa-icon  class="mr-6 text-rose-600" [icon]="myPromo" ></fa-icon>
 
                         <div class="flex items-center h-5">
-                            <input  class=" form-control w-4 h-4 border border-rose-600 rounded bg-gray-50 focus:ring-3 focus:ring-rose-500 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                            <input  class=" form-control w-4 h-4 border border-rose-600 rounded bg-white focus:ring-3 focus:ring-rose-500 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                                     id="promo" type="checkbox"
                                     [value]="currentProduct.promotionProduct"
                                     formControlName="promotionProduct">
@@ -242,9 +278,11 @@
                     </div>
 
                     <div *ngIf="editProductForm.get('promotionProduct').value" class="mb-6">
-                        <label for="promotionRate" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pourcentage de la promotion :</label>
+                        <label for="promotionRate" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2 text-rose-600" [icon]="myRate"></fa-icon> Pourcentage de la promotion :
+                        </label>
                         
-                        <input  class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        <input  class="form-control bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 type="number" id="promotionRate" min="0" max="1"
                                 [value]="currentProduct.promotionRate"
                                 formControlName="promotionRate">
@@ -256,7 +294,7 @@
 
                         <div class="flex items-center h-5">
                  
-                            <input   class="form-control w-4 h-4 border border-yellow-400 rounded bg-gray-50 focus:ring-3 focus:ring-yellow-400 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                            <input   class="form-control w-4 h-4 border border-yellow-400 rounded bg-white focus:ring-3 focus:ring-yellow-400 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
                                     id="tendancyProduct" type="checkbox" 
                                     [value]="currentProduct.tendancyProduct"
                                     formControlName="tendancyProduct">
@@ -273,7 +311,7 @@
 
                         <div class="flex items-center h-5">
 
-                            <input   class="form-control w-4 h-4 border border-fuchsia-700 rounded bg-gray-50 focus:ring-3 focus:ring-fuchsia-700 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                            <input   class="form-control w-4 h-4 border border-fuchsia-700 rounded bg-white focus:ring-3 focus:ring-fuchsia-700 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
                                     id="select" type="checkbox" 
                                     [value]="currentProduct.selectedProduct"
                                     formControlName="selectedProduct">
@@ -289,7 +327,7 @@
                         <fa-icon  class="mr-6 text-green-400" [icon]="myAvailable" ></fa-icon> 
 
                         <div class="flex items-center h-5">
-                            <input  class="form-control w-4 h-4 border border-green-400 rounded bg-gray-50  focus:ring-3 focus:ring-green-400 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:focus:ring-offset-gray-800" 
+                            <input  class="form-control w-4 h-4 border border-green-400 rounded bg-white  focus:ring-3 focus:ring-green-400 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:focus:ring-offset-gray-800" 
                                     id="dispo" type="checkbox"
                                     [value]="currentProduct.availableProduct"
                                     formControlName="availableProduct">
@@ -305,7 +343,7 @@
                         <fa-icon  class="mr-6 text-blue-600" [icon]="myNewPr"></fa-icon>
 
                         <div class="flex items-center h-5">
-                            <input   class="form-control w-4 h-4 border border-blue-600 rounded bg-gray-50 focus:ring-3 focus:ring-blue-600 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                            <input   class="form-control w-4 h-4 border border-blue-600 rounded bg-white focus:ring-3 focus:ring-blue-600 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
                                     id="newProduct" type="checkbox" 
                                     [value]="currentProduct.newProduct"
                                     formControlName="newProduct">
@@ -321,7 +359,7 @@
                         <fa-icon  class="mr-5 text-emerald-700" [icon]="myFutur" ></fa-icon> 
 
                         <div class="flex items-center h-5">
-                            <input   class="form-control w-4 h-4 border border-emerald-700 rounded bg-gray-50 focus:ring-3 focus:ring-emerald-700-700 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                            <input   class="form-control w-4 h-4 border border-emerald-700 rounded bg-white focus:ring-3 focus:ring-emerald-700-700 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
                                     id="futurProduct" type="checkbox" 
                                     [value]="currentProduct.futurProduct"
                                     formControlName="futurProduct">
@@ -352,3 +390,54 @@
         </div>
     </div>
 </section>
+
+<div *ngIf="!editProduct">
+
+    <br><br>
+    
+    <div class="flex justify-center">
+    
+      <nav aria-label="Page navigation example">
+    
+        <ul class="inline-flex -space-x-px text-base h-10">
+    
+          <li *ngIf="!(firstPage==currentPage)">
+            <a (click)="loadPreviousPage()" class="clickable mr-4 flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-blue-800 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+              <fa-icon class="mr-2 text-blue-800" [icon]="myAngleLeft"></fa-icon> Précédent
+            </a>
+          </li>
+    
+          <ng-container *ngFor="let pageNum of getPageNumbers()">
+    
+            <li class="clickable ">
+    
+                <a  *ngIf="pageNum !== '...'; else ellipsis"  
+                    [class]="isPageActive(pageNum) ? 'rounded-md bg-blue-800 mr-2 ml-2 flex items-center justify-center px-4 h-10 text-white border border-gray-300   dark:border-gray-700 dark:bg-gray-700 dark:text-white' 
+                                                   : 'rounded-md mr-2 ml-2 flex items-center justify-center px-4 h-10 text-blue-600 border border-blue-800 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white'"
+                    (click)="loadProductsByPage(+pageNum)">
+                    
+                    {{ pageNum }}
+                </a>
+                <ng-template #ellipsis>
+                  <span class="px-4 h-10 flex items-center justify-center text-blue-600">...</span>
+                </ng-template>
+            </li>
+    
+          </ng-container>
+    
+          <li *ngIf="!(lastPage==currentPage)">
+            <a (click)="loadNextPage()" class="clickable ml-4 flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-blue-800 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+              Suivant <fa-icon class="ml-3 text-blue-800" [icon]="myAngle"></fa-icon>
+            </a>
+          </li>
+    
+        </ul>
+      </nav>
+      
+    
+    </div>
+    
+    <br>
+    
+    </div>
+    

@@ -1,11 +1,15 @@
 <br>
 <br>
 <div>
+    <h6 *ngIf="productsByCat" class="mb-4 font-semibold text-lg text-gray-600 dark:text-white">
+        <fa-icon class="mr-2 text-blue-800"  [icon]="mySearch2"></fa-icon> Rechercher dans la même catégorie, des produits par mot clé : 
+    </h6>
+    
     <div>      
         <form [formGroup]="searchForm" (submit)="onSearchProducts()">
             <div class="flex">
                 <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
-                <button routerLink="/products/all/p" id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-blue-500 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
+                <button (click)= "onAllProducts()" id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-blue-500 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
                     Tous les produits <fa-icon class="ml-3 text-blue-800" [icon]="myAngle"></fa-icon>
                 </button>
 
@@ -34,7 +38,9 @@
 
     <div *ngIf="productsByCat && !searchMode">
 
-        <h6 class="mb-4 font-semibold text-gray-900 dark:text-white">Rechercher dans la meme catégorie, des produits par type : </h6>
+        <h6 class="mb-4 font-semibold text-lg text-gray-600 dark:text-white">
+            <fa-icon class="mr-2 text-blue-800" [icon]="mySearch2"></fa-icon> Rechercher dans la même catégorie, des produits par type : 
+        </h6>
 
         <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
             
@@ -128,7 +134,7 @@
 
     <div>
        
-      <h6 class="mb-4 font-semibold text-gray-900 dark:text-white">
+      <h6 class="mb-4 font-semibold text-blue-800 text-lg dark:text-white">
         <fa-icon *ngIf="p1==2"  class="mr-2 text-fuchsia-700" [icon]="myCatManage" ></fa-icon> 
         <fa-icon *ngIf="all=='all'"  class="mr-2 text-fuchsia-700" [icon]="myProdManage" ></fa-icon>
         <fa-icon *ngIf="p1==4" class="mr-2 text-yellow-400 " [icon]="myTendancy"></fa-icon>
@@ -136,7 +142,7 @@
         <fa-icon *ngIf="p1==3"  class="mr-2 text-rose-600" [icon]="myPromo" ></fa-icon> 
         <fa-icon *ngIf="p1==6"  class="mr-2 text-emerald-700" [icon]="myFutur" ></fa-icon> 
 
-        {{title}}</h6>
+        <span class="text-lg">{{title}}</span></h6>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" >
@@ -211,16 +217,17 @@
 
     <div *ngIf="products">
 
-    
-
-
-        <div>
-           
-          <h6 class="mb-4 font-semibold text-gray-900 dark:text-white">
-            <fa-icon  class="mr-2 text-fuchsia-700" [icon]="myProdManage" ></fa-icon>
-    
-            {{title}}</h6>
+        <div *ngIf="searchMode" class="font-bold text-base text-blue-800 flex justify-between ">
+                <div>
+                    <fa-icon class="mr-2" [icon]="mySearch"></fa-icon> {{title}}
+                </div>
+                <div>
+                    <button (click)="onAllProducts()" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> <span >  Annuler</span>
+                    </button>
+                </div>
         </div>
+  
         <br>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" >
     

@@ -613,15 +613,15 @@
 
     <div *ngIf="products">
 
-    
-
-
-        <div>
-           
-          <h6 class="mb-4 font-semibold text-gray-900 dark:text-white">
-            <fa-icon  class="mr-2 text-fuchsia-700" [icon]="myProdManage" ></fa-icon>
-    
-            {{title}}</h6>
+        <div *ngIf="searchMode" class="font-bold text-base text-blue-800 flex justify-between ">
+            <div>
+                <fa-icon class="mr-2" [icon]="mySearch"></fa-icon> {{title}}
+            </div>
+            <div>
+                <button (click)="onHome()" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <fa-icon class="mr-2" [icon]="myCancel"></fa-icon> <span >  Annuler</span>
+                </button>
+            </div>
         </div>
         <br>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" >

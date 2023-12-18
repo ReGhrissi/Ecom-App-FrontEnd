@@ -26,6 +26,8 @@ export class HomeComponent implements OnInit {
   myAngle= this.icons.myAngle;
   myAngleLeft =this.icons.myAngleLeft; 
   myProdManage=this.icons.myProdManage
+  mySearch=this.icons.mySearch
+  myCancel=this.icons.myCancel
 
   selectedProducts :any;
   promoProducts :any;
@@ -232,6 +234,10 @@ onProductsByCat(categoryId:any)
         this.searchMode = true;
     }
 
+    onHome()
+    {
+      window.location.reload();
+    }
 //--------------------------------------------------------------------------------
     getTotalProductsCount(url :any)
     {

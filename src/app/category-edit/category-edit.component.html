@@ -2,13 +2,13 @@
 
     <div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
 
-        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
             
             <div class="rounded-t bg-white mb-0 px-6 py-6">
 
                 <div class="text-center flex justify-between">
 
-                    <label class="font-semibold text-gray-800 dark:text-white">
+                    <label class="font-semibold text-blue-800 dark:text-white">
                          <fa-icon class="mr-2" [icon]="myEdit"></fa-icon>  Modifier la catégorie :
                     </label>
 
@@ -26,7 +26,9 @@
                 <form [formGroup]="editCategoryForm"  (ngSubmit)="onUpdateCategory()">
 
                     <div class=" mb-6">
-                        <label for="id_c" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID de la catégorie :</label>
+                        <label for="id_c" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myId"></fa-icon> ID de la catégorie :
+                        </label>
                         
                         <input  class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                                                 dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -38,7 +40,9 @@
 
                     <div class=" items-start mb-6">
                         
-                        <label for="file_input" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo de la catégorie : </label>
+                        <label for="file_input" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myImage"></fa-icon> Photo de la catégorie : 
+                        </label>
                         
                         <div class="flex">
                             <div class="flex items-center justify-center w-full">
@@ -66,9 +70,11 @@
                     </div>
 
                     <div class=" mb-6">
-                        <label for="name_c" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Désignation de la catégorie :</label>
+                        <label for="name_c" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myCat"></fa-icon>  Désignation de la catégorie :
+                        </label>
                         
-                        <input  class=" form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                        <input  class=" form-control bg-white border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                                                 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 type="text" id="name_c"
                                 [value]="currentCategory.name"
@@ -77,9 +83,11 @@
                     </div>
 
                     <div class="mb-6">       
-                        <label for="descr" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Déscription de la catégorie :</label>
+                        <label for="descr" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myDesc"></fa-icon>  Déscription de la catégorie :
+                        </label>
                         
-                        <textarea  class="form-control block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                        <textarea  class="form-control block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                                                                 dark:focus:border-blue-500"
                                     id="descr"  rows="4"
                                     [value]="currentCategory.description"
@@ -88,14 +96,16 @@
 
 
                     <div class="flex items-start mb-6">
+
                         <div class="flex items-center h-5">
-                            <input  class=" form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                            <input  class=" form-control w-4 h-4 border border-gray-300 rounded bg-white focus:ring-3 focus:ring-green-500 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-green-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                                     id="active" type="checkbox"
                                     [value]="currentCategory.active"
                                     formControlName="active">
                             
                         </div>
-                        <label for="active" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Active </label>
+                        <label for="active" class="control-label ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            Active </label>
                     </div>
      
                     <br>

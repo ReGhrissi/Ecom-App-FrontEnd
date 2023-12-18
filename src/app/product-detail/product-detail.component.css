@@ -9,3 +9,12 @@
 {
     height: 350px;
 }
+
+.pre-container {
+    max-width: 100%; /* Ajustez la largeur maximale selon vos besoins */
+    overflow: auto; /* Ajoute un défilement si nécessaire */
+    white-space: pre-wrap; /* Préserve les sauts de ligne et effectue un retour à la ligne automatique si nécessaire */
+    word-wrap: break-word; /* Gère le débordement des mots pour les mots longs */
+    border: 1px solid #ccc; /* Ajoute une bordure pour le conteneur */
+    padding: 10px; /* Ajoute un espace interne */
+  }

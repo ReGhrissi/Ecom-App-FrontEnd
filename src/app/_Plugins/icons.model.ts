@@ -1,13 +1,15 @@
-import { faProductHunt, faSkype, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faProductHunt, faSearchengin, faSkype, faWhatsapp} from "@fortawesome/free-brands-svg-icons";
 import { faCalendarDays, faComment, faCreditCardAlt, faMessage } from "@fortawesome/free-regular-svg-icons";
 import { faAngleRight, faArrowLeft, faBasketShopping, faBookAtlas, faBullhorn, faCartPlus, faCartShopping, faCheck, faCheckCircle,
      faCircleUser, faCity, faCreditCard, faCrown, faEarthAfrica, faEnvelope, faIdBadge, faKey, faListCheck, faLocationDot, faLock, faMapLocationDot, faMobileScreen, faPen, faRightFromBracket,
       faRightLong,
       faRightToBracket, faSackDollar, faSackXmark, faSplotch, faThumbsUp, faTrash, faTruck, faTruckArrowRight, faUpload, faUser, faUserGear,
        faUserGraduate,
-       faUserPen, faUserPlus, faUserSecret, faUserTie, faUsers, faXmark, faCommentDots, faCircleXmark, faHourglass, faHourglassStart, faRotateRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+       faUserPen, faUserPlus, faUserSecret, faUserTie, faUsers, faXmark, faCommentDots, faCircleXmark, faHourglass, faHourglassStart, 
+       faRotateRight, faAngleLeft, faArrowRight, faCheckDouble, faImage, faTableList, faFilePen, faDollarSign, faHouseFire, 
+       faWarehouse, faStore, faPercent, faMagnifyingGlass, faMagnifyingGlassArrowRight, faReply } from "@fortawesome/free-solid-svg-icons";
 
-export class Icons{
+export class Icons{ 
 
     myAngle = faAngleRight;
     myAngleLeft=faAngleLeft
@@ -23,6 +25,7 @@ export class Icons{
 
     myGoTo = faRightLong;
     myBack=faArrowLeft;
+    myNext=faArrowRight;
     myCancel=faXmark;
     myUpload=faUpload;
 
@@ -31,12 +34,21 @@ export class Icons{
     myUserName = faUser
     myAdmin=faUserGraduate
     myId = faIdBadge
+    myIdObj=faCheckDouble
     myKey=faKey
     myPassword=faLock
     myAccount = faUserGear;
     myCartShopping = faCartShopping;
     myLogin= faRightToBracket;
     myLogout = faRightFromBracket;
+    myImage=faImage
+    myDesc=faFilePen
+    myPrice=faDollarSign
+    myStock=faStore
+    myRate=faPercent
+    mySearch=faMagnifyingGlass
+    mySearch2=faSearchengin
+    myReply = faReply
 
     myPayment=faSackDollar;
     myDenyPayment=faSackXmark;

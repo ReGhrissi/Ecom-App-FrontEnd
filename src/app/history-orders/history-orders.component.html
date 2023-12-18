@@ -22,13 +22,16 @@
                     Date 
                 </th>
                 <th scope="col" class="px-6 py-3">
+                  Heure 
+                </th>
+                <th scope="col" class="px-6 py-3">
                   Montant (DH)
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Etat
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    <fa-icon [icon]="myEdit"></fa-icon>
+                    
                 </th>
             </tr>
         </thead>
@@ -53,7 +56,10 @@
                     {{o.orderId}}
                 </td>
                 <td class="px-6 py-4">
-                     {{o.orderDate}}
+                     {{ onFormatDate(o.orderDate) }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ onFormatTime(o.orderDate) }}
                 </td>
                 <td class="px-6 py-4">
                   {{o.totalAmount}}
@@ -89,7 +95,7 @@
 
             <tr *ngIf="selectedOrder && selectedOrder.orderId==o.orderId" class="border border-blue-400  ">
 
-               <td colspan="7">
+               <td colspan="8">
 
                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
@@ -106,7 +112,7 @@
                                  <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
                                     
           
-                                    <td colspan="7">
+                                    <td colspan="8">
                                        
                                        <div id="alert-additional-content-5" class="mx-6 my-6 p-4 border border-gray-300 rounded-lg bg-gray-50 dark:border-gray-600 dark:bg-gray-800" role="alert">
                                  
@@ -115,47 +121,75 @@
                                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                                              </svg>
                                              <span class="sr-only">Info</span>
-                                             <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Informations du client </h3>
+                                             <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Informations du client :</h3>
                                              </div>
                                              <br>
-                                    
-                                             <div class="flex items-center">
-                                                <fa-icon [icon]="myClient"></fa-icon>
-                                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                   
-                                                </svg>
-                                                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Nom du client :</h3> 
-                                                <span >{{selectedOrder.client.name}}</span>
-                                                <div></div>
-                                             </div>
                                              
-                                             <div class="flex items-center">
-                                                <fa-icon [icon]="myAddress"></fa-icon>
-                                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                   
-                                                </svg>
-                                                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Adresse Clinet :</h3>
-                                                <span>{{selectedOrder.client.address}}</span>
+
+                                             <div class="relative overflow-x-auto shadow-lg sm:rounded-lg ">
+
+                                                <table class=" w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400">
+
+                                                   <tbody>
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                            <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-white dark:text-white dark:bg-gray-800">    
+                                                                  <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300">
+                                                                     <fa-icon class="ml-6 mr-6" [icon]="myClient"></fa-icon> Nom du client :
+                                                                  </h3> 
+                                                            </th>
+                                                            <td class="px-6 py-2 bg-white">
+                                                               {{selectedOrder.client.name}}
+                                                            </td>
+                                                      </tr>
+
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                            <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-blue-50 dark:text-white dark:bg-gray-800">
+                                                               <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                                                                  <fa-icon class="ml-6 mr-6" [icon]="myAddress"></fa-icon> Adresse Client :
+                                                               </h3> 
+                                                            </th>
+                                                            <td class="px-6 py-2 bg-blue-50">
+                                                               {{selectedOrder.client.address}}
+                                                            </td>    
+                                                      </tr>
+
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                            <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-white dark:text-white dark:bg-gray-800">
+                                                               <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                                                                  <fa-icon class="ml-6 mr-6" [icon]="myEmail"></fa-icon> Email :
+                                                               </h3> 
+                                                            </th>
+                                                            <td class="px-6 py-2 bg-white">
+                                                               {{selectedOrder.client.email}}
+                                                            </td>
+                                                      </tr>
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                            <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-blue-50 dark:text-white dark:bg-gray-800">
+                                                               <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                                                                  <fa-icon class="ml-6 mr-6" [icon]="myPhone"></fa-icon> Téléphone :</h3> 
+                                                            </th>
+                                                            <td class="px-6 py-2 bg-blue-50">
+                                                               {{selectedOrder.client.phoneNumber}}
+                                                            </td>  
+                                                      </tr>
+
+                                                      <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                         <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-white dark:text-white dark:bg-gray-800">
+                                                            <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                                                               <fa-icon class="ml-6 mr-6" [icon]="myWhatsapp"></fa-icon> WhatsApp :
+                                                            </h3> 
+                                                         </th>
+                                                         <td class="px-6 py-2 bg-white">
+                                                            {{selectedOrder.client.whatsapp}}
+                                                         </td>                
+                                                      </tr>
+                                             
+                                                   </tbody>
+                                                </table>
+                                                
                                              </div>
-                                    
-                                             <div class="flex items-center">
-                                                   <fa-icon [icon]="myPhone"></fa-icon>
-                                                   <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                      
-                                                   </svg>
-                                                   <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Téléphone :</h3>
-                                                   <span >{{selectedOrder.client.phoneNumber}}</span>
-                                             </div>
-                                    
-                                             <div class="flex items-center">
-                                                <fa-icon [icon]="myEmail"></fa-icon>
-                                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                         
-                                                </svg>
-                                                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Email :</h3>
-                                                <span >{{selectedOrder.client.email}}</span>
-                                             </div>
-                                          </div>
+                                             <br>
+                                       </div>
                                           
                                        </td>
                         
@@ -164,7 +198,7 @@
                                  <tr  class="bg-white border-b dark:bg-gray-800   ">
 
 
-                                    <td colspan="7">
+                                    <td colspan="8">
 
                                     <div class=" mx-6 my-6 border border-gray-300 rounded-lg">
 
@@ -179,20 +213,16 @@
                                                 Produit
                                              </th>
                                              <th scope="col" class="px-6 py-3">
-                                                Z
+                                                Quantité
                                              </th>
                                              <th scope="col" class="px-6 py-3">
-                                                Prix
+                                                Prix (DH)
                                              </th>
                                              <th scope="col" class="px-6 py-3">
-                                                X
-                                             </th>
-                                             <th scope="col" class="px-6 py-3">
-                                                Y
-                                             </th>
-                                             
-                                       </tr>
-                                    </thead>
+                                                Total (DH)
+                                             </th>       
+                                          </tr>
+                                       </thead>
                                     
                                     <tbody>
                                        
@@ -211,15 +241,11 @@
                                              </td>
                                     
                                              <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                                {{i.product.stock}}
+                                                {{i.product.currentPrice}}
                                              </td>
                                     
-                                             <td class="px-6 py-4" >
-                                                <a  class="clickable font-medium text-green-600 dark:text-red-500 hover:underline">Modifier</a>
-                                             </td>
-                                    
-                                             <td class="px-6 py-4" >
-                                                <a  class="clickable font-medium text-red-600 dark:text-red-500 hover:underline">Retirer</a>
+                                             <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white" >
+                                                {{i.quantity * i.product.currentPrice}}
                                              </td>
                                              
                                           </tr>
@@ -234,10 +260,8 @@
                                  </tr>
 
                               </tbody>
-                              <br>
-                                                   
-                           </table>
-                   
+
+                           </table>     
                   </td>
                </tr>
             </ng-container>

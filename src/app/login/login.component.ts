@@ -9,6 +9,7 @@ import { TokenService } from '../services/token.service';
 import {Observable, catchError} from 'rxjs';
 import { Location } from '@angular/common';
 import { AccountService } from '../services/account.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -81,11 +82,50 @@ export class LoginComponent implements OnInit {
         catchError (err => {
           console.log(err);
 
+          if(err.status == 401)
+          {
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Votre Login ou Mot de passe sont incorrectes ! ",
+                showConfirmButton: false,
+                timer: 3000
+              });
+          }
+          else if(err.status == 404)
+          {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Erreur d'authentification : "+err.status,
+              showConfirmButton: false,
+              timer: 3000
+            });
+
+          }
+              
+
           throw err;    
         })
       ).subscribe((res : any)=> {
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Bienvenue !",
+            showConfirmButton: false,
+            timer: 2000
+          });
+       
+          
+          setTimeout(() => 
+          {
+            this.handleResponse(res);
+            
+          }, 1500);
       
-          this.handleResponse(res);
+          
+
       });
   }
  
@@ -95,8 +135,12 @@ export class LoginComponent implements OnInit {
     this.accountService.changeAuthStatus(true);
     //this.location.back()
     this.router.navigate(['/']).then(() => {
-      window.location.reload();
+
+        window.location.reload();  
     });
+
+  
+    
     //this.router.navigateByUrl('/')
   }
 

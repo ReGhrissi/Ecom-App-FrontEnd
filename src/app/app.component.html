@@ -1,54 +1,54 @@
 <div class="myAPP">
 
-    <div class="navbar"> 
-        
-          <app-navbar (Selected_Products)= "onSelectedProducts()"
-                      (products_Dispo) = "onProductsDispo()"
-                      (all_Products) = "OnAllProducts()"
-                      (products_Promo) = "OnProductsPromo()"
-                      (products_New) = "OnProductsNew()"
-                      (products_Tendancy) = "OnProductsTendancy()"
-                      (products_Futur) = "OnProductsFutur()"
-                      (Log_Out) = "onLogout()"
-                      (Log_In) = "onLogin()"
-                      (Jump_To_Section) = "onJumpToSection($event)"
-          >
-          </app-navbar>
-        
-    </div>
+  <div class="navbar"> 
+      
+        <app-navbar (Selected_Products)= "onSelectedProducts()"
+                    (products_Dispo) = "onProductsDispo()"
+                    (all_Products) = "OnAllProducts()"
+                    (products_Promo) = "OnProductsPromo()"
+                    (products_New) = "OnProductsNew()"
+                    (products_Tendancy) = "OnProductsTendancy()"
+                    (products_Futur) = "OnProductsFutur()"
+                    (Log_Out) = "onLogout()"
+                    (Log_In) = "onLogin()"
+                    (Jump_To_Section) = "onJumpToSection($event)"
+        >
+        </app-navbar>
+      
+  </div>
 
-    <div class="flex content-after-navbar">
+  <div class="flex content-after-navbar">
 
-        <div class="w-1/5">
-          <app-sidebar  [_Categories] = "categories"
-                        [Total_Products_By_Category] = "totalProductsByCategory"
-                        [Current_Category] = "currentCategory"
-                        (Products_By_Cat) = "getProductsByCat($event)"
-          >
-          </app-sidebar>
+      <div class="w-1/5">
+        <app-sidebar  [_Categories] = "categories"
+                      [Total_Products_By_Category] = "totalProductsByCategory"
+                      [Current_Category] = "currentCategory"
+                      (Products_By_Cat) = "getProductsByCat($event)"
+        >
+        </app-sidebar>
+      </div>
+
+
+        <div class=" w-3/4">
+          <br>
+          <router-outlet>
+
+          </router-outlet>
+
+          <section  id="contact-us">
+            <app-footer></app-footer>
+          </section>
+          
         </div>
 
-
-          <div class=" w-3/4">
-            <br>
-            <router-outlet>
-
-            </router-outlet>
-
-            <section  id="contact-us">
-              <app-footer></app-footer>
-            </section>
-            
-          </div>
-
-    </div>
+  </div>
 
 
 
-    <br>
-    <br>
+  <br>
+  <br>
 
-    <!--
-    <app-footer></app-footer>
-    -->
+  <!--
+  <app-footer></app-footer>
+  -->
 </div>

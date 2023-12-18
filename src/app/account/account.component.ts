@@ -7,6 +7,7 @@ import { Icons } from '../_Plugins/icons.model';
 import { CatalogueService } from '../services/catalogue.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { User } from '../_Model/user.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-account',
@@ -136,7 +137,18 @@ export class AccountComponent implements OnInit{
                            
                             },
 
-              error: err => console.error(err)
+              error: err => {
+                console.error(err)
+
+                Swal.fire({
+                  position: "top-end",
+                  icon: "error",
+                  title: "Erreur : "+err.status,
+                  text:"",
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              }
           });
  
       })
@@ -211,11 +223,37 @@ export class AccountComponent implements OnInit{
           next: (data:any) => {
                             this.currentContact=data;
                             this.currentUser.contact =this.currentContact;
-                            window.location.reload();
                             this.editionContact = false;
+
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "success",
+                              title: "Enregistrement réussit !",
+                              text:"Vos cordonnées personnelles ont été ajoutées avec succès !",
+                              showConfirmButton: false,
+                              timer: 3000
+                            });
+                            
+                            setTimeout(() => 
+                            {
+                              window.location.reload();
+                              
+                            }, 2500);
                         },
 
-          error: err => console.error(err)
+          error: err => 
+          {
+            console.error(err)
+
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Erreur : "+err.status,
+              text:"",
+              showConfirmButton: false,
+              timer: 3000
+            });
+          }
       });
 
   }
@@ -233,11 +271,37 @@ export class AccountComponent implements OnInit{
           next: (data:any) => {
                             this.currentPaymentCard=data;
                             this.currentUser.paymentCard=this.currentPaymentCard;
-                            window.location.reload();
                             this.editionPaymentCard = false;
+
+
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "success",
+                              title: "Enregistrement réussit !",
+                              text:"Votre carte de payement a été ajoutée avec succès !",
+                              showConfirmButton: false,
+                              timer: 3000
+                            });
+                            
+                            setTimeout(() => 
+                            {
+                              window.location.reload();
+                              
+                            }, 2500);
                         },
 
-          error: err => console.error(err)
+          error: err =>{ 
+            console.error(err)
+
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Erreur : "+err.status,
+              text:"",
+              showConfirmButton: false,
+              timer: 2000
+            });
+          }
       });
 
   }
@@ -265,11 +329,35 @@ export class AccountComponent implements OnInit{
 
           next: (data:any) => {
                             this.currentUser=data;
-                            window.location.reload();
                             this.editionProfil = false;
+
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "success",
+                              title: "",
+                              showConfirmButton: false,
+                              timer: 2000
+                            });
+                            
+                            setTimeout(() => 
+                            {
+                              window.location.reload();
+                              
+                            }, 1500);
                         },
 
-          error: err => console.error(err)
+          error: err =>{ 
+            console.error(err)
+
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Erreur : "+err.status,
+              text:"",
+              showConfirmButton: false,
+              timer: 2000
+            });
+          }
       });
 
   }
@@ -361,17 +449,37 @@ export class AccountComponent implements OnInit{
                     }
                     else if(event instanceof HttpResponse)
                     {
-                      //  alert("Chargement avec succès !");
                         this.timeStamp=Date.now();
                         this.editPhoto=false; // ajouté ???
-                        window.location.reload();
+
+                        Swal.fire({
+                          position: "top-end",
+                          icon: "success",
+                          title: "",
+                          showConfirmButton: false,
+                          timer: 2000
+                        });
+                        
+                        setTimeout(() => 
+                        {
+                          window.location.reload();
+                          
+                        }, 1500);
+                       
                     }
 
                   },
       
       error:  err=>
                   {
-                    alert("Problème de chargement !");
+                    Swal.fire({
+                      position: "top-end",
+                      icon: "error",
+                      title: "Erreur : "+err.status,
+                      text:"",
+                      showConfirmButton: false,
+                      timer: 2000
+                    });
                      
                   }
                   

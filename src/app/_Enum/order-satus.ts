@@ -1,12 +1,12 @@
 
 export enum OrderStatus {
-    REGISTERED,
-    PAID ,
-    UNDER_TREATEMENT,
-    CANCELLED ,
-    SENT ,
-    DELIVERED ,
-    RETURNED 
+    Nouvelle = 'REGISTERED',
+    Payé ='PAID'  ,
+    En_cours_de_traitement ='UNDER_TREATEMENT',
+    Annulée ='CANCELLED',
+    Envoyée ='SENT',
+    Livrée ='DELIVERED',
+    Retour ='RETURNED'
 /*
     REGISTERED ="REGISTERED",
     PAID = "payé",

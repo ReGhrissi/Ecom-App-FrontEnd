@@ -1,17 +1,17 @@
 
 <div >
-
-    <div class="panel-heading">Récapitulatif sur votre commande</div>
-
+    <br>
+    <div class="text-lg font-bold text-blue-800">
+        <fa-icon class="mr-2" [icon]="myOrder"></fa-icon> 
+        <span *ngIf="!(orderService.order.orderId!='')" >Récapitulatif sur votre commande</span>
+        <span *ngIf="orderService.order.orderId!=''" > Détails de la commande</span>
+    </div>
+    <br>
     <br>
 <!----------------------------------------------------------------------->
     
     <div *ngIf="orderService.order.orderId!=''" class="relative overflow-x-auto shadow-md sm:rounded-lg"> 
 
-        <div>
-            Détail de la commande :
-        </div>
-        <br>
         
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
@@ -24,6 +24,9 @@
                         Date de la Commande
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Heure
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Montant à payer
                     </th>
                 </tr>
@@ -33,12 +36,15 @@
                 
                 <tr   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     
-                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white w-32 p-4">
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white p-4">
                         {{orderService.order.orderId}}
                     </td>
                     
                     <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                        {{orderService.order.orderDate}}
+                        {{onFormatDate(orderService.order.orderDate)}}
+                    </td>
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{onFormatTime(orderService.order.orderDate)}}
                     </td>
                     
                     <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
@@ -52,83 +58,104 @@
         </table>
     </div>
     <br>
-    <div *ngIf="orderService.order.orderId">
+    <div *ngIf="orderService.order.orderId" class="flex justify-between">
 
-        <div  class="flex">
-            <button (click)="onPayOrder()" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <fa-icon  [icon]="myCard"></fa-icon>
+        <div  >
+            <button (click)="onPayOrder()" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <fa-icon class="mr-2"  [icon]="myCard"></fa-icon>
                 <span > Passer au paiment</span>
             </button>
         </div>
-        <br>
-        <div  class="flex">
-            <button (click)="onCancel()" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <fa-icon  [icon]="myCancel"></fa-icon>
+        
+        <div >
+            <button (click)="onCancel()" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <fa-icon class="mr-2" [icon]="myCancel"></fa-icon>
                 <span > Annuler la commande</span>
             </button>
         </div>
     </div>
 <!----------------------------------------------------------------------------------------------------------------------------->
     <br>
-
-    <div id="alert-additional-content-5" class="p-4 border border-gray-300 rounded-lg bg-gray-50 dark:border-gray-600 dark:bg-gray-800" role="alert">
+    <br>
+<div class="flex justify-center">
+    <div id="alert-additional-content-5" class="w-full shadow-xl p-4 border border-gray-300 rounded-lg bg-white dark:border-gray-600 dark:bg-gray-800" role="alert">
         
-        <div class="flex items-center">
+        <div class="flex items-center text-blue-800">
           <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
           </svg>
           <span class="sr-only">Info</span>
-          <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Informations du client </h3>
+          <h3 class="text-lg font-medium  dark:text-gray-300">Informations du client :</h3>
         </div>
         <br>
 
-        <div class="flex items-center">
-            <fa-icon [icon]="myClinet"></fa-icon>
-            <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-              
-            </svg>
-            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Nom du client :</h3> 
-            <span >{{orderService.order.client.name}}</span>
-            <div></div>
-        </div>
-          
-        <div class="flex items-center">
-            <fa-icon [icon]="myaddress"></fa-icon>
-            <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                
-            </svg>
-            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Adresse Clinet :</h3>
-            <span>{{orderService.order.client.address}}</span>
-        </div>
+        <table class=" w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400">
 
-        <div class="flex items-center">
-                <fa-icon [icon]="myPhone"></fa-icon>
-                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  
-                </svg>
-                <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Téléphone :</h3>
-                <span >{{orderService.order.client.phoneNumber}}</span>
-        </div>
+            <tbody>
+               <tr class="border-b border-gray-200 dark:border-gray-700">
+                     <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-gray-100 dark:text-white dark:bg-gray-800">    
+                           <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300">
+                              <fa-icon class="ml-6 mr-6" [icon]="myClinet"></fa-icon> Nom du client 
+                           </h3> 
+                     </th>
+                     <td class="px-6 py-2 bg-gray-100">
+                        {{orderService.order.client.name}}
+                     </td>
+               </tr>
 
-        <div class="flex items-center">
-            <fa-icon [icon]="myEmail"></fa-icon>
-            <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    
-            </svg>
-            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">Email :</h3>
-            <span >{{orderService.order.client.email}}</span>
-        </div>
+               <tr class="border-b border-gray-200 dark:border-gray-700">
+                     <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                           <fa-icon class="ml-6 mr-6" [icon]="myaddress"></fa-icon> Adresse Client 
+                        </h3> 
+                     </th>
+                     <td class="px-6 py-2 bg-gray-50">
+                        {{orderService.order.client.address}}
+                     </td>    
+               </tr>
+
+               <tr class="border-b border-gray-200 dark:border-gray-700">
+                     <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-gray-100 dark:text-white dark:bg-gray-800">
+                        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                           <fa-icon class="ml-6 mr-6" [icon]="myEmail"></fa-icon> Email 
+                        </h3> 
+                     </th>
+                     <td class="px-6 py-2 bg-gray-100">
+                        {{orderService.order.client.email}}
+                     </td>
+               </tr>
+               <tr class="border-b border-gray-200 dark:border-gray-700">
+                     <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                           <fa-icon class="ml-6 mr-6" [icon]="myPhone"></fa-icon> Téléphone </h3> 
+                     </th>
+                     <td class="px-6 py-2 bg-gray-50">
+                        {{orderService.order.client.phoneNumber}}
+                     </td>  
+               </tr>
+
+               <tr class="border-b border-gray-200 dark:border-gray-700">
+                  <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-gray-100 dark:text-white dark:bg-gray-800">
+                     <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300"> 
+                        <fa-icon class="ml-6 mr-6" [icon]="myWhatsapp"></fa-icon> WhatsApp 
+                     </h3> 
+                  </th>
+                  <td class="px-6 py-2 bg-gray-100">
+                     {{orderService.order.client.whatsapp}}
+                  </td>                
+               </tr>
+      
+            </tbody>
+         </table>
     </div>
-
+</div>
 <!--------------------------------------------------------------------------------------------->
     <br>
+    <br>
     
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg"> 
+    <div class=" shadow-xl relative overflow-x-auto  sm:rounded-lg"> 
 
-        <div>
-            Les produits de la commande :
-        </div>
-        
+        <br>
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -143,7 +170,10 @@
                         Quantité
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Prix
+                        Prix (DH)
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Total (DH)
                     </th>
                 </tr>
             </thead>
@@ -167,21 +197,28 @@
                     <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                         {{p.price | number:'0.2'}}
                     </td>
+
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{p.quantity * p.price | number:'0.2'}}
+                    </td>
                 
                 </tr>
 
             </tbody>
             <br>
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead class=" text-blue-800  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr >     
-                    <th scope="col" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                         Total :
+                    <th scope="col" class="px-6 py-4">
+                       
                     </th>   
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 font-semibold text-base  dark:text-white">
+                        Total de la commande (DH) :
                     </th> 
                     <th scope="col" class="px-6 py-3">
                     </th>
-                    <th scope="col" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    <th scope="col" class="px-6 py-3">
+                    </th>
+                    <th scope="col" class="px-6 py-4 font-semibold text-base  dark:text-white">
                         {{orderService.getTotal()|number:'0.2'}}
                     </th>
                 </tr>
@@ -192,22 +229,24 @@
 
 <!---------------------------------------------------------------------------------------->
     <br>
+    <br>
+    <div *ngIf="orderService.order.orderId==''" class="flex justify-between">
 
-    <div *ngIf="orderService.order.orderId==''">
-
-        <div  class="flex">
-            <button (click)="onOrder()" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <fa-icon  [icon]="myValid"></fa-icon>
-                <span > Confirmer la commande</span>
+        <div >
+            <button (click)="onOrder()" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <fa-icon class="mr-2" [icon]="myValid"></fa-icon>
+                <span > Confirmer </span>
             </button>
         </div>
         <br>
-        <div  class="flex">
-            <button (click)="onBack()" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <fa-icon  [icon]="myBack"></fa-icon>
+        <div >
+            <button (click)="onBack()" type="button" class="text-white bg-blue-800 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <span > Retour</span>
+                <fa-icon class="ml-4"  [icon]="myBack"></fa-icon>
             </button>
         </div>
     </div>
 
 </div>
+<br>
+<br>

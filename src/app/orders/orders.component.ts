@@ -40,6 +40,7 @@ export class OrdersComponent implements OnInit {
   orderStatusEnum = OrderStatus;
   Object: ObjectConstructor = Object;
 
+  
   selectedOrder: any = null;
   status:any;
 
@@ -51,6 +52,7 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
 
+    console.log("oooooooooooord :"+this.orderStatusEnum)
     this.activeRoute.params.subscribe((data)=>
     {              
            this.status = data['orderStatus'];
@@ -90,7 +92,7 @@ export class OrdersComponent implements OnInit {
                 } );
 
   }
-
+  
 
 onStatusChange(status: string) 
 {
@@ -132,7 +134,7 @@ toggleDetails(order: any): void
     this.updateOrderForm = new FormGroup ({
 
       orderStatus: new FormControl(this.selectedOrder.orderStatus,[Validators.required]),
-      reasonOfStatus: new FormControl('',[Validators.required]),
+      reasonOfStatus: new FormControl(this.selectedOrder.reasonOfStatus,[Validators.required]),
     
     });
 }
@@ -149,32 +151,28 @@ onFormatTime(dateFromBackend:any)
   let dateObj = new Date(dateFromBackend);
   return `${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
 }
-// Formatage de la date
 
-
-// Formatage de l'heure
-
-
- 
-
-/*
-  orderStatusDisplay :any = {
-    NULL : '---',
-    REGISTERED: 'Enregistrée',
-    PAID: 'Payée',
-    UNDER_TREATMENT: 'En cours de traitement',
-    CANCELLED: 'Annulée',
-    SENT: 'Envoyée',
-    DELIVERED: 'Livrée',
-    RETURNED: 'Retournée'
-  };
- */ 
-/*
-  getStatusDisplayEntries(): { key: string, value: string }[] 
+  getStatusLabel(status: string): string 
   {
-    return Object.entries(this.orderStatusDisplay).map(([key, value]: [string, string]) => ({ key, value }));
+    switch (status) {
+        case OrderStatus.Nouvelle:
+            return 'Nouvelle';
+        case OrderStatus.Payé:
+            return 'Payé';
+        case OrderStatus.En_cours_de_traitement:
+            return 'En cours de traitement';
+        case OrderStatus.Annulée:
+            return 'Annulée';
+        case OrderStatus.Envoyée:
+            return 'Envoyée';
+        case OrderStatus.Livrée:
+            return 'Livrée';
+        case OrderStatus.Retour:
+            return 'Retour';
+        default:
+            return status;
+    }
   }
-*/
   onUpdateStatus(orderId:any)
   {
     const orderStatus  = this.updateOrderForm.get('orderStatus')?.value || '' ;

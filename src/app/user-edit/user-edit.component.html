@@ -2,13 +2,13 @@
 
     <div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
 
-        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
             
             <div class="rounded-t bg-white mb-0 px-6 py-6">
 
                 <div class="text-center flex justify-between">
 
-                    <label class="font-semibold text-gray-800 dark:text-white">
+                    <label class="font-semibold text-blue-800 dark:text-white">
                          <fa-icon class="mr-2" [icon]="myEdit"></fa-icon>  Modifier l'utilisateur :
                     </label>
 
@@ -26,7 +26,9 @@
                 <form [formGroup]="editUserForm"  (ngSubmit)="onUpdateUser()">
 
                     <div  class=" mb-6">
-                        <label for="id_c" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID de l'utilisateur :</label>
+                        <label for="id_c" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myId"></fa-icon> ID de l'utilisateur :
+                        </label>
                         
                         <input  class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                                                 dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -37,9 +39,11 @@
                     </div>
 
                     <div class=" mb-6">
-                        <label for="Fname_u" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom :</label>
+                        <label for="Fname_u" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Prénom :
+                        </label>
                         
-                        <input  class=" form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                        <input  class=" form-control bg-white border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                                                 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 type="text" id="Fname_u"
                                 [value]="currentUser.firstName"
@@ -48,9 +52,11 @@
                     </div>
 
                     <div class=" mb-6">
-                        <label for="Lname_u" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom :</label>
+                        <label for="Lname_u" class="control-label block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <fa-icon class="mr-2" [icon]="myUserName"></fa-icon> Nom :
+                        </label>
                         
-                        <input  class=" form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                        <input  class=" form-control bg-white border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                                                 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 type="text" id="Lname_u"
                                 [value]="currentUser.lastName"
@@ -59,19 +65,20 @@
                     </div>
 
                     <div class="flex items-start mb-6">
+                        <fa-icon class="mr-6 text-red-500" [icon]="myAdmin"></fa-icon>
                         <div class="flex items-center h-5">
-                            <input  class=" form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                            <input  class=" form-control w-4 h-4 border border-red-500 rounded bg-white focus:ring-3 focus:ring-red-500 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                                     id="admin" type="checkbox"
                                     [value]="currentUser.admin"
                                     formControlName="admin">
                             
                         </div>
-                        <label for="admin" class="control-label ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Administrateur </label>
+                        <label for="admin" class="control-label ml-2 text-sm font-medium text-red-500 dark:text-gray-300">Administrateur </label>
                     </div>
 
                     <div class="flex items-start mb-6">
                         <div class="flex items-center h-5">
-                            <input  class=" form-control w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                            <input  class=" form-control w-4 h-4 border border-gray-300 rounded bg-white focus:ring-3 focus:ring-blue-300 dark:bg-gray-700  dark:border-gray-600 dark:focus:ring-blue-600  dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                                     id="active" type="checkbox"
                                     [value]="currentUser.active"
                                     formControlName="active">

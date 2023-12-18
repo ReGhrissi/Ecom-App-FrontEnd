@@ -77,7 +77,12 @@ export class AuthentificationService {
         this.accountService.changeRoleStatus(false); 
         this.accountService.changeAuthStatus(false); 
         this.router.navigate(['/login']).then(() => {
-          window.location.reload();
+
+          setTimeout(() => 
+          {
+            window.location.reload();  
+          }, 2000);
+          
         });
         //this.router.navigateByUrl('/login');
       }

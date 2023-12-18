@@ -68,14 +68,14 @@
                     <th (click)="onCategoryDetail(c.categoryId)"  scope="row" class="clickable px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{c.name}}
                     </th>
-                    <td class="px-6 py-4">
-                        (25)
+                    <td class="px-6 py-4 font-medium text-gray-900">
+                        {{ totalProductsByCategory[c.categoryId] || 0 }}
                     </td>
                     <td class="px-6 py-4" >
                         <a (click)="onEdit(c.categoryId)" class="clickable font-medium text-green-600 dark:text-red-500 hover:underline">Modifier</a>
                     </td>
                     <td class="px-6 py-4" >
-                        <a  class="clickable font-medium text-red-600 dark:text-red-500 hover:underline">Retirer</a>
+                        <a (click)="onDelete(c.categoryId)" class="clickable font-medium text-red-600 dark:text-red-500 hover:underline">Retirer</a>
                     </td>
                     <td class="px-6 py-4">
                         <a (click)="newProduct(c)" class="clickable font-medium text-blue-600 dark:text-blue-500 hover:underline">Ajouter un produit</a>

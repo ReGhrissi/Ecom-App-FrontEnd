@@ -8,6 +8,7 @@ import { Observable, identity } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Order } from '../_Model/order.model';
 import { HttpClient } from '@angular/common/http';
+import { Icons } from '../_Plugins/icons.model';
 
 @Component({
   selector: 'app-client',
@@ -16,6 +17,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ClientComponent implements OnInit {
 
+  icons :Icons = new Icons();
+
+  myNext=this.icons.myBack
+  myBack=this.icons.myNext
+  myClient=this.icons.myClinet
   
 
 

@@ -16,9 +16,9 @@
 <br>
 <br> 
 
-<div *ngIf="currentProduct" >     
+<div *ngIf="currentProduct" class="bg-gray-200 rounded-xl border border-gray-300">     
 
-    <article *ngIf="mode==0" class="md:gap-8 md:grid md:grid-cols-3 shadow-lg">
+    <article *ngIf="mode==0" class="md:gap-8 md:grid md:grid-cols-3 shadow-xl bg-gray-100 border border-gray-200 rounded-lg">
 
         <div class="ml-10 mt-10">
             <div class="flex items-center mb-6 space-x-4">
@@ -79,7 +79,7 @@
             <br>
         </div>
 
-        <div class="col-span-2 mt-6 md:mt-0">
+        <div class="col-span-2 mt-6 md:mt-0 pt-10 pr-10">
 
             <div class="flex items-start mb-5">
 
@@ -91,8 +91,14 @@
 
          
             <span class="text-1xl font-bold text-blue-800 dark:text-white">Description :</span>
-            <p class="mb-5 text-gray-500 dark:text-gray-400"> {{currentProduct.description}}</p>
-           
+            
+            <div >
+                <p class="mb-5 text-gray-500 dark:text-gray-400"> 
+                    
+                    {{currentProduct.description}}
+                
+                </p>
+            </div>
             <div class="flex items-center mt-2.5 mb-5">
                 <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
@@ -211,20 +217,31 @@
                          <svg class="w-3.5 h-3.5 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                         <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
                             </svg>
-                         Helpful
+                         J'aime
                     </a>
 
                     <a href="#" class="inline-flex items-center text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 group">
                             <svg class="w-3.5 h-3.5 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                                 <path d="M11.955 2.117h-.114C9.732 1.535 6.941.5 4.356.5c-1.4 0-1.592.526-1.879 1.316l-2.355 7A2 2 0 0 0 2 11.5h3.956L4.4 16a1.779 1.779 0 0 0 3.332 1.061 24.8 24.8 0 0 1 4.226-5.36l-.003-9.584ZM15 11h2a1 1 0 0 0 1-1V2a2 2 0 1 0-4 0v8a1 1 0 0 0 1 1Z"/>
                             </svg>
-                            Not helpful
+                            J'aime pas
                     </a>
             </aside>
         </div>
+
     </article>
-
-
+    <div class="px-10 pt-10 ">
+        <span class="text-1xl font-bold text-blue-800 dark:text-white">Détails :</span>
+        <br>
+        <br>
+        <div >
+            <p class="text-gray-900 dark:text-gray-400"> 
+                
+                {{currentProduct.details}}
+            
+            </p>
+        </div>
+    </div>
 
     
     <br><br>
@@ -428,7 +445,7 @@
 
     <div  class="w-full lg:w-8/12 px-4 mx-auto mt-6">
       
-          <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+          <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
           
             <div class="rounded-t bg-white mb-0 px-6 py-6">
               <div class="text-center flex justify-between">
@@ -575,7 +592,7 @@
                         <fa-icon  [icon]="myDelete"></fa-icon>
                     </a> 
                 </div>
-                <p class="text-gray-400 text-sm">{{c.commentDate}}</p> <!---->
+                <p class="text-gray-400 text-sm">{{onFormatDate(c.commentDate) }} - {{onFormatTime(c.commentDate) }} </p> <!---->
             </div>
         </div>
         <p class="-mt-4 text-gray-500">{{c.commentText}}

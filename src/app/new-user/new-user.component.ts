@@ -5,6 +5,7 @@ import { AuthentificationService } from '../services/authentification.service';
 import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-user',
@@ -73,12 +74,37 @@ export class NewUserComponent {
 
       catchError(err => {
                         console.log(err);
+
+                        Swal.fire({
+                          position: "top-end",
+                          icon: "error",
+                          title: "Erreur : "+err.status,
+                          text:"",
+                          showConfirmButton: false,
+                          timer: 2000
+                        });
         throw err;
       })
       ).subscribe((data:any)=> {
 
           this.newUser =data;
-          this.router.navigateByUrl('/user-edit/'+this.newUser.userId)    
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "",
+            text:"",
+            showConfirmButton: false,
+            timer: 2000
+          });
+
+          setTimeout(() => 
+          {
+            this.router.navigateByUrl('/user-edit/'+this.newUser.userId)   
+            
+          }, 1500);
+      
+           
 
         });
   }

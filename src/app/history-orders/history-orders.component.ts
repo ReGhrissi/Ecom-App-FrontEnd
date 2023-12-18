@@ -17,6 +17,7 @@ export class HistoryOrdersComponent implements OnInit{
 
   myEmail=this.icons.myEmail
   myPhone=this.icons.myPhone
+  myWhatsapp=this.icons.myWhatsapp
   myAddress=this.icons.myaddress
   myClient=this.icons.myClinet
   myEdit=this.icons.myEdit
@@ -57,7 +58,20 @@ export class HistoryOrdersComponent implements OnInit{
         this.orderService.getOrdersByUser(userId).subscribe({
 
             next: (data:any) => {
-                                    this.currentUserOrders=data;   
+                                    this.currentUserOrders=data;  
+                                    
+                                    this.currentUserOrders.sort((a:any, b:any) => {
+                                        
+                                      const dateA = new Date(a.orderDate);
+                                      const dateB = new Date(b.orderDate);
+                                      
+                                      if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+                                       
+                                        return 0;
+                                      }
+                                    
+                                      return dateB.getTime() - dateA.getTime();
+                                });  
                                 },
 
             error: err => console.error(err)
@@ -69,6 +83,18 @@ export class HistoryOrdersComponent implements OnInit{
       this.selectedOrder = order;
   }
 
+  onFormatDate(dateFromBackend :any)
+  {
+    let dateObj = new Date(dateFromBackend);
+
+    return `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
+  }
+
+  onFormatTime(dateFromBackend:any)
+  {
+    let dateObj = new Date(dateFromBackend);
+    return `${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
+  }
 
 
 }

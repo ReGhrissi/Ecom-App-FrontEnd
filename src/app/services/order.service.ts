@@ -10,6 +10,7 @@ import { ProductItem } from '../_Model/product-item.model';
 import { GatewayService } from './gateway.service';
 import { MicroServicesName } from '../_Enum/micro-service';
 import { OrderStatus } from '../_Enum/order-satus';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
   providedIn: 'root'
@@ -168,6 +169,12 @@ export class OrderService {
   getOrdersByUser(userId:any)
   {
     return this.httpClient.get(this.host+"/orders/"+userId)
+  }
+
+  isOrdered(idProduct:any) 
+  {
+      return  this.httpClient.get(this.host+"/orderItems/totalProductsCountByProductId/"+idProduct)
+
   }
 }
 
